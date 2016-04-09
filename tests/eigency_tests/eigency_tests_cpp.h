@@ -5,6 +5,8 @@
 
 void function_w_vec_arg(const Eigen::Map<Eigen::VectorXd> &vec);
 
+void function_w_vec_arg_no_map(const Eigen::VectorXd &vec);
+
 void function_w_mat_arg(const Eigen::Map<Eigen::MatrixXd> &mat);
 
 void set_first_zero_inplace(Eigen::Map<Eigen::VectorXd> &vec);

@@ -273,10 +273,14 @@ cdef extern from "eigency_cpp.h" namespace "eigency":
          long rows()
          long cols()
 
-     cdef cppclass Map[DenseTypeShort]:
-         Map() except +
-         Map(void *bla, long rows, long cols) except +
+     cdef cppclass Map[DenseTypeShort](PlainObjectBase):
+          # pass
+     #     Map() except +
+     #     Map(void *bla, long rows, long cols) except +
          Map(MapSettings &) except +
+
+     cdef cppclass CopyMap[DenseTypeShort]:
+         CopyMap(MapSettings &) except +
 
      cdef cppclass FlattenedMap[DenseType, dtype, Rows, Cols]:
          FlattenedMap() except +
@@ -539,43 +543,10 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
           pass
 
 
-# @cython.boundscheck(False)
-# cdef inline np.ndarray[np.double_t, ndim=2] to_numpy(VectorXd &v):
-#     cdef VectorXd *v_ptr = &v;
-#     cdef nrows = deref(v_ptr).rows()
-#     cdef double[:] mem_view = <double[:nrows]>deref(v_ptr).data()
-#     return np.asarray(mem_view)
+# cdef MapSettings from_numpy_1d(double[:] array_data_mview)
+# cdef MapSettings from_numpy_2d(double[:,:] array_data_mview)
 
-# @cython.boundscheck(False)
-# cdef inline np.ndarray[np.double_t, ndim=2] to_numpy_copy(VectorXd v):
-#     return(np.copy(to_numpy(v)))
+cdef MapSettings from_numpy(np.ndarray array)
 
-# @cython.boundscheck(False)
-# cdef inline MapSettings from_numpy(np.ndarray[np.double_t, ndim=1] array):
-#      cdef double[:] vec_data_mview = array_data
-#      cdef double *array_data_raw = &array_data[0]
-#      return MapSettings(array_data_raw, max(1, array_data_mview.shape[0]), max(1, array_data_mview.shape[1]))
-
-
-# cdef np.ndarray[np.double_t, ndim=2] to_numpy_impl(void *data, int rows)
-
-# cdef np.ndarray[np.double_t, ndim=2] to_numpy(DenseTypeShort &v)
-
-# cdef np.ndarray[np.double_t, ndim=2] to_numpy(VectorXd &v)
-
-# cdef np.ndarray[np.double_t, ndim=2] to_numpy_copy(VectorXd v)
-
-# cdef api np.ndarray[np.double_t, ndim=2] to_numpy2(double *data, int rows, int cols)
-
-cdef MapSettings from_numpy_1d(double[:] array_data_mview)
-# cdef MapSettings from_numpy(np.ndarray[np.double_t, ndim=1] array)
-
-cdef MapSettings from_numpy_2d(double[:,:] array_data_mview)
 # cdef MapSettings from_numpy(np.ndarray[np.double_t, ndim=2] array)
 
-# cdef FlattenedMap[Matrix, double, Dynamic, Dynamic] from_numpy(np.ndarray[np.double_t, ndim=2] array)
-
-cdef np.ndarray[double, ndim=2] to_numpy_old(MapSettings &settings)
-cdef np.ndarray[double, ndim=2] to_numpy_copy_old(MapSettings settings)
-
-# cdef np.ndarray[double, ndim=2] to_numpy_copy_direct2(DenseBase base)

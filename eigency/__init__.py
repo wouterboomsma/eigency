@@ -8,6 +8,6 @@ def get_includes(include_eigen=True):
     parent = os.path.join(root, "..")
     path = [root, parent, np.get_include()]
     if include_eigen:
-        path.append(__eigen_dir__)
+        path.append(os.path.join(root, __eigen_dir__))
     return path
 

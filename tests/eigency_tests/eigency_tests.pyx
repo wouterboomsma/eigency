@@ -13,6 +13,9 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
      cdef void _function_w_vec_arg "function_w_vec_arg"(Map[VectorXd] &)
 
+     # cdef void _function_w_vec_arg_no_map "function_w_vec_arg_no_map"(PlainObjectBase&)
+     cdef void _function_w_vec_arg_no_map "function_w_vec_arg_no_map"(MapCopy[VectorXd] &)
+
      cdef void _function_w_mat_arg "function_w_mat_arg"(Map[MatrixXd] &)
 
      cdef void _set_first_zero_inplace "set_first_zero_inplace" (Map[VectorXd] &)
@@ -26,22 +29,27 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
 
 # Function with vector argument. 
-def function_w_vec_arg(np.ndarray[np.double_t, ndim=1] array):
-    return _function_w_vec_arg(Map[VectorXd](from_numpy_1d(array)))
+def function_w_vec_arg(np.ndarray array):
+    return _function_w_vec_arg(Map[VectorXd](from_numpy(array)))
+
+# Function with vector argument - no map. 
+def function_w_vec_arg_no_ref(np.ndarray array):
+    # return _function_w_vec_arg_no_map(Map[VectorXd](from_numpy(array)))
+    return _function_w_vec_arg_no_map(MapCopy[VectorXd](from_numpy(array)))
 
 # Function with matrix argument. 
-def function_w_mat_arg(np.ndarray[np.double_t, ndim=2] array):
-    return _function_w_mat_arg(Map[MatrixXd](from_numpy_2d(array)))
+def function_w_mat_arg(np.ndarray array):
+    return _function_w_mat_arg(Map[MatrixXd](from_numpy(array)))
 
 # Function setting first entry to zero
-def set_first_zero_inplace(np.ndarray[np.double_t, ndim=1] array):
-    return _set_first_zero_inplace(Map[VectorXd](from_numpy_1d(array)))
+def set_first_zero_inplace(np.ndarray array):
+    return _set_first_zero_inplace(Map[VectorXd](from_numpy(array)))
 
 # Function using a full Map specification, rather than the convenience typedefs
 # Note that since cython does not support nested fused types, the Map has been
 # flattened to include all arguments at once
-def test_full_specification(np.ndarray[np.double_t, ndim=1] array):
-    return _function_w_1darray_arg(FlattenedMap[Array, double, Dynamic, _1](from_numpy_1d(array)))
+def test_full_specification(np.ndarray array):
+    return _function_w_1darray_arg(FlattenedMap[Array, double, Dynamic, _1](from_numpy(array)))
 
 # Function returning vector (copy is made)
 def function_w_vec_retval():

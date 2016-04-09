@@ -2,7 +2,11 @@
 #include <iostream>
 
 void function_w_vec_arg(const Eigen::Map<Eigen::VectorXd> &vec) {
-    // std::cout << vec << "\n";
+    std::cout << "->" << vec << "\n";
+}
+
+void function_w_vec_arg_no_map(const Eigen::VectorXd &vec) {
+    std::cout << "->" << vec << "\n";
 }
 
 void function_w_mat_arg(const Eigen::Map<Eigen::MatrixXd> &mat) {

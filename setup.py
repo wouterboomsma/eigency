@@ -42,6 +42,10 @@ if dist.command_obj.has_key('install'):
     file_util.copy_file('eigency/conversions.pxd', package_path, update=1, preserve_mode=0)
     file_util.copy_file('eigency/conversions.pyx', package_path, update=1, preserve_mode=0)
 
+    # Copy C++ file
+    file_util.copy_file('eigency/eigency_cpp.h', package_path, update=1, preserve_mode=0)
+    file_util.copy_file('eigency/conversions_api.h', package_path, update=1, preserve_mode=0)
+    
     # Copy Eigen header files
     eigen_path = os.path.join(package_path, __eigen_dir__)
     dir_util.copy_tree(__eigen_dir__, eigen_path, update=1, preserve_mode=0)
