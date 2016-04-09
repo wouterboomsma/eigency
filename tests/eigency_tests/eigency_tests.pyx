@@ -1,5 +1,5 @@
 # distutils: language = c++
-# distutils: sources = eigency_tests/tests.cpp
+# distutils: sources = eigency_tests/eigency_tests_cpp.cpp
 
 from eigency.core cimport *
 # cimport eigency.conversions
@@ -9,7 +9,7 @@ from eigency.core cimport *
 # import eigency
 # include "../eigency.pyx"
  
-cdef extern from "eigency_tests/tests.h":
+cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
      cdef void _function_w_vec_arg "function_w_vec_arg"(Map[VectorXd] &)
 

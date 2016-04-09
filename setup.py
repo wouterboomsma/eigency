@@ -6,45 +6,43 @@ from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
 
+import eigency
 import numpy as np
 
-__packagename__ = "eigency"
-dist = setup(
-    name = __packagename__,
-    version = '0.1',
-    packages = [__packagename__],
-    package_data={'': ['*.h']}
-)
+__package_name__ = "eigency"
+__eigen_dir__ = eigency.__eigen_dir__
 
 extensions = [
     Extension("eigency.core", ["eigency/core.pyx"],
-              include_dirs = [".", "eigency_tests", np.get_include(), "../eigency", "eigen_3.2.8", ".."]
-              # include_dirs = [".", "eigency_tests"] + eigency.get_includes()
+              include_dirs = [np.get_include(), __eigen_dir__]
     ),
     Extension("eigency.conversions", ["eigency/conversions.pyx"],
-              include_dirs = [".", "eigency_tests", np.get_include(), "../eigency", "eigen_3.2.8", ".."]
-              # include_dirs = [".", "eigency_tests"] + eigency.get_includes()
+              include_dirs = [np.get_include(), __eigen_dir__]
     )
 ]
 
-setup(
-    name = "eigency",
+dist = setup(
+    name = __package_name__,
+    version = "1.0",
+    description = "Cython interface between the numpy arrays and the Matrix/Array classes of the Eigen C++ library",
+    author = "Wouter Boomsma",
+    author_email = "wb@bio.ku.dk",
+    url = "https://github.com/wouterboomsma/eigency",
     ext_modules = cythonize(extensions),
-    packages = ["eigency"]
-    # ,package_dir = {'eigency':'..'}
+    packages = [__package_name__]
 )
 
+if dist.command_obj.has_key('install'):
+    destination_path = dist.command_obj['install'].install_lib
+    package_path = os.path.join(destination_path, __package_name__)
 
-destination_path = dist.command_obj['install'].install_lib
-package_path = os.path.join(destination_path, __packagename__)
+    # Copy cython files
+    file_util.copy_file('eigency/core.pxd', package_path, update=1, preserve_mode=0)
+    file_util.copy_file('eigency/core.pyx', package_path, update=1, preserve_mode=0)
+    file_util.copy_file('eigency/conversions.pxd', package_path, update=1, preserve_mode=0)
+    file_util.copy_file('eigency/conversions.pyx', package_path, update=1, preserve_mode=0)
 
-# Copy cython files
-file_util.copy_file('eigency/core.pxd', package_path, update=1, preserve_mode=0)
-file_util.copy_file('eigency/core.pyx', package_path, update=1, preserve_mode=0)
-file_util.copy_file('eigency/conversions.pxd', package_path, update=1, preserve_mode=0)
-file_util.copy_file('eigency/conversions.pyx', package_path, update=1, preserve_mode=0)
-
-# Copy Eigen header files
-eigen_path = os.path.join(package_path, 'eigen')
-dir_util.copy_tree('eigen', eigen_path, update=1, preserve_mode=0)
+    # Copy Eigen header files
+    eigen_path = os.path.join(package_path, __eigen_dir__)
+    dir_util.copy_tree(__eigen_dir__, eigen_path, update=1, preserve_mode=0)
 

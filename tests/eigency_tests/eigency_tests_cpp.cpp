@@ -1,4 +1,4 @@
-#include "tests.h"
+#include "eigency_tests_cpp.h"
 #include <iostream>
 
 void function_w_vec_arg(const Eigen::Map<Eigen::VectorXd> &vec) {
