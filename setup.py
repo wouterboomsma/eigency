@@ -28,7 +28,7 @@ dist = setup(
     author = "Wouter Boomsma",
     author_email = "wb@bio.ku.dk",
     url = "https://github.com/wouterboomsma/eigency",
-    download_url = "https://github.com/wouterboomsma/eigency/tarball/1.0",
+    download_url = "https://github.com/wouterboomsma/eigency/tarball/1.1",
     ext_modules = cythonize(extensions),
     packages = [__package_name__]
 )
