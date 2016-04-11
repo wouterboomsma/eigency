@@ -155,9 +155,9 @@ cdef class MyClass:
         return to_numpy(self.thisptr.get_matrix())
 ```
 
-Note that the Eigen to Numpy direction, only a single
-function call to `to_numpy` is necessary.
-```
+This last line contains the actual conversion. Note that the Eigen to
+Numpy direction, only a single function call to `to_numpy` is
+necessary.
 
 Due to limitations in Cython, Eigency cannot deal with full
 Matrix/Array template specifications as return types
