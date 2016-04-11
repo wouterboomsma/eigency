@@ -38,7 +38,6 @@ class TestEigency(unittest.TestCase):
     def test_vec_retval(self):
         retval = eigency_tests.function_w_vec_retval()
         # Consistent with Eigen, return values always have two dimensions - even when it's a vector
-        print retval
         # No Shared memory test: Set first entry to zero and get matrix again to check that this change is maintained
         retval[0,0] = 0.
         retval = eigency_tests.function_w_vec_retval()
@@ -46,7 +45,6 @@ class TestEigency(unittest.TestCase):
 
     def test_mat_retval(self):
         retval = eigency_tests.function_w_mat_retval()
-        print retval
         # No Shared memory test: Set first entry to zero and get matrix again to check that this change is maintained
         retval[0,0] = 0.
         retval = eigency_tests.function_w_mat_retval()
@@ -60,5 +58,21 @@ class TestEigency(unittest.TestCase):
         retval = my_object.get_matrix()
         self.assertAlmostEqual(retval[0,0], 0.)        
         
+    def test_mat_constref_retval(self):
+        my_object = eigency_tests.MyClass()
+        retval = my_object.get_const_matrix()
+        # No shared memory test: Set first entry to zero and get matrix again to check that this change is maintained
+        retval[0,0] = 0.
+        retval = my_object.get_const_matrix()
+        self.assertAlmostEqual(retval[0,0], 4.)        
+
+    def test_mat_constref_retval_force_view(self):
+        my_object = eigency_tests.MyClass()
+        retval = my_object.get_const_matrix_force_view()
+        # Shared memory test: Set first entry to zero and get matrix again to check that this change is maintained
+        retval[0,0] = 0.
+        retval = my_object.get_const_matrix_force_view()
+        self.assertAlmostEqual(retval[0,0], 0.)        
+        
 if __name__ == '__main__':
-    unittest.main(buffer=False)        
+    unittest.main(buffer=True)

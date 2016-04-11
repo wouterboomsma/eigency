@@ -207,7 +207,44 @@ cannot be enforced in Python. However, you can always override the
 default behavior by using the `to_numpy_copy` or `to_numpy_view`
 functions.
 
+Expanding the `MyClass` example from before:
 
+```c++
+class MyClass {
+public:
+    ...
+    const Eigen::MatrixXd &get_const_matrix() {
+        return this->matrix;
+    }
+    ...
+};
+```
 
+With the corresponding cython interface specification
+The Cython C++ class inteface is specified as usual:
+
+```
+     cdef cppclass _MyClass "MyClass":
+         ...
+         const Matrix3d &get_const_matrix()
+```
+
+The following would return a copy
+
+```python
+cdef class MyClass:
+    ...
+    def get_const_matrix(self):
+        return to_numpy(self.thisptr.get_const_matrix())
+```
+
+While this would force it to return a view
+
+```python
+cdef class MyClass:
+    ...
+    def get_const_matrix(self):
+        return to_numpy_view(self.thisptr.get_const_matrix())
+```
 
 

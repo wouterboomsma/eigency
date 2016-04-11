@@ -30,6 +30,7 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
      cdef cppclass _MyClass "MyClass":
          _MyClass "MyClass"() except +
          Matrix3d &get_matrix()
+         const Matrix3d &get_const_matrix()
 
 # Function with vector argument. 
 def function_w_vec_arg(np.ndarray array):
@@ -74,3 +75,8 @@ cdef class MyClass:
         del self.thisptr
     def get_matrix(self):
         return to_numpy(self.thisptr.get_matrix())
+    def get_const_matrix(self):
+        return to_numpy(self.thisptr.get_const_matrix())
+    def get_const_matrix_force_view(self):
+        return to_numpy_view(self.thisptr.get_const_matrix())
+        

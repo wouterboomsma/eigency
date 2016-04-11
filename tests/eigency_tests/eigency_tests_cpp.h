@@ -27,6 +27,9 @@ public:
     Eigen::Matrix3d &get_matrix() {
         return this->matrix;
     }
+    const Eigen::Matrix3d &get_const_matrix() {
+        return this->matrix;
+    }
 private:
     Eigen::Matrix3d matrix;
 };
