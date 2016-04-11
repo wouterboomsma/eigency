@@ -289,8 +289,9 @@ cdef extern from "eigency_cpp.h" namespace "eigency":
 
      # cdef MapSettings Eigency(DenseBase &&)
      # cdef MapSettings to_eigency(DenseBase &&)
-     cdef np.ndarray[np.double_t, ndim=2] to_numpy(PlainObjectBase &&)
-     cdef np.ndarray[np.double_t, ndim=2] to_numpy_copy(PlainObjectBase &&)
+     cdef np.ndarray to_numpy_view(PlainObjectBase &)
+     cdef np.ndarray to_numpy_copy(PlainObjectBase &)
+     cdef np.ndarray to_numpy(PlainObjectBase &)
 
 # cdef extern from "conversions.h" namespace "CythonEigen":
 #      cdef void test(DenseBase &&)
