@@ -9,15 +9,15 @@ by your C++ code will they be made (see example below)
 
 Below is a description of a range of common usage scenarios. A full working
 example of both setup and these different use cases is available in the
-`test` directory distributed with the Eigency package.
+`test` directory distributed with the this package.
 
 ## Setup
 To import eigency functionality, add the following to your `.pyx` file:
 ```
 from eigency.core cimport *
 ```
-In addition, the `setup.py` the include directories must be set up
-to include the eigency include. This can be done by calling the `get_includes`
+In addition, in the `setup.py`, the include directories must be set up
+to include the eigency includes. This can be done by calling the `get_includes`
 function in the `eigency` module:
 ```
 import eigency
@@ -32,7 +32,7 @@ Eigency includes a version of the Eigen library, and the `get_includes` function
 have your own version of Eigen, just set the `include_eigen` option to False, and add your own path instead:
 
 ```
-              include_dirs = [".", "module-dir-name", 'path-to-own-eigen'] + eigency.get_includes(include_eigen=False)
+    include_dirs = [".", "module-dir-name", 'path-to-own-eigen'] + eigency.get_includes(include_eigen=False)
 ```
 
 ## From Numpy to Eigen
@@ -67,14 +67,24 @@ conversion call (the other direction is slightly simpler - see below).
 
 Since Cython does not support nested fused types, you cannot write types like `Map[Matrix[double, 2, 2]]`. In most cases, you won't need to, since you can just use Eigens convenience typedefs, such as `Map[VectorXd]`. If you need the additional flexibility of the full specification, you can use the `FlattenedMap` type, where all type arguments can be specified at top level, for instance `FlattenedMap[Matrix, double, _2, _3]` or `FlattenedMap[Matrix, double, _2, _Dynamic]`. Note that dimensions must be prefixed with an underscore.
 
+Using full specifications of the Eigen types, the previous example would look like this:
+```
+cdef extern from "functions.h":
+     cdef void _function_w_mat_arg "function_w_mat_arg" (FlattenedMap[Matrix, double, Dynamic, Dynamic] &)
+
+# This will be exposed to Python
+def function_w_mat_arg(np.ndarray array):
+    return _function_w_mat_arg(FlattenedMap[Matrix, double, Dynamic, Dynamic](from_numpy(array)))
+```
+
 
 ## From Numpy to Eigen (insisting on a copy)
 
-Eigency also handles cases where the C++ function does not take a
-Eigen Map object, but instead a regular Matrix or Array. However, in
-such cases, a copy will be made. Actually, the procedure is exactly
-the same as above. In the `.pyx` file, you still everything exactly
-the same way as for the Map case described above.
+Eigency will not complain if the C++ function you interface with does
+not take a Eigen Map object, but instead a regular Matrix or
+Array. However, in such cases, a copy will be made. Actually, the
+procedure is exactly the same as above. In the `.pyx` file, you still
+everything exactly the same way as for the Map case described above.
 
 For instance, given the following C++ function:
 ```c++
