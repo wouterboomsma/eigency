@@ -23,7 +23,7 @@ extensions = [
 
 dist = setup(
     name = __package_name__,
-    version = "1.0",
+    version = "1.1",
     description = "Cython interface between the numpy arrays and the Matrix/Array classes of the Eigen C++ library",
     author = "Wouter Boomsma",
     author_email = "wb@bio.ku.dk",
