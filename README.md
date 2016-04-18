@@ -54,13 +54,12 @@ cdef extern from "functions.h":
 
 # This will be exposed to Python
 def function_w_mat_arg(np.ndarray array):
-    return _function_w_mat_arg(Map[MatrixXd](from_numpy(array)))
+    return _function_w_mat_arg(Map[MatrixXd](array))
 ```
 
-The last line contains the actual conversion. Due to limitations in
-Cython, for the conversions in this direction, the type
-`Map[MatrixXd]` must be specified both in the definition and the
-conversion call (the other direction is slightly simpler - see below).
+The last line contains the actual conversion. `Map` is an Eigency
+type that derives from the real Eigen map, and will take care of
+the conversion from the numpy array to the corresponding Eigen type..
 
 
 ## Writing Eigen Map types in Cython
@@ -74,7 +73,7 @@ cdef extern from "functions.h":
 
 # This will be exposed to Python
 def function_w_mat_arg(np.ndarray array):
-    return _function_w_mat_arg(FlattenedMap[Matrix, double, Dynamic, Dynamic](from_numpy(array)))
+    return _function_w_mat_arg(FlattenedMap[Matrix, double, Dynamic, Dynamic](array))
 ```
 
 
@@ -99,7 +98,7 @@ cdef extern from "functions.h":
 
 # This will be exposed to Python
 def function_w_vec_arg_no_map(np.ndarray array):
-    return _function_w_vec_arg_no_map(Map[VectorXd](from_numpy(array)))
+    return _function_w_vec_arg_no_map(Map[VectorXd](array))
 ```
 
 Cython will not mind the fact that the argument type in the extern
@@ -111,11 +110,10 @@ the underlying data.
 
 ## Eigen to Numpy
 
-C++ functions returning a reference to an Eigen Matrix/Array can
-also be transferred to numpy arrays without copying their content.
-In this case the syntax is even simpler than above. Assume we have
-a class with a single getter function, returning an Eigen matrix
-member:
+C++ functions returning a reference to an Eigen Matrix/Array can also
+be transferred to numpy arrays without copying their content.  Assume
+we have a class with a single getter function, returning an Eigen
+matrix member:
 
 ```c++
 class MyClass {
@@ -152,12 +150,12 @@ cdef class MyClass:
         del self.thisptr
 
     def get_matrix(self):
-        return to_numpy(self.thisptr.get_matrix())
+        return ndarray(self.thisptr.get_matrix())
 ```
 
-This last line contains the actual conversion. Note that the Eigen to
-Numpy direction, only a single function call to `to_numpy` is
-necessary.
+This last line contains the actual conversion. Again, eigency has its
+own version of `ndarray` (note that it is not called np.ndarray), that
+will take care of the conversion for you.
 
 Due to limitations in Cython, Eigency cannot deal with full
 Matrix/Array template specifications as return types
@@ -188,7 +186,7 @@ cdef extern from "functions.h":
 
 # This will be exposed to Python
 def function_w_mat_retval():
-    return to_numpy(_function_w_mat_retval())
+    return ndarray(_function_w_mat_retval())
 ```
 
 As mentioned above, you can always replace `Matrix3d` with
@@ -198,13 +196,13 @@ Eigen object that do not have an associated convenience typedef.
 
 ## Overriding default behavior
 
-The `to_numpy` function will attempt do guess whether you want a copy
+The `ndarray` conversion type specifier will attempt do guess whether you want a copy
 or a view, depending on the return type. Most of the time, this is
 probably what you want. However, there might be cases where you want
 to override this behavior. For instance, functions returning const
 references will result in a copy of the array, since the const-ness
 cannot be enforced in Python. However, you can always override the
-default behavior by using the `to_numpy_copy` or `to_numpy_view`
+default behavior by using the `ndarray_copy` or `ndarray_view`
 functions.
 
 Expanding the `MyClass` example from before:
@@ -235,16 +233,16 @@ The following would return a copy
 cdef class MyClass:
     ...
     def get_const_matrix(self):
-        return to_numpy(self.thisptr.get_const_matrix())
+        return ndarray(self.thisptr.get_const_matrix())
 ```
 
-While this would force it to return a view
+, while this would force it to return a view
 
 ```python
 cdef class MyClass:
     ...
     def get_const_matrix(self):
-        return to_numpy_view(self.thisptr.get_const_matrix())
+        return ndarray_view(self.thisptr.get_const_matrix())
 ```
 
 

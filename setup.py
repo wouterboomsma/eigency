@@ -14,10 +14,12 @@ __eigen_dir__ = eigency.__eigen_dir__
 
 extensions = [
     Extension("eigency.conversions", ["eigency/conversions.pyx"],
-              include_dirs = [np.get_include(), __eigen_dir__]
+              include_dirs = [np.get_include(), __eigen_dir__],
+              language="c++"
     ),
     Extension("eigency.core", ["eigency/core.pyx"],
-              include_dirs = [np.get_include(), __eigen_dir__]
+              include_dirs = [np.get_include(), __eigen_dir__],
+              language="c++"
     )
 ]
 
@@ -29,13 +31,13 @@ except(IOError, ImportError):
 
 dist = setup(
     name = __package_name__,
-    version = "1.2",
+    version = "1.3",
     description = "Cython interface between the numpy arrays and the Matrix/Array classes of the Eigen C++ library",
     long_description=long_description,
     author = "Wouter Boomsma",
     author_email = "wb@bio.ku.dk",
     url = "https://github.com/wouterboomsma/eigency",
-    download_url = "https://github.com/wouterboomsma/eigency/tarball/1.2",
+    download_url = "https://github.com/wouterboomsma/eigency/tarball/1.3",
     ext_modules = cythonize(extensions),
     packages = [__package_name__]
 )

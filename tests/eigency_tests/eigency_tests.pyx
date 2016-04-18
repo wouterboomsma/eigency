@@ -34,37 +34,37 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
 # Function with vector argument. 
 def function_w_vec_arg(np.ndarray array):
-    return _function_w_vec_arg(Map[VectorXd](from_numpy(array)))
+    return _function_w_vec_arg(Map[VectorXd](array))
 
 # Function with vector argument - no map - no ref. 
 def function_w_vec_arg_no_map1(np.ndarray array):
-    return _function_w_vec_arg_no_map1(Map[VectorXd](from_numpy(array)))
+    return _function_w_vec_arg_no_map1(Map[VectorXd](array))
 
 # Function with vector argument - no map. 
 def function_w_vec_arg_no_map2(np.ndarray array):
-    return _function_w_vec_arg_no_map2(Map[VectorXd](from_numpy(array)))
+    return _function_w_vec_arg_no_map2(Map[VectorXd](array))
 
 # Function with matrix argument. 
 def function_w_mat_arg(np.ndarray array):
-    return _function_w_mat_arg(Map[MatrixXd](from_numpy(array)))
+    return _function_w_mat_arg(Map[MatrixXd](array))
 
 # Function using a full Map specification, rather than the convenience typedefs
 # Note that since cython does not support nested fused types, the Map has been
 # flattened to include all arguments at once
 def function_w_fullspec_arg(np.ndarray array):
-    return _function_w_fullspec_arg(FlattenedMap[Array, double, Dynamic, _1](from_numpy(array)))
+    return _function_w_fullspec_arg(FlattenedMap[Array, double, Dynamic, _1](array))
 
 # Function returning vector (copy is made)
 def function_w_vec_retval():
-    return to_numpy(_function_w_vec_retval())
+    return ndarray(_function_w_vec_retval())
 
 # Function returning matrix (copy is made)
 def function_w_mat_retval():
-    return to_numpy(_function_w_mat_retval())
+    return ndarray(_function_w_mat_retval())
 
 # Function returning matrix (copy is made)
 def function_w_mat_retval_full_spec():
-    return to_numpy(_function_w_mat_retval_full_spec())
+    return ndarray(_function_w_mat_retval_full_spec())
 
 
 cdef class MyClass:
@@ -74,9 +74,9 @@ cdef class MyClass:
     def __dealloc__(self):
         del self.thisptr
     def get_matrix(self):
-        return to_numpy(self.thisptr.get_matrix())
+        return ndarray(self.thisptr.get_matrix())
     def get_const_matrix(self):
-        return to_numpy(self.thisptr.get_const_matrix())
+        return ndarray(self.thisptr.get_const_matrix())
     def get_const_matrix_force_view(self):
-        return to_numpy_view(self.thisptr.get_const_matrix())
+        return ndarray_view(self.thisptr.get_const_matrix())
         

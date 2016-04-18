@@ -159,6 +159,106 @@ ctypedef fused DenseTypeShort:
     Matrix3cd
     Matrix4cd
     MatrixXcd
+    Array22i
+    Array23i
+    Array24i
+    Array2Xi
+    Array32i
+    Array33i
+    Array34i
+    Array3Xi
+    Array42i
+    Array43i
+    Array44i
+    Array4Xi
+    ArrayX2i
+    ArrayX3i
+    ArrayX4i
+    ArrayXXi
+    Array2i
+    Array3i
+    Array4i
+    ArrayXi
+    Array22f
+    Array23f
+    Array24f
+    Array2Xf
+    Array32f
+    Array33f
+    Array34f
+    Array3Xf
+    Array42f
+    Array43f
+    Array44f
+    Array4Xf
+    ArrayX2f
+    ArrayX3f
+    ArrayX4f
+    ArrayXXf
+    Array2f
+    Array3f
+    Array4f
+    ArrayXf
+    Array22d
+    Array23d
+    Array24d
+    Array2Xd
+    Array32d
+    Array33d
+    Array34d
+    Array3Xd
+    Array42d
+    Array43d
+    Array44d
+    Array4Xd
+    ArrayX2d
+    ArrayX3d
+    ArrayX4d
+    ArrayXXd
+    Array2d
+    Array3d
+    Array4d
+    ArrayXd
+    Array22cf
+    Array23cf
+    Array24cf
+    Array2Xcf
+    Array32cf
+    Array33cf
+    Array34cf
+    Array3Xcf
+    Array42cf
+    Array43cf
+    Array44cf
+    Array4Xcf
+    ArrayX2cf
+    ArrayX3cf
+    ArrayX4cf
+    ArrayXXcf
+    Array2cf
+    Array3cf
+    Array4cf
+    ArrayXcf
+    Array22cd
+    Array23cd
+    Array24cd
+    Array2Xcd
+    Array32cd
+    Array33cd
+    Array34cd
+    Array3Xcd
+    Array42cd
+    Array43cd
+    Array44cd
+    Array4Xcd
+    ArrayX2cd
+    ArrayX3cd
+    ArrayX4cd
+    ArrayXXcd
+    Array2cd
+    Array3cd
+    Array4cd
+    ArrayXcd
 
 cdef extern from "eigency_cpp.h" namespace "eigency":
 
@@ -260,49 +360,19 @@ cdef extern from "eigency_cpp.h" namespace "eigency":
 
      cdef cppclass PlainObjectBase:
           pass
-          # void *data() nogil
-
-          # int rows() nogil
-          # int cols() nogil
-
-     cdef cppclass MapSettings:
-         MapSettings() except +
-         MapSettings(void *, long rows, long cols) except +
-         MapSettings(PlainObjectBase &&) except +
-         void *data()
-         long rows()
-         long cols()
 
      cdef cppclass Map[DenseTypeShort](PlainObjectBase):
-          # pass
-     #     Map() except +
-     #     Map(void *bla, long rows, long cols) except +
-         Map(MapSettings &) except +
-
-     cdef cppclass CopyMap[DenseTypeShort]:
-         CopyMap(MapSettings &) except +
+         Map() except +
+         Map(np.ndarray array) except +
 
      cdef cppclass FlattenedMap[DenseType, dtype, Rows, Cols]:
          FlattenedMap() except +
-         FlattenedMap(dtype *, long rows, long cols) except +
-         FlattenedMap(MapSettings &) except +
+         FlattenedMap(np.ndarray array) except +
 
-     # cdef MapSettings Eigency(DenseBase &&)
-     # cdef MapSettings to_eigency(DenseBase &&)
-     cdef np.ndarray to_numpy_view(PlainObjectBase &)
-     cdef np.ndarray to_numpy_copy(PlainObjectBase &)
-     cdef np.ndarray to_numpy(PlainObjectBase &)
+     cdef np.ndarray ndarray_view(PlainObjectBase &)
+     cdef np.ndarray ndarray_copy(PlainObjectBase &)
+     cdef np.ndarray ndarray(PlainObjectBase &)
 
-# cdef extern from "conversions.h" namespace "CythonEigen":
-#      cdef void test(DenseBase &&)
-
-# cdef extern void test(DenseBase &&)
-
-# cdef extern from "core_api.h":
-#      pass
-
-cdef class _MapSettings:
-     cdef MapSettings *thisptr;
 
 cdef extern from "eigency_cpp.h" namespace "Eigen":
 
@@ -543,11 +613,304 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
      cdef cppclass MatrixXcd(PlainObjectBase):
           pass
 
-
-# cdef MapSettings from_numpy_1d(double[:] array_data_mview)
-# cdef MapSettings from_numpy_2d(double[:,:] array_data_mview)
-
-cdef MapSettings from_numpy(np.ndarray array)
-
-# cdef MapSettings from_numpy(np.ndarray[np.double_t, ndim=2] array)
+     cdef cppclass Array22i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array23i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array24i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2Xi(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array32i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array33i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array34i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3Xi(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array42i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array43i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array44i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4Xi(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX2i(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX3i(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX4i(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXXi(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3i(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4i(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXi(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array22f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array23f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array24f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2Xf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array32f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array33f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array34f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3Xf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array42f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array43f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array44f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4Xf(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX2f(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX3f(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX4f(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXXf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3f(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4f(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array22d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array23d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array24d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2Xd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array32d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array33d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array34d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3Xd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array42d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array43d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array44d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4Xd(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX2d(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX3d(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX4d(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXXd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3d(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4d(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array22cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array23cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array24cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2Xcf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array32cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array33cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array34cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3Xcf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array42cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array43cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array44cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4Xcf(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX2cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX3cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX4cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXXcf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4cf(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXcf(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array22cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array23cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array24cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2Xcd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array32cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array33cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array34cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3Xcd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array42cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array43cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array44cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4Xcd(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX2cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX3cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayX4cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXXcd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array2cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array3cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass Array4cd(PlainObjectBase):
+          pass
+          
+     cdef cppclass ArrayXcd(PlainObjectBase):
+          pass
+          
 
