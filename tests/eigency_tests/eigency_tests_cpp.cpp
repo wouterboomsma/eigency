@@ -35,3 +35,14 @@ Eigen::Matrix<double, 2, 4> function_w_mat_retval_full_spec() {
     return Eigen::Matrix<double, 2, 4>::Constant(2.);
 }
 
+Eigen::Map<Eigen::ArrayXXd> &function_filter1(Eigen::Map<Eigen::ArrayXXd> &mat) {
+    return mat;
+}
+
+Eigen::Map<Eigen::Array<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> > &function_filter2(Eigen::Map<Eigen::Array<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> > &mat) {
+    return mat;
+}
+
+Eigen::Map<Eigen::ArrayXXd, Eigen::Unaligned, Eigen::Stride<1, Eigen::Dynamic> > &function_filter3(Eigen::Map<Eigen::ArrayXXd, Eigen::Unaligned, Eigen::Stride<1, Eigen::Dynamic> > &mat) {
+    return mat;
+}

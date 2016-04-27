@@ -1,5 +1,5 @@
 import unittest
-
+from numpy.testing import assert_array_equal
 import numpy as np
 import eigency_tests
 
@@ -73,6 +73,33 @@ class TestEigency(unittest.TestCase):
         retval[0,0] = 0.
         retval = my_object.get_const_matrix_force_view()
         self.assertAlmostEqual(retval[0,0], 0.)        
+
+    def test_storage_order1(self):
+        x = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]])
+        y = eigency_tests.function_filter1(x)
+        # y is transposed
+        assert_array_equal(x, y.transpose())
+
+    def test_storage_order2(self):
+        x = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]])
+        # C++ function explicitly uses C-storage order
+        y = eigency_tests.function_filter2(x)
+        assert_array_equal(x, y)
+        # print x
+        # print y
+
+    def test_storage_order3(self):
+        x = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]])
+        # C++ function explicitly uses C-storage order map stride
+        y = eigency_tests.function_filter3(x)
+        assert_array_equal(x, y)
+
+    def test_storage_order4(self):
+        # Explicitly use F-storage order in numpy array
+        x = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]], order='F')
+        y = eigency_tests.function_filter1(x)
+        assert_array_equal(x, y)
+        
         
 if __name__ == '__main__':
-    unittest.main(buffer=True)
+    unittest.main(buffer=False)

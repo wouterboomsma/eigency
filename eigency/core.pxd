@@ -48,40 +48,9 @@ ctypedef fused Rows:
     _32
     Dynamic
 
-ctypedef fused Cols:
-    _1
-    _2
-    _3
-    _4
-    _5
-    _6
-    _7
-    _8
-    _9
-    _10
-    _11
-    _12
-    _13
-    _14
-    _15
-    _16
-    _17
-    _18
-    _19
-    _20
-    _21
-    _22
-    _23
-    _24
-    _25
-    _26
-    _27
-    _28
-    _29
-    _30
-    _31
-    _32
-    Dynamic
+ctypedef Rows Cols
+ctypedef Rows StrideOuter
+ctypedef Rows StrideInner
 
 ctypedef fused DenseTypeShort:
     Vector1i
@@ -260,6 +229,14 @@ ctypedef fused DenseTypeShort:
     Array4cd
     ArrayXcd
 
+ctypedef fused StorageOrder:
+    RowMajor
+    ColMajor
+
+ctypedef fused MapOptions:
+    Aligned
+    Unaligned
+
 cdef extern from "eigency_cpp.h" namespace "eigency":
 
      cdef cppclass _1 "1":
@@ -369,6 +346,14 @@ cdef extern from "eigency_cpp.h" namespace "eigency":
          FlattenedMap() except +
          FlattenedMap(np.ndarray array) except +
 
+     cdef cppclass FlattenedMapWithOrder "eigency::FlattenedMap" [DenseType, dtype, Rows, Cols, StorageOrder]:
+         FlattenedMapWithOrder() except +
+         FlattenedMapWithOrder(np.ndarray array) except +
+
+     cdef cppclass FlattenedMapWithStride "eigency::FlattenedMap" [DenseType, dtype, Rows, Cols, StorageOrder, MapOptions, StrideOuter, StrideInner]:
+         FlattenedMapWithStride() except +
+         FlattenedMapWithStride(np.ndarray array) except +
+
      cdef np.ndarray ndarray_view(PlainObjectBase &)
      cdef np.ndarray ndarray_copy(PlainObjectBase &)
      cdef np.ndarray ndarray(PlainObjectBase &)
@@ -378,7 +363,19 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
 
      cdef cppclass Dynamic:
           pass
+
+     cdef cppclass RowMajor:
+          pass
+
+     cdef cppclass ColMajor:
+          pass
           
+     cdef cppclass Aligned:
+          pass
+
+     cdef cppclass Unaligned:
+          pass
+
      cdef cppclass Matrix(PlainObjectBase):
           pass
           

@@ -76,6 +76,14 @@ def function_w_mat_arg(np.ndarray array):
     return _function_w_mat_arg(FlattenedMap[Matrix, double, Dynamic, Dynamic](array))
 ```
 
+FlattenedType takes four template parameters: arraytype, scalartype,
+rows and cols.  Eigen supports a few other template arguments for
+setting the storage layout and Map strides. Since cython does not
+support default template arguments for fused types, we have instead
+defined separate types for this purpose. These are called
+FlattenedMapWithOrder and FlattenedMapWithStride with five and seven
+arguments, respectively. For details on their use, see the section
+about storage layout below.
 
 ## From Numpy to Eigen (insisting on a copy)
 
@@ -246,3 +254,120 @@ cdef class MyClass:
 ```
 
 
+## Storage layout - why arrays are sometimes transposed in the interface
+
+The default storage layout used in numpy and Eigen differ. Numpy uses
+a row-major layout (C-style) per default while Eigen uses a
+column-major layout (Fortran style).  In Eigency, we prioritize to
+avoid copying of data whenever possible, which can have unexpected
+consequences in some cases: There is no problem when passing values
+from C++ to Python - we just adjust the storage layout of the returned
+numpy array to match that of Eigen. However, since the storage layout
+is encoded into the _type_ of the Eigen array (or the type of the
+Map), we cannot change the layout in the Python to C++ direction. In
+eigency, we have therefore opted to return the transposed array/matrix
+in such cases. This provides the user with the flexibility to deal
+with the problem either in Python (use order="F" when constructing
+your numpy array), or on the C++ side: (1) explicitly define your
+argument to have the row-major storage layout, 2) manually set the Map
+stride, or 3) just call `.transpose()` on the received
+array/matrix). We have illustrated each of these scenarios in the
+tests directory.
+
+As an example, consider the case of a C++ function that both receives
+and returns a Eigen Map type, thus acting as a filter:
+
+```c++
+Eigen::Map<Eigen::ArrayXXd> function_filter(Eigen::Map<Eigen::ArrayXXd> &mat) {
+    return mat;
+}
+```
+
+As above, the Cython code could be:
+
+```
+cdef extern from "functions.h":
+    ...
+    cdef Map[ArrayXXd] &_function_filter1 "function_filter1" (Map[ArrayXXd] &)
+
+def function_filter1(np.ndarray array):
+    return ndarray(_function_filter1(Map[ArrayXXd](array)))
+
+```
+
+If we call this function from Python in the standard way, we will
+see that the array is transposed on the way from Python to C++, and
+remains that way when it is again returned to Python:
+
+```python
+>>> x = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]])
+>>> y = function_filter1(x)
+>>> print x
+[[ 1.  2.  3.  4.]
+ [ 5.  6.  7.  8.]]
+>>> print y
+[[ 1.  5.]
+ [ 2.  6.]
+ [ 3.  7.]
+ [ 4.  8.]]
+```
+
+The simplest way to avoid this is to tell numpy to use a
+column-major array layout instead of the default row-major
+layout. This can be done using the order='F' option:
+
+```python
+>>> x = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]], order='F')
+>>> y = function_filter1(x)
+>>> print x
+[[ 1.  2.  3.  4.]
+ [ 5.  6.  7.  8.]]
+>>> print y
+[[ 1.  2.  3.  4.]
+ [ 5.  6.  7.  8.]]
+```
+
+The other alternative is to tell Eigen to use RowMajor layout. This
+requires changing the C++ function definition:
+
+```c++
+typedef Eigen::Map<Eigen::Array<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> > RowMajorArrayMap;
+
+RowMajorArrayMap &function_filter2(RowMajorArrayMap &mat) {
+    return mat;
+}
+```
+
+In this case, the Cython definitions become (see above)
+
+```
+cdef extern from "functions.h":
+    ...
+    cdef PlainObjectBase _function_filter2 "function_filter2" (FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor])
+
+def function_filter2(np.ndarray array):
+    return ndarray(_function_filter2(FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor](array)))
+```
+
+Another alternative is to keep the array itself in RowMajor format,
+but use different stride values for the Map type:
+
+```c++
+typedef Eigen::Map<Eigen::ArrayXXd, Eigen::Unaligned, Eigen::Stride<1, Eigen::Dynamic> > CustomStrideMap;
+
+CustomStrideMap &function_filter3(CustomStrideMap &);
+```
+
+The corresponding cython code could now look this this:
+
+```
+cdef extern from "functions.h":
+    ...
+    cdef PlainObjectBase _function_filter3 "function_filter3" (FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic])
+
+def function_filter3(np.ndarray array):
+    return ndarray(_function_filter3(FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic](array)))
+```
+
+In all three cases, the returned array will now be of the same shape
+as the original.

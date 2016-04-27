@@ -19,6 +19,15 @@ Eigen::Matrix3d function_w_mat_retval();
 
 Eigen::Matrix<double, 2, 4> function_w_mat_retval_full_spec();
 
+Eigen::Map<Eigen::ArrayXXd> &function_filter1(Eigen::Map<Eigen::ArrayXXd> &);
+
+typedef Eigen::Map<Eigen::Array<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> >RowMajorArrayMap;
+RowMajorArrayMap &function_filter2(RowMajorArrayMap &);
+
+typedef Eigen::Map<Eigen::ArrayXXd, Eigen::Unaligned, Eigen::Stride<1, Eigen::Dynamic> > CustomStrideMap;
+CustomStrideMap &function_filter3(CustomStrideMap &);
+
+
 class MyClass {
 public:
     MyClass():

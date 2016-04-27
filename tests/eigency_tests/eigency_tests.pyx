@@ -27,6 +27,13 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
      cdef PlainObjectBase _function_w_mat_retval_full_spec "function_w_mat_retval_full_spec" ()
 
+     cdef Map[ArrayXXd] &_function_filter1 "function_filter1" (Map[ArrayXXd] &)
+
+     cdef PlainObjectBase _function_filter2 "function_filter2" (FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor])
+
+     cdef PlainObjectBase _function_filter3 "function_filter3" (FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic])
+
+
      cdef cppclass _MyClass "MyClass":
          _MyClass "MyClass"() except +
          Matrix3d &get_matrix()
@@ -65,6 +72,18 @@ def function_w_mat_retval():
 # Function returning matrix (copy is made)
 def function_w_mat_retval_full_spec():
     return ndarray(_function_w_mat_retval_full_spec())
+
+# Function both taking array as argument and returning it
+def function_filter1(np.ndarray array):
+    return ndarray(_function_filter1(Map[ArrayXXd](array)))
+
+# Function both taking array as argument and returning it - RowMajor order
+def function_filter2(np.ndarray array):
+    return ndarray(_function_filter2(FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor](array)))
+
+# Function both taking array as argument and returning it - RowMajor stride
+def function_filter3(np.ndarray array):
+    return ndarray(_function_filter3(FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic](array)))
 
 
 cdef class MyClass:
