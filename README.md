@@ -16,9 +16,9 @@ To import eigency functionality, add the following to your `.pyx` file:
 ```
 from eigency.core cimport *
 ```
-In addition, in the `setup.py`, the include directories must be set up
-to include the eigency includes. This can be done by calling the `get_includes`
-function in the `eigency` module:
+In addition, in the `setup.py` file, the include directories must be
+set up to include the eigency includes. This can be done by calling
+the `get_includes` function in the `eigency` module:
 ```
 import eigency
 ...
@@ -59,12 +59,12 @@ def function_w_mat_arg(np.ndarray array):
 
 The last line contains the actual conversion. `Map` is an Eigency
 type that derives from the real Eigen map, and will take care of
-the conversion from the numpy array to the corresponding Eigen type..
+the conversion from the numpy array to the corresponding Eigen type.
 
 
 ## Writing Eigen Map types in Cython
 
-Since Cython does not support nested fused types, you cannot write types like `Map[Matrix[double, 2, 2]]`. In most cases, you won't need to, since you can just use Eigens convenience typedefs, such as `Map[VectorXd]`. If you need the additional flexibility of the full specification, you can use the `FlattenedMap` type, where all type arguments can be specified at top level, for instance `FlattenedMap[Matrix, double, _2, _3]` or `FlattenedMap[Matrix, double, _2, _Dynamic]`. Note that dimensions must be prefixed with an underscore.
+Since Cython does not support nested fused types, you cannot write types like `Map[Matrix[double, 2, 2]]`. In most cases, you won't need to, since you can just use Eigens convenience typedefs, such as `Map[VectorXd]`. If you need the additional flexibility of the full specification, you can use the `FlattenedMap` type, where all type arguments can be specified at top level, for instance `FlattenedMap[Matrix, double, _2, _3]` or `FlattenedMap[Matrix, double, _2, Dynamic]`. Note that dimensions must be prefixed with an underscore.
 
 Using full specifications of the Eigen types, the previous example would look like this:
 ```
@@ -76,22 +76,22 @@ def function_w_mat_arg(np.ndarray array):
     return _function_w_mat_arg(FlattenedMap[Matrix, double, Dynamic, Dynamic](array))
 ```
 
-FlattenedType takes four template parameters: arraytype, scalartype,
+`FlattenedType` takes four template parameters: arraytype, scalartype,
 rows and cols.  Eigen supports a few other template arguments for
 setting the storage layout and Map strides. Since cython does not
 support default template arguments for fused types, we have instead
 defined separate types for this purpose. These are called
-FlattenedMapWithOrder and FlattenedMapWithStride with five and seven
-arguments, respectively. For details on their use, see the section
+`FlattenedMapWithOrder` and `FlattenedMapWithStride` with five and eight
+template arguments, respectively. For details on their use, see the section
 about storage layout below.
 
 ## From Numpy to Eigen (insisting on a copy)
 
 Eigency will not complain if the C++ function you interface with does
-not take a Eigen Map object, but instead a regular Matrix or
+not take a Eigen Map object, but instead a regular Eigen Matrix or
 Array. However, in such cases, a copy will be made. Actually, the
 procedure is exactly the same as above. In the `.pyx` file, you still
-everything exactly the same way as for the Map case described above.
+define everything exactly the same way as for the Map case described above.
 
 For instance, given the following C++ function:
 ```c++
@@ -120,7 +120,7 @@ the underlying data.
 
 C++ functions returning a reference to an Eigen Matrix/Array can also
 be transferred to numpy arrays without copying their content.  Assume
-we have a class with a single getter function, returning an Eigen
+we have a class with a single getter function that returns an Eigen
 matrix member:
 
 ```c++
@@ -162,8 +162,8 @@ cdef class MyClass:
 ```
 
 This last line contains the actual conversion. Again, eigency has its
-own version of `ndarray` (note that it is not called np.ndarray), that
-will take care of the conversion for you.
+own version of `ndarray`, that will take care of the conversion for
+you.
 
 Due to limitations in Cython, Eigency cannot deal with full
 Matrix/Array template specifications as return types
@@ -177,10 +177,8 @@ you prefer):
 
 ## Eigen to Numpy (non-reference return values)
 
-Functions returning a Eigen object (not a reference), are specified
-in a similar way. 
-
-For instance, given the following C++ function:
+Functions returning an Eigen object (not a reference), are specified
+in a similar way. For instance, given the following C++ function:
 
 ```c++
 Eigen::Matrix3d function_w_mat_retval();
@@ -197,7 +195,7 @@ def function_w_mat_retval():
     return ndarray(_function_w_mat_retval())
 ```
 
-As mentioned above, you can always replace `Matrix3d` with
+As mentioned above, you can replace `Matrix3d` (or any other Eigen return type) with
 `PlainObjectBase`, which is especially relevant when working with
 Eigen object that do not have an associated convenience typedef.
 
@@ -244,7 +242,7 @@ cdef class MyClass:
         return ndarray(self.thisptr.get_const_matrix())
 ```
 
-, while this would force it to return a view
+while the following would force it to return a view
 
 ```python
 cdef class MyClass:
@@ -254,25 +252,24 @@ cdef class MyClass:
 ```
 
 
-## Storage layout - why arrays are sometimes transposed in the interface
+## Storage layout - why arrays are sometimes transposed
 
 The default storage layout used in numpy and Eigen differ. Numpy uses
 a row-major layout (C-style) per default while Eigen uses a
-column-major layout (Fortran style).  In Eigency, we prioritize to
+column-major layout (Fortran style) by default.  In Eigency, we prioritize to
 avoid copying of data whenever possible, which can have unexpected
 consequences in some cases: There is no problem when passing values
 from C++ to Python - we just adjust the storage layout of the returned
 numpy array to match that of Eigen. However, since the storage layout
 is encoded into the _type_ of the Eigen array (or the type of the
-Map), we cannot change the layout in the Python to C++ direction. In
-eigency, we have therefore opted to return the transposed array/matrix
+Map), we cannot automatically change the layout in the Python to C++ direction. In
+Eigency, we have therefore opted to return the transposed array/matrix
 in such cases. This provides the user with the flexibility to deal
 with the problem either in Python (use order="F" when constructing
 your numpy array), or on the C++ side: (1) explicitly define your
 argument to have the row-major storage layout, 2) manually set the Map
 stride, or 3) just call `.transpose()` on the received
-array/matrix). We have illustrated each of these scenarios in the
-tests directory.
+array/matrix). 
 
 As an example, consider the case of a C++ function that both receives
 and returns a Eigen Map type, thus acting as a filter:
@@ -283,7 +280,7 @@ Eigen::Map<Eigen::ArrayXXd> function_filter(Eigen::Map<Eigen::ArrayXXd> &mat) {
 }
 ```
 
-As above, the Cython code could be:
+The Cython code could be:
 
 ```
 cdef extern from "functions.h":
@@ -338,7 +335,9 @@ RowMajorArrayMap &function_filter2(RowMajorArrayMap &mat) {
 }
 ```
 
-In this case, the Cython definitions become (see above)
+To write the corresponding Cython definition, we need the expanded version of
+`FlattenedMap` called `FlattenedMapWithOrder`, which allows us to specify
+the storage order:
 
 ```
 cdef extern from "functions.h":
@@ -358,7 +357,9 @@ typedef Eigen::Map<Eigen::ArrayXXd, Eigen::Unaligned, Eigen::Stride<1, Eigen::Dy
 CustomStrideMap &function_filter3(CustomStrideMap &);
 ```
 
-The corresponding cython code could now look this this:
+In this case, in Cython, we need to use the even more extended
+`FlattenedMap` type called `FlattenedMapWithStride`, taking eight
+arguments:
 
 ```
 cdef extern from "functions.h":
