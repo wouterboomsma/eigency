@@ -27,10 +27,9 @@ RowMajorArrayMap &function_filter2(RowMajorArrayMap &);
 typedef Eigen::Map<Eigen::ArrayXXd, Eigen::Unaligned, Eigen::Stride<1, Eigen::Dynamic> > CustomStrideMap;
 CustomStrideMap &function_filter3(CustomStrideMap &);
 
-
-class MyClass {
+class FixedMatrixClass {
 public:
-    MyClass():
+    FixedMatrixClass():
         matrix(Eigen::Matrix3d::Constant(4.)) {
     }
     Eigen::Matrix3d &get_matrix() {
@@ -41,6 +40,38 @@ public:
     }
 private:
     Eigen::Matrix3d matrix;
+};
+
+class DynamicArrayClass {
+public:
+    DynamicArrayClass(const Eigen::Map<Eigen::ArrayXXd> &array):
+        array(array) {
+    }
+    Eigen::Map<Eigen::ArrayXXd> get_array() {
+        return this->array;
+    }
+
+    Eigen::ArrayXXd get_array_copy() {
+        return this->array;
+    }
+private:
+    Eigen::Map<Eigen::ArrayXXd> array;
+};
+
+class DynamicRowMajorArrayClass {
+public:
+    DynamicRowMajorArrayClass(const Eigen::Map<Eigen::Array<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> > &array):
+        array(array) {
+    }
+    Eigen::Map<Eigen::Array<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> > get_array() {
+        return this->array;
+    }
+
+    Eigen::Array<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> get_array_copy() {
+        return this->array;
+    }
+private:
+    Eigen::Map<Eigen::Array<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> > array;
 };
 
 #endif

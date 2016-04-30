@@ -34,10 +34,20 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
      cdef PlainObjectBase _function_filter3 "function_filter3" (FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic])
 
 
-     cdef cppclass _MyClass "MyClass":
-         _MyClass "MyClass"() except +
+     cdef cppclass _FixedMatrixClass "FixedMatrixClass":
+         _FixedMatrixClass () except +
          Matrix3d &get_matrix()
          const Matrix3d &get_const_matrix()
+
+     cdef cppclass _DynamicArrayClass "DynamicArrayClass":
+         _DynamicArrayClass (Map[ArrayXXd] &) except +
+         ArrayXXd &get_array()
+         ArrayXXd get_array_copy()
+
+     cdef cppclass _DynamicRowMajorArrayClass "DynamicRowMajorArrayClass":
+         _DynamicRowMajorArrayClass (FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor] &) except +
+         PlainObjectBase &get_array()
+         PlainObjectBase get_array_copy()
 
 # Function with vector argument. 
 def function_w_vec_arg(np.ndarray array):
@@ -86,10 +96,10 @@ def function_filter3(np.ndarray array):
     return ndarray(_function_filter3(FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic](array)))
 
 
-cdef class MyClass:
-    cdef _MyClass *thisptr;
+cdef class FixedMatrixClass:
+    cdef _FixedMatrixClass *thisptr;
     def __cinit__(self):
-        self.thisptr = new _MyClass()
+        self.thisptr = new _FixedMatrixClass()
     def __dealloc__(self):
         del self.thisptr
     def get_matrix(self):
@@ -98,4 +108,23 @@ cdef class MyClass:
         return ndarray(self.thisptr.get_const_matrix())
     def get_const_matrix_force_view(self):
         return ndarray_view(self.thisptr.get_const_matrix())
-        
+
+cdef class DynamicArrayClass:
+    cdef _DynamicArrayClass *thisptr;
+    def __cinit__(self, np.ndarray array):
+        self.thisptr = new _DynamicArrayClass(Map[ArrayXXd](array))
+    def __dealloc__(self):
+        del self.thisptr
+    def get_array(self):
+        return ndarray(self.thisptr.get_array())
+
+cdef class DynamicRowMajorArrayClass:
+    cdef _DynamicRowMajorArrayClass *thisptr;
+    def __cinit__(self, np.ndarray array):
+        self.thisptr = new _DynamicRowMajorArrayClass(FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor](array))
+    def __dealloc__(self):
+        del self.thisptr
+    def get_array(self):
+        return ndarray(self.thisptr.get_array())
+    def get_array_copy(self):
+        return ndarray(self.thisptr.get_array_copy())

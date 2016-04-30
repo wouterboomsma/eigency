@@ -51,7 +51,7 @@ class TestEigency(unittest.TestCase):
         self.assertAlmostEqual(retval[0,0], 4.)        
 
     def test_mat_ref_retval(self):
-        my_object = eigency_tests.MyClass()
+        my_object = eigency_tests.FixedMatrixClass()
         retval = my_object.get_matrix()
         # Shared memory test: Set first entry to zero and get matrix again to check that this change is maintained
         retval[0,0] = 0.
@@ -59,7 +59,7 @@ class TestEigency(unittest.TestCase):
         self.assertAlmostEqual(retval[0,0], 0.)        
         
     def test_mat_constref_retval(self):
-        my_object = eigency_tests.MyClass()
+        my_object = eigency_tests.FixedMatrixClass()
         retval = my_object.get_const_matrix()
         # No shared memory test: Set first entry to zero and get matrix again to check that this change is maintained
         retval[0,0] = 0.
@@ -67,7 +67,7 @@ class TestEigency(unittest.TestCase):
         self.assertAlmostEqual(retval[0,0], 4.)        
 
     def test_mat_constref_retval_force_view(self):
-        my_object = eigency_tests.MyClass()
+        my_object = eigency_tests.FixedMatrixClass()
         retval = my_object.get_const_matrix_force_view()
         # Shared memory test: Set first entry to zero and get matrix again to check that this change is maintained
         retval[0,0] = 0.
@@ -99,6 +99,23 @@ class TestEigency(unittest.TestCase):
         x = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]], order='F')
         y = eigency_tests.function_filter1(x)
         assert_array_equal(x, y)
+
+    def test_mat_ref_retval_array(self):
+        x = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]], order='F')
+        my_object = eigency_tests.DynamicArrayClass(x)
+        y = my_object.get_array()
+        # Shared memory test: Set first entry to zero and get matrix again to check that this change is maintained
+        y[0,0] = 0.
+        y = my_object.get_array()
+        self.assertAlmostEqual(y[0,0], 0.)        
+        assert_array_equal(x, y)
+
+    def test_mat_ref_retval_array_row_major(self):
+        x = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]])
+        my_object = eigency_tests.DynamicRowMajorArrayClass(x)
+        y = my_object.get_array_copy()
+        assert_array_equal(x, y)
+        
         
         
 if __name__ == '__main__':
