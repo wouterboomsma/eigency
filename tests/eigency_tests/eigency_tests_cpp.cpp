@@ -1,8 +1,14 @@
 #include "eigency_tests_cpp.h"
 #include <iostream>
 
-void function_w_vec_arg(Eigen::Map<Eigen::VectorXd> &vec) {
+long function_w_vec_arg(Eigen::Map<Eigen::VectorXd> &vec) {
     vec[0] = 0.;
+    return vec.size();
+}
+
+long function_w_1darr_arg(Eigen::Map<Eigen::ArrayXi> &arr) {
+    arr[0] = 0.;
+    return arr.size();
 }
 
 void function_w_vec_arg_no_map1(Eigen::VectorXd vec) {

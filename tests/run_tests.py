@@ -7,9 +7,17 @@ class TestEigency(unittest.TestCase):
 
     def test_function_w_vec_arg(self):
         x = np.array([1., 2., 3., 4.])
-        eigency_tests.function_w_vec_arg(x)
+        cpp_size = eigency_tests.function_w_vec_arg(x)
         # Shared memory test: Verify that first entry was set to 0 by C++ code.
         self.assertAlmostEqual(x[0], 0.)
+        self.assertEqual(cpp_size, 4)
+
+    def test_function_w_1darr_arg(self):
+        x = np.array([1, 2, 3, 4], dtype=np.int32)
+        cpp_size = eigency_tests.function_w_1darr_arg(x)
+        # Shared memory test: Verify that first entry was set to 0 by C++ code.
+        self.assertAlmostEqual(x[0], 0)
+        self.assertEqual(cpp_size, 4)
 
     def test_function_w_vec_arg_no_map1(self):
         x = np.array([1., 2., 3., 4.])

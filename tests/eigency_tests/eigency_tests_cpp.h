@@ -3,7 +3,9 @@
 
 #include "Eigen/Dense"
 
-void function_w_vec_arg(Eigen::Map<Eigen::VectorXd> &vec);
+long function_w_vec_arg(Eigen::Map<Eigen::VectorXd> &vec);
+
+long function_w_1darr_arg(Eigen::Map<Eigen::ArrayXi> &arr);
 
 void function_w_vec_arg_no_map1(Eigen::VectorXd vec);
 

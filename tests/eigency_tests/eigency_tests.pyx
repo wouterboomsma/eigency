@@ -11,7 +11,9 @@ from eigency.core cimport *
  
 cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
-     cdef void _function_w_vec_arg "function_w_vec_arg"(Map[VectorXd] &)
+     cdef long _function_w_vec_arg "function_w_vec_arg"(Map[VectorXd] &)
+
+     cdef long _function_w_1darr_arg "function_w_1darr_arg"(Map[ArrayXi] &)
 
      cdef void _function_w_vec_arg_no_map1 "function_w_vec_arg_no_map1"(Map[VectorXd])
 
@@ -52,6 +54,10 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 # Function with vector argument. 
 def function_w_vec_arg(np.ndarray array):
     return _function_w_vec_arg(Map[VectorXd](array))
+
+# Function with vector argument. 
+def function_w_1darr_arg(np.ndarray[np.int32_t] array):
+    return _function_w_1darr_arg(Map[ArrayXi](array))
 
 # Function with vector argument - no map - no ref. 
 def function_w_vec_arg_no_map1(np.ndarray array):

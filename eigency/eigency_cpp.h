@@ -171,6 +171,36 @@ inline PyArrayObject *ndarray_copy(const Eigen::Map<Derived, MapOptions, Stride>
 }
 
 
+template <typename MatrixType,
+          int _MapOptions = Eigen::Unaligned,
+          typename _StrideType=Eigen::Stride<0,0> >
+class MapBase: public Eigen::Map<MatrixType, _MapOptions, _StrideType> {
+public:
+    typedef Eigen::Map<MatrixType, _MapOptions, _StrideType> Base;
+    typedef typename Base::Scalar Scalar;
+
+    MapBase(Scalar* data,
+            long rows,
+            long cols,
+            _StrideType stride=_StrideType())
+        : Base(data,
+               // If both dimensions are dynamic or dimensions match, accept dimensions as they are
+               ((Base::RowsAtCompileTime==Eigen::Dynamic && Base::ColsAtCompileTime==Eigen::Dynamic) ||
+                (Base::RowsAtCompileTime==rows && Base::ColsAtCompileTime==cols))
+               ? rows
+               // otherwise, test if swapping them makes them fit
+               : ((Base::RowsAtCompileTime==cols || Base::ColsAtCompileTime==rows)
+                  ? cols
+                  : rows),
+               ((Base::RowsAtCompileTime==Eigen::Dynamic && Base::ColsAtCompileTime==Eigen::Dynamic) ||
+                (Base::RowsAtCompileTime==rows && Base::ColsAtCompileTime==cols))
+               ? cols
+               : ((Base::RowsAtCompileTime==cols || Base::ColsAtCompileTime==rows)
+                  ? rows
+                  : cols),
+               stride
+            )  {}
+};
 
 
 template <template<class,int,int,int,int,int> class DenseBase,
@@ -195,9 +225,9 @@ template <template<class,int,int,int,int,int> class DenseBase,
           int _StrideOuter=0, int _StrideInner=0,
           int _MaxRows = _Rows,
           int _MaxCols = _Cols>
-class FlattenedMap: public Eigen::Map<DenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> >  {
+class FlattenedMap: public MapBase<DenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> >  {
 public:
-    typedef Eigen::Map<DenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> > Base;
+    typedef MapBase<DenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> > Base;
 
     FlattenedMap()
         : Base(nullptr, 0, 0) {}
@@ -243,35 +273,34 @@ public:
 
 
 template <typename MatrixType>
-class Map: public Eigen::Map<MatrixType> {
+class Map: public MapBase<MatrixType> {
 public:
-    typedef Eigen::Map<MatrixType> Base;
-    typedef typename Base::Scalar Scalar;
+    typedef MapBase<MatrixType> Base;
+    typedef typename MatrixType::Scalar Scalar;
 
     Map()
         : Base(nullptr, 0, 0) {
     }
     
     Map(Scalar *data, long rows, long cols)
-        : Base(data,
-               ((Base::RowsAtCompileTime!=Eigen::Dynamic && Base::RowsAtCompileTime==cols) &&
-                (Base::ColsAtCompileTime!=Eigen::Dynamic && Base::ColsAtCompileTime==rows))?cols:rows,
-               ((Base::RowsAtCompileTime!=Eigen::Dynamic && Base::RowsAtCompileTime==cols) &&
-                (Base::ColsAtCompileTime!=Eigen::Dynamic && Base::ColsAtCompileTime==rows))?rows:cols) {
-    }
+        : Base(data, rows, cols) {}
 
     Map(PyArrayObject *object)
-        : Base((Scalar *)object->data,
-               // ROW: If 1D numpy array, set to 1 (column vector)
-               (object->nd == 1) ? 1
-               // ROW: otherwise, if array is in row-major order, transpose (see README)
-               : (PyArray_IS_C_CONTIGUOUS(object) ? object->dimensions[1] : object->dimensions[0]),
-               // COLUMN: If 1D numpy array, set to length (column vector)
-               (object->nd == 1) ? object->dimensions[0]
-               // COLUMN: otherwise, if array is in row-major order: transpose (see README)
-               : (PyArray_IS_C_CONTIGUOUS(object) ? object->dimensions[0] : object->dimensions[1])) {
+        : Base((PyObject*)object == Py_None? nullptr: (Scalar *)object->data,
+               // ROW: If array is in row-major order, transpose (see README)
+               (PyArray_IS_C_CONTIGUOUS(object)
+                ? ((object->nd == 1)
+                   ? 1  // ROW: If 1D row-major numpy array, set to 1 (row vector)
+                   : object->dimensions[1])
+                : object->dimensions[0]),
+               // COLUMN: If array is in row-major order: transpose (see README)
+               (PyArray_IS_C_CONTIGUOUS(object)
+                ? object->dimensions[0]
+                : ((object->nd == 1)
+                   ? 1  // COLUMN: If 1D col-major numpy array, set to length (column vector)
+                   : object->dimensions[1]))) {
         if (!PyArray_ISONESEGMENT(object))
-            throw std::invalid_argument("Numpy array must be a in one contiguous segment to be able to be transferred to a Eigen Map.");        
+            throw std::invalid_argument("Numpy array must be a in one contiguous segment to be able to be transferred to a Eigen Map.");
     }
     
     Map &operator=(const Map &other) {
