@@ -245,7 +245,7 @@ public:
                Eigen::Stride<_StrideOuter, _StrideInner>(_StrideOuter != Eigen::Dynamic ? _StrideOuter : (((PyArrayObject*)object)->nd == 2) ? ((PyArrayObject*)object)->dimensions[0] : 1,
                                                          _StrideInner != Eigen::Dynamic ? _StrideInner : (((PyArrayObject*)object)->nd == 2) ? ((PyArrayObject*)object)->dimensions[1] : ((PyArrayObject*)object)->dimensions[0])) {
 
-        if (!PyArray_ISONESEGMENT(object))
+        if (((PyObject*)object != Py_None) && !PyArray_ISONESEGMENT(object))
             throw std::invalid_argument("Numpy array must be a in one contiguous segment to be able to be transferred to a Eigen Map.");
     }
     FlattenedMap &operator=(const FlattenedMap &other) {
@@ -299,7 +299,8 @@ public:
                 : ((object->nd == 1)
                    ? 1  // COLUMN: If 1D col-major numpy array, set to length (column vector)
                    : object->dimensions[1]))) {
-        if (!PyArray_ISONESEGMENT(object))
+
+        if (((PyObject*)object != Py_None) && !PyArray_ISONESEGMENT(object))
             throw std::invalid_argument("Numpy array must be a in one contiguous segment to be able to be transferred to a Eigen Map.");
     }
     
