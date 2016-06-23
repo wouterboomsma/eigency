@@ -230,7 +230,7 @@ public:
     typedef MapBase<DenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> > Base;
 
     FlattenedMap()
-        : Base(nullptr, 0, 0) {}
+        : Base(NULL, 0, 0) {}
     
     FlattenedMap(Scalar *data, long rows, long cols, long outer_stride=0, long inner_stride=0)
         : Base(data, rows, cols,
@@ -279,14 +279,14 @@ public:
     typedef typename MatrixType::Scalar Scalar;
 
     Map()
-        : Base(nullptr, 0, 0) {
+        : Base(NULL, 0, 0) {
     }
     
     Map(Scalar *data, long rows, long cols)
         : Base(data, rows, cols) {}
 
     Map(PyArrayObject *object)
-        : Base((PyObject*)object == Py_None? nullptr: (Scalar *)object->data,
+        : Base((PyObject*)object == Py_None? NULL: (Scalar *)object->data,
                // ROW: If array is in row-major order, transpose (see README)
                (PyArray_IS_C_CONTIGUOUS(object)
                 ? ((object->nd == 1)
