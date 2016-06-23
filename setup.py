@@ -41,7 +41,7 @@ dist = setup(
     packages = [__package_name__]
 )
 
-if dist.command_obj.has_key('install'):
+if 'install' in dist.command_obj:
     destination_path = dist.command_obj['install'].install_lib
     package_path = os.path.join(destination_path, __package_name__)
 
