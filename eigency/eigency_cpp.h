@@ -1,6 +1,7 @@
 #include <Eigen/Dense>
 
 #include <iostream>
+#include <stdexcept>
 #include "conversions_api.h"
 
 #ifndef EIGENCY_CPP
