@@ -120,8 +120,17 @@ PyArrayObject *_ndarray_copy<char>(const char *data, long rows, long cols, bool 
 template <typename Derived>
 inline PyArrayObject *ndarray(Eigen::PlainObjectBase<Derived> &m) {
     import_eigency__conversions();
+    return _ndarray_view(m.data(), m.rows(), m.cols(), m.IsRowMajor);
+}
+// If C++11 is available, check if m is an r-value reference, in
+// which case a copy should always be made
+#if __cplusplus >= 201103L
+template <typename Derived>
+inline PyArrayObject *ndarray(Eigen::PlainObjectBase<Derived> &&m) {
+    import_eigency__conversions();
     return _ndarray_copy(m.data(), m.rows(), m.cols(), m.IsRowMajor);
 }
+#endif
 template <typename Derived>
 inline PyArrayObject *ndarray(const Eigen::PlainObjectBase<Derived> &m) {
     import_eigency__conversions();

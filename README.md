@@ -175,31 +175,6 @@ you prefer):
          PlainObjectBase &get_matrix()
 ```
 
-## Eigen to Numpy (non-reference return values)
-
-Functions returning an Eigen object (not a reference), are specified
-in a similar way. For instance, given the following C++ function:
-
-```c++
-Eigen::Matrix3d function_w_mat_retval();
-```
-
-The Cython code could be written as:
-
-```
-cdef extern from "functions.h":
-     cdef Matrix3d _function_w_mat_retval "function_w_mat_retval" ()
-
-# This will be exposed to Python
-def function_w_mat_retval():
-    return ndarray(_function_w_mat_retval())
-```
-
-As mentioned above, you can replace `Matrix3d` (or any other Eigen return type) with
-`PlainObjectBase`, which is especially relevant when working with
-Eigen object that do not have an associated convenience typedef.
-
-
 ## Overriding default behavior
 
 The `ndarray` conversion type specifier will attempt do guess whether you want a copy
@@ -250,6 +225,63 @@ cdef class MyClass:
     def get_const_matrix(self):
         return ndarray_view(self.thisptr.get_const_matrix())
 ```
+
+## Eigen to Numpy (non-reference return values)
+
+Functions returning an Eigen object (not a reference), are specified
+in a similar way. For instance, given the following C++ function:
+
+```c++
+Eigen::Matrix3d function_w_mat_retval();
+```
+
+The Cython code could be written as:
+
+```
+cdef extern from "functions.h":
+     cdef Matrix3d _function_w_mat_retval "function_w_mat_retval" ()
+
+# This will be exposed to Python
+def function_w_mat_retval():
+    return ndarray_copy(_function_w_mat_retval())
+```
+
+As mentioned above, you can replace `Matrix3d` (or any other Eigen return type) with
+`PlainObjectBase`, which is especially relevant when working with
+Eigen object that do not have an associated convenience typedef.
+
+Note that we use `ndarray_copy` instead of `ndarray` to explicitly
+state that a copy should be made. In c++11 compliant compilers, it
+will detect the rvalue reference and automatically make a copy even if
+you just use `ndarray` (see next section), but to ensure that it works
+also with older compilers it is recommended to always use
+`ndarray_copy` when returning newly constructed eigen values.
+
+
+## Corrupt data when returning non-map types
+The tendency of Eigency to avoid copies whenever possible can lead
+to corrupted data when returning non-map Eigen arrays. For instance,
+in the `function_w_mat_retval` from the previous section, a temporary
+value will be returned from C++, and we have to take care to make
+a copy of this data instead of letting the resulting numpy array
+refer directly to this memory. In C++11, this situation can be
+detected directly using rvalue references, and it will therefore
+automatically make a copy: 
+```
+def function_w_mat_retval():
+    # This works in C++11, because it detects the rvalue reference
+    return ndarray(_function_w_mat_retval()) 
+```
+
+However, to make sure it works with older compilers,
+it is recommended to use the `ndarray_copy` conversion:
+
+```
+def function_w_mat_retval():
+    # Explicit request for copy - this always works
+    return ndarray_copy(_function_w_mat_retval()) 
+```
+
 
 
 ## Storage layout - why arrays are sometimes transposed
@@ -372,3 +404,5 @@ def function_filter3(np.ndarray array):
 
 In all three cases, the returned array will now be of the same shape
 as the original.
+
+

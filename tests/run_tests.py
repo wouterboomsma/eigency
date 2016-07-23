@@ -125,6 +125,5 @@ class TestEigency(unittest.TestCase):
         assert_array_equal(x, y)
         
         
-        
 if __name__ == '__main__':
     unittest.main(buffer=False)
