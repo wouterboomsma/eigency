@@ -21,6 +21,8 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
      cdef void _function_w_mat_arg "function_w_mat_arg"(Map[MatrixXd] &)
 
+     cdef void _function_w_complex_mat_arg "function_w_complex_mat_arg"(Map[MatrixXcd] &)
+
      cdef void _function_w_fullspec_arg "function_w_fullspec_arg" (FlattenedMap[Array, double, Dynamic, _1] &)
 
      cdef VectorXd _function_w_vec_retval "function_w_vec_retval" ()
@@ -70,6 +72,10 @@ def function_w_vec_arg_no_map2(np.ndarray array):
 # Function with matrix argument. 
 def function_w_mat_arg(np.ndarray array):
     return _function_w_mat_arg(Map[MatrixXd](array))
+
+# Function with complex matrix argument. 
+def function_w_complex_mat_arg(np.ndarray array):
+    return _function_w_complex_mat_arg(Map[MatrixXcd](array))
 
 # Function using a full Map specification, rather than the convenience typedefs
 # Note that since cython does not support nested fused types, the Map has been

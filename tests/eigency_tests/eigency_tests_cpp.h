@@ -13,6 +13,8 @@ void function_w_vec_arg_no_map2(const Eigen::VectorXd &vec);
 
 void function_w_mat_arg(Eigen::Map<Eigen::MatrixXd> &mat);
 
+void function_w_complex_mat_arg(Eigen::Map<Eigen::MatrixXcd> &mat);
+
 void function_w_fullspec_arg(Eigen::Map<Eigen::Array<double, Eigen::Dynamic, 1> > &vec);
 
 Eigen::VectorXd function_w_vec_retval();

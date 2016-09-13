@@ -25,6 +25,10 @@ void function_w_mat_arg(Eigen::Map<Eigen::MatrixXd> &mat) {
     mat(0,0) = 0.;
 }
 
+void function_w_complex_mat_arg(Eigen::Map<Eigen::MatrixXcd> &mat) {
+    mat(0,0) = 0.+0.j;
+}
+
 void function_w_fullspec_arg(Eigen::Map<Eigen::Array<double, Eigen::Dynamic, 1> > &vec) {
     vec[0] = 0.;
 }

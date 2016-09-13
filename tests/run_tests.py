@@ -37,6 +37,12 @@ class TestEigency(unittest.TestCase):
         # Shared memory test: Verify that first entry was set to 0 by C++ code.
         self.assertAlmostEqual(x[0], 0.)        
 
+    def test_function_w_complex_mat_arg(self):
+        x = np.array([1.+1.j, 2.+1.j, 3.+1.j, 4.+1.j])
+        eigency_tests.function_w_complex_mat_arg(x.reshape([2,2]))
+        # Shared memory test: Verify that first entry was set to 0.+0.j by C++ code.
+        self.assertAlmostEqual(x[0], 0.+0.j)        
+
     def test_funcion_w_fullspec_arg(self):
         x = np.array([1., 2., 3., 4.])
         eigency_tests.function_w_fullspec_arg(x)

@@ -30,3 +30,13 @@ cdef api np.ndarray[char, ndim=2] ndarray_char_F(char *data, long rows, long col
 cdef api np.ndarray[char, ndim=2] ndarray_copy_char_C(const char *data, long rows, long cols, long outer_stride, long inner_stride)
 cdef api np.ndarray[char, ndim=2] ndarray_copy_char_F(const char *data, long rows, long cols, long outer_stride, long inner_stride)
 
+cdef api np.ndarray[np.complex128_t, ndim=2] ndarray_complex_double_C(np.complex128_t *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[np.complex128_t, ndim=2] ndarray_complex_double_F(np.complex128_t *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[np.complex128_t, ndim=2] ndarray_copy_complex_double_C(const np.complex128_t *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[np.complex128_t, ndim=2] ndarray_copy_complex_double_F(const np.complex128_t *data, long rows, long cols, long outer_stride, long inner_stride)
+
+cdef api np.ndarray[np.complex64_t, ndim=2] ndarray_complex_float_C(np.complex64_t *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[np.complex64_t, ndim=2] ndarray_complex_float_F(np.complex64_t *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[np.complex64_t, ndim=2] ndarray_copy_complex_float_C(const np.complex64_t *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[np.complex64_t, ndim=2] ndarray_copy_complex_float_F(const np.complex64_t *data, long rows, long cols, long outer_stride, long inner_stride)
+

@@ -2,6 +2,11 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <complex>
+
+typedef ::std::complex< double > __pyx_t_double_complex;
+typedef ::std::complex< float > __pyx_t_float_complex;
+
 #include "conversions_api.h"
 
 #ifndef EIGENCY_CPP
@@ -116,6 +121,37 @@ inline PyArrayObject *_ndarray_copy<char>(const char *data, long rows, long cols
     else
         return ndarray_copy_char_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
 }
+
+template<>
+inline PyArrayObject *_ndarray_view<std::complex<double> >(std::complex<double> *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_complex_double_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_complex_double_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+template<>
+inline PyArrayObject *_ndarray_copy<std::complex<double> >(const std::complex<double> *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_copy_complex_double_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_copy_complex_double_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+
+template<>
+inline PyArrayObject *_ndarray_view<std::complex<float> >(std::complex<float> *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_complex_float_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_complex_float_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+template<>
+inline PyArrayObject *_ndarray_copy<std::complex<float> >(const std::complex<float> *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_copy_complex_float_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_copy_complex_float_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+
 
 template <typename Derived>
 inline PyArrayObject *ndarray(Eigen::PlainObjectBase<Derived> &m) {
