@@ -30,13 +30,13 @@ except(IOError, ImportError):
 
 dist = setup(
     name = __package_name__,
-    version = "1.66",
+    version = "1.67",
     description = "Cython interface between the numpy arrays and the Matrix/Array classes of the Eigen C++ library",
     long_description=long_description,
     author = "Wouter Boomsma",
     author_email = "wb@bio.ku.dk",
     url = "https://github.com/wouterboomsma/eigency",
-    download_url = "https://github.com/wouterboomsma/eigency/tarball/1.66",
+    download_url = "https://github.com/wouterboomsma/eigency/tarball/1.67",
     ext_modules = cythonize(extensions),
     packages = [__package_name__]
 )

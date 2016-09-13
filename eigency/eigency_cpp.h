@@ -10,9 +10,9 @@
 namespace eigency {
 
 template<typename Scalar>
-PyArrayObject *_ndarray_view(Scalar *, long rows, long cols, bool is_row_major, long outer_stride=0, long inner_stride=0);
+inline PyArrayObject *_ndarray_view(Scalar *, long rows, long cols, bool is_row_major, long outer_stride=0, long inner_stride=0);
 template<typename Scalar>
-PyArrayObject *_ndarray_copy(const Scalar *, long rows, long cols, bool is_row_major, long outer_stride=0, long inner_stride=0);
+inline PyArrayObject *_ndarray_copy(const Scalar *, long rows, long cols, bool is_row_major, long outer_stride=0, long inner_stride=0);
 
 // Strides:
 // Eigen and numpy differ in their way of dealing with strides. Eigen has the concept of outer and
@@ -23,7 +23,7 @@ PyArrayObject *_ndarray_copy(const Scalar *, long rows, long cols, bool is_row_m
 // Consequently, a switch in numpy storage order from row-major to column-major involves a switch
 // in strides, while it does not affect the stride in Eigen.
 template<>
-PyArrayObject *_ndarray_view<double>(double *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_view<double>(double *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major) {
         // Eigen row-major mode: row_stride=outer_stride, and col_stride=inner_stride
         // If no stride is given, the row_stride is set to the number of columns.
@@ -35,7 +35,7 @@ PyArrayObject *_ndarray_view<double>(double *data, long rows, long cols, bool is
     }
 }
 template<>
-PyArrayObject *_ndarray_copy<double>(const double *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_copy<double>(const double *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_copy_double_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
@@ -43,14 +43,14 @@ PyArrayObject *_ndarray_copy<double>(const double *data, long rows, long cols, b
 }
 
 template<>
-PyArrayObject *_ndarray_view<float>(float *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_view<float>(float *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_float_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
         return ndarray_float_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
 }
 template<>
-PyArrayObject *_ndarray_copy<float>(const float *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_copy<float>(const float *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_copy_float_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
@@ -58,14 +58,14 @@ PyArrayObject *_ndarray_copy<float>(const float *data, long rows, long cols, boo
 }
 
 template<>
-PyArrayObject *_ndarray_view<long>(long *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_view<long>(long *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_long_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
         return ndarray_long_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
 }
 template<>
-PyArrayObject *_ndarray_copy<long>(const long *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_copy<long>(const long *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_copy_long_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
@@ -73,14 +73,14 @@ PyArrayObject *_ndarray_copy<long>(const long *data, long rows, long cols, bool 
 }
 
 template<>
-PyArrayObject *_ndarray_view<int>(int *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_view<int>(int *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_int_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
         return ndarray_int_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
 }
 template<>
-PyArrayObject *_ndarray_copy<int>(const int *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_copy<int>(const int *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_copy_int_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
@@ -88,14 +88,14 @@ PyArrayObject *_ndarray_copy<int>(const int *data, long rows, long cols, bool is
 }
 
 template<>
-PyArrayObject *_ndarray_view<short>(short *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_view<short>(short *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_short_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
         return ndarray_short_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
 }
 template<>
-PyArrayObject *_ndarray_copy<short>(const short *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_copy<short>(const short *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_copy_short_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
@@ -103,14 +103,14 @@ PyArrayObject *_ndarray_copy<short>(const short *data, long rows, long cols, boo
 }
 
 template<>
-PyArrayObject *_ndarray_view<char>(char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_view<char>(char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_char_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
         return ndarray_char_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
 }
 template<>
-PyArrayObject *_ndarray_copy<char>(const char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_copy<char>(const char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_copy_char_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
