@@ -28,23 +28,23 @@ cdef np.ndarray[double, ndim=2] ndarray_copy_double_F(const double *data, long r
 @cython.boundscheck(False)
 cdef np.ndarray[float, ndim=2] ndarray_float_C(float *data, long rows, long cols, long row_stride, long col_stride):
     cdef float[:,:] mem_view = <float[:rows,:cols]>data
-    cdef int itemsize = np.dtype('float').itemsize
+    cdef int itemsize = np.dtype('float32').itemsize
     return as_strided(np.asarray(mem_view, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
 @cython.boundscheck(False)
 cdef np.ndarray[float, ndim=2] ndarray_float_F(float *data, long rows, long cols, long row_stride, long col_stride):
     cdef float[::1,:] mem_view = <float[:rows:1,:cols]>data
-    cdef int itemsize = np.dtype('float').itemsize
+    cdef int itemsize = np.dtype('float32').itemsize
     return as_strided(np.asarray(mem_view, order="F"), strides=[row_stride*itemsize, col_stride*itemsize])
 
 @cython.boundscheck(False)
 cdef np.ndarray[float, ndim=2] ndarray_copy_float_C(const float *data, long rows, long cols, long row_stride, long col_stride):
     cdef float[:,:] mem_view = <float[:rows,:cols]>data
-    cdef int itemsize = np.dtype('float').itemsize
+    cdef int itemsize = np.dtype('float32').itemsize
     return np.copy(as_strided(np.asarray(mem_view, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
 @cython.boundscheck(False)
 cdef np.ndarray[float, ndim=2] ndarray_copy_float_F(const float *data, long rows, long cols, long row_stride, long col_stride):
     cdef float[::1,:] mem_view = <float[:rows:1,:cols]>data
-    cdef int itemsize = np.dtype('float').itemsize
+    cdef int itemsize = np.dtype('float32').itemsize
     return np.copy(as_strided(np.asarray(mem_view, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
 
