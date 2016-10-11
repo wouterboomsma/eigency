@@ -37,6 +37,14 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
      cdef PlainObjectBase _function_filter3 "function_filter3" (FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic])
 
+     cdef PlainObjectBase _function_type_double "function_type_double" (Map[ArrayXXd] &)
+     cdef PlainObjectBase _function_type_float "function_type_float" (Map[ArrayXXf] &)
+     cdef PlainObjectBase _function_type_long "function_type_long" (FlattenedMap[Array, long, Dynamic, Dynamic] &)
+     cdef PlainObjectBase _function_type_int "function_type_int" (Map[ArrayXXi] &)
+     cdef PlainObjectBase _function_type_short "function_type_short" (FlattenedMap[Array, short, Dynamic, Dynamic] &)
+     cdef PlainObjectBase _function_type_char "function_type_char" (FlattenedMap[Array, char, Dynamic, Dynamic] &)
+     cdef PlainObjectBase _function_type_complex_double "function_type_complex_double" (Map[ArrayXXcd] &)
+     cdef PlainObjectBase _function_type_complex_float "function_type_complex_float" (Map[ArrayXXcf] &)
 
      cdef cppclass _FixedMatrixClass "FixedMatrixClass":
          _FixedMatrixClass () except +
@@ -106,6 +114,38 @@ def function_filter2(np.ndarray array):
 # Function both taking array as argument and returning it - RowMajor stride
 def function_filter3(np.ndarray array):
     return ndarray(_function_filter3(FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic](array)))
+
+# Functions with different matrix types: float64
+def function_type_float64(np.ndarray array):
+    return ndarray(_function_type_double(Map[ArrayXXd](array)))
+
+# Functions with different matrix types: float32
+def function_type_float32(np.ndarray array):
+    return ndarray(_function_type_float(Map[ArrayXXf](array)))
+
+# Functions with different matrix types: long
+def function_type_long(np.ndarray array):
+    return ndarray(_function_type_long(FlattenedMap[Array, long, Dynamic, Dynamic](array)))
+
+# Functions with different matrix types: int
+def function_type_intc(np.ndarray array):
+    return ndarray(_function_type_int(Map[ArrayXXi](array)))
+
+# Functions with different matrix types: short
+def function_type_short(np.ndarray array):
+    return ndarray(_function_type_short(FlattenedMap[Array, short, Dynamic, Dynamic](array)))
+
+# Functions with different matrix types: char
+def function_type_uint8(np.ndarray array):
+    return ndarray(_function_type_char(FlattenedMap[Array, char, Dynamic, Dynamic](array)))
+
+# Functions with different matrix types: complex128
+def function_type_complex128(np.ndarray array):
+    return ndarray(_function_type_complex_double(Map[ArrayXXcd](array)))
+
+# Functions with different matrix types: complex64
+def function_type_complex64(np.ndarray array):
+    return ndarray(_function_type_complex_float(Map[ArrayXXcf](array)))
 
 
 cdef class FixedMatrixClass:

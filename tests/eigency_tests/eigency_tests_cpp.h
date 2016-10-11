@@ -31,6 +31,16 @@ RowMajorArrayMap &function_filter2(RowMajorArrayMap &);
 typedef Eigen::Map<Eigen::ArrayXXd, Eigen::Unaligned, Eigen::Stride<1, Eigen::Dynamic> > CustomStrideMap;
 CustomStrideMap &function_filter3(CustomStrideMap &);
 
+Eigen::ArrayXXd function_type_double(Eigen::Map<Eigen::ArrayXXd> &array);
+Eigen::ArrayXXf function_type_float(Eigen::Map<Eigen::ArrayXXf> &array);
+Eigen::Array<long, Eigen::Dynamic, Eigen::Dynamic> function_type_long(Eigen::Map<Eigen::Array<long, Eigen::Dynamic, Eigen::Dynamic> > &mat);
+Eigen::ArrayXXi function_type_int(Eigen::Map<Eigen::ArrayXXi> &array);
+Eigen::Array<short, Eigen::Dynamic, Eigen::Dynamic> function_type_short(Eigen::Map<Eigen::Array<short, Eigen::Dynamic, Eigen::Dynamic> > &mat);
+Eigen::Array<char, Eigen::Dynamic, Eigen::Dynamic> function_type_char(Eigen::Map<Eigen::Array<char, Eigen::Dynamic, Eigen::Dynamic> > &mat);
+Eigen::ArrayXXcd function_type_complex_double(Eigen::Map<Eigen::ArrayXXcd> &array);
+Eigen::ArrayXXcf function_type_complex_float(Eigen::Map<Eigen::ArrayXXcf> &array);
+
+
 class FixedMatrixClass {
 public:
     FixedMatrixClass():

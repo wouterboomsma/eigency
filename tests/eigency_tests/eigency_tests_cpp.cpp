@@ -56,3 +56,44 @@ Eigen::Map<Eigen::Array<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
 Eigen::Map<Eigen::ArrayXXd, Eigen::Unaligned, Eigen::Stride<1, Eigen::Dynamic> > &function_filter3(Eigen::Map<Eigen::ArrayXXd, Eigen::Unaligned, Eigen::Stride<1, Eigen::Dynamic> > &mat) {
     return mat;
 }
+
+Eigen::ArrayXXd function_type_double(Eigen::Map<Eigen::ArrayXXd> &mat) {
+    Eigen::ArrayXXd output = mat;
+    return output;
+}
+
+Eigen::ArrayXXf function_type_float(Eigen::Map<Eigen::ArrayXXf> &mat) {
+    Eigen::ArrayXXf output = mat;
+    return output;
+}
+
+Eigen::Array<long, Eigen::Dynamic, Eigen::Dynamic> function_type_long(Eigen::Map<Eigen::Array<long, Eigen::Dynamic, Eigen::Dynamic> > &mat) {
+    Eigen::Array<long, Eigen::Dynamic, Eigen::Dynamic> output = mat;
+    return output;
+}
+
+Eigen::ArrayXXi function_type_int(Eigen::Map<Eigen::ArrayXXi> &mat) {
+    Eigen::ArrayXXi output = mat;
+    return output;
+}
+
+Eigen::Array<short, Eigen::Dynamic, Eigen::Dynamic> function_type_short(Eigen::Map<Eigen::Array<short, Eigen::Dynamic, Eigen::Dynamic> > &mat) {
+    Eigen::Array<short, Eigen::Dynamic, Eigen::Dynamic> output = mat;
+    return output;
+}
+
+Eigen::Array<char, Eigen::Dynamic, Eigen::Dynamic> function_type_char(Eigen::Map<Eigen::Array<char, Eigen::Dynamic, Eigen::Dynamic> > &mat) {
+    Eigen::Array<char, Eigen::Dynamic, Eigen::Dynamic> output = mat;
+    return output;
+}
+
+Eigen::ArrayXXcd function_type_complex_double(Eigen::Map<Eigen::ArrayXXcd> &mat) {
+    Eigen::ArrayXXcd output = mat;
+    return output;
+}
+
+Eigen::ArrayXXcf function_type_complex_float(Eigen::Map<Eigen::ArrayXXcf> &mat) {
+    Eigen::ArrayXXcf output = mat;
+    return output;
+}
+
