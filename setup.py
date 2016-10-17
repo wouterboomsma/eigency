@@ -29,11 +29,9 @@ except(IOError, ImportError):
     long_description = open('README.md').read()
 
 datafiles2 = []
-os.chdir('eigency')
 for d, folders, files in  os.walk('eigen_3.2.8'):
     the_files=[os.path.join(d,f) for f in files]
     datafiles2.extend(the_files)
-os.chdir('..')
 
     
 dist = setup(
