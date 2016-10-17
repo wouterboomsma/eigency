@@ -9,5 +9,6 @@ def get_includes(include_eigen=True):
     path = [root, parent, np.get_include()]
     if include_eigen:
         path.append(os.path.join(root, __eigen_dir__))
+    print('here is path from get_includes: ',path)
     return path
 

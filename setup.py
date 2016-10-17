@@ -3,7 +3,7 @@ from setuptools import setup
 from distutils import dir_util, file_util
 from setuptools.extension import Extension
 from Cython.Build import cythonize
-import glob
+
 
 import eigency
 import numpy as np
@@ -28,9 +28,6 @@ try:
 except(IOError, ImportError):
     long_description = open('README.md').read()
 
-datafiles = [(d, [os.path.join(d,f) for f in files])
-    for d, folders, files in os.walk('eigency/eigen_3.2.8')]
-
 datafiles2 = []
 os.chdir('eigency')
 for d, folders, files in  os.walk('eigen_3.2.8'):
@@ -38,7 +35,6 @@ for d, folders, files in  os.walk('eigen_3.2.8'):
     datafiles2.extend(the_files)
 os.chdir('..')
 
-print(datafiles2[:40])    
     
 dist = setup(
     name = __package_name__,
@@ -52,7 +48,6 @@ dist = setup(
     include_package_data = True,
     package_data={'eigency':datafiles2},
     ext_modules = cythonize(extensions),
-    data_files=datafiles,
     packages = [__package_name__]
 )
 
