@@ -11,6 +11,7 @@ include eigency/core.pyx
 include eigency/conversions.pxd
 include eigency/conversions.pyx
 include eigency/eigency_cpp.h
+include eigency/conversions_api.h
 exclude eigency/conversions.c
 exclude eigency/core.cpp
 
