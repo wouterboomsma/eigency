@@ -129,6 +129,54 @@ class TestEigency(unittest.TestCase):
         my_object = eigency_tests.DynamicRowMajorArrayClass(x)
         y = my_object.get_array_copy()
         assert_array_equal(x, y)
+
+    def test_function_type_float64(self):
+        # C++ double
+        mat_in = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]], order='F', dtype=np.float64)
+        mat_out = eigency_tests.function_type_float64(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_float32(self):
+        # C++ float
+        mat_in = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]], order='F', dtype=np.float32)
+        mat_out = eigency_tests.function_type_float32(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_long(self):
+        # C++ long
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.long)
+        mat_out = eigency_tests.function_type_long(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_intc(self):
+        # C++ int
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.intc)
+        mat_out = eigency_tests.function_type_intc(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_short(self):
+        # C++ short
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.short)
+        mat_out = eigency_tests.function_type_short(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_char(self):
+        # C++ char
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.uint8)
+        mat_out = eigency_tests.function_type_uint8(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_complex128(self):
+        # C++ char
+        mat_in = np.array([[1.+1.j, 2.+2.j, 3.+3.j, 4.+4.j], [5.+5.j, 6.+6.j, 7.+7.j, 8.+8.j]], order='F', dtype=np.complex128)
+        mat_out = eigency_tests.function_type_complex128(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_complex64(self):
+        # C++ char
+        mat_in = np.array([[1.+1.j, 2.+2.j, 3.+3.j, 4.+4.j], [5.+5.j, 6.+6.j, 7.+7.j, 8.+8.j]], order='F', dtype=np.complex64)
+        mat_out = eigency_tests.function_type_complex64(mat_in)
+        assert_array_equal(mat_in, mat_out)
         
         
 if __name__ == '__main__':
