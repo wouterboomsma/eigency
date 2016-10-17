@@ -24,5 +24,5 @@ include tests/run_tests.py
 include tests/setup.py
 
 # Eigen library
-include eigen_3.2.8/*
+recursive-include eigen_3.2.8 *
 
