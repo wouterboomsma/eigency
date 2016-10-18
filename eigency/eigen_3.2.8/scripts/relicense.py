@@ -1,3 +1,4 @@
+from __future__ import print_function
 # This file is part of Eigen, a lightweight C++ template library
 # for linear algebra.
 #
@@ -52,7 +53,7 @@ rootdir = sys.argv[1]
 for root, sub_folders, files in os.walk(rootdir):
     for basename in files:
         if basename in exclusions:
-          print 'SKIPPED', filename
+          print('SKIPPED', filename)
           continue
         filename = os.path.join(root, basename)
         fo = file(filename)
@@ -64,6 +65,6 @@ for root, sub_folders, files in os.walk(rootdir):
           fo = file(filename, "w")
           fo.write(text)
           fo.close()
-          print 'UPDATED', filename
+          print('UPDATED', filename)
         else:
-          print '       ', filename
+          print('       ', filename)
