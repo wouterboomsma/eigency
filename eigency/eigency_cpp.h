@@ -334,12 +334,14 @@ public:
     Map(PyArrayObject *object)
         : Base((PyObject*)object == Py_None? NULL: (Scalar *)object->data,
                // ROW: If array is in row-major order, transpose (see README)
+               (PyObject*)object == Py_None? 0 :
                (PyArray_IS_C_CONTIGUOUS(object)
                 ? ((object->nd == 1)
                    ? 1  // ROW: If 1D row-major numpy array, set to 1 (row vector)
                    : object->dimensions[1])
                 : object->dimensions[0]),
                // COLUMN: If array is in row-major order: transpose (see README)
+               (PyObject*)object == Py_None? 0 :
                (PyArray_IS_C_CONTIGUOUS(object)
                 ? object->dimensions[0]
                 : ((object->nd == 1)
