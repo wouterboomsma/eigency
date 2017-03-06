@@ -143,9 +143,25 @@ class TestEigency(unittest.TestCase):
         assert_array_equal(mat_in, mat_out)
         
     def test_function_type_long(self):
+        # C++ long - Note that this is the standard Python integer
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F')
+        # # equivalent to:
+        # mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.int_)
+        # # equivalent to:
+        # mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.long)
+        mat_out = eigency_tests.function_type_long(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_ulong(self):
+        # C++ ulong - Note that this is the standard Python unsigned integer
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.uint)
+        mat_out = eigency_tests.function_type_long(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_long(self):
         # C++ long
         mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.long)
-        mat_out = eigency_tests.function_type_long(mat_in)
+        mat_out = eigency_tests.function_type_ulong(mat_in)
         assert_array_equal(mat_in, mat_out)
         
     def test_function_type_intc(self):
@@ -154,14 +170,32 @@ class TestEigency(unittest.TestCase):
         mat_out = eigency_tests.function_type_intc(mat_in)
         assert_array_equal(mat_in, mat_out)
         
+    def test_function_type_uintc(self):
+        # C++ uint
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.uintc)
+        mat_out = eigency_tests.function_type_uintc(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
     def test_function_type_short(self):
         # C++ short
         mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.short)
         mat_out = eigency_tests.function_type_short(mat_in)
         assert_array_equal(mat_in, mat_out)
         
-    def test_function_type_char(self):
+    def test_function_type_unsigned_short(self):
+        # C++ ushort
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.ushort)
+        mat_out = eigency_tests.function_type_ushort(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_signed_char(self):
         # C++ char
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.int8)
+        mat_out = eigency_tests.function_type_int8(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        
+    def test_function_type_unsigned_char(self):
+        # C++ unsigned char
         mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.uint8)
         mat_out = eigency_tests.function_type_uint8(mat_in)
         assert_array_equal(mat_in, mat_out)

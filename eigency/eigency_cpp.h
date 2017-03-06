@@ -78,6 +78,21 @@ inline PyArrayObject *_ndarray_copy<long>(const long *data, long rows, long cols
 }
 
 template<>
+inline PyArrayObject *_ndarray_view<unsigned long>(unsigned long *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_ulong_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_ulong_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+template<>
+inline PyArrayObject *_ndarray_copy<unsigned long>(const unsigned long *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_copy_ulong_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_copy_ulong_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+
+template<>
 inline PyArrayObject *_ndarray_view<int>(int *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
         return ndarray_int_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
@@ -90,6 +105,21 @@ inline PyArrayObject *_ndarray_copy<int>(const int *data, long rows, long cols, 
         return ndarray_copy_int_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
         return ndarray_copy_int_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+
+template<>
+inline PyArrayObject *_ndarray_view<unsigned int>(unsigned int *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_uint_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_uint_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+template<>
+inline PyArrayObject *_ndarray_copy<unsigned int>(const unsigned int *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_copy_uint_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_copy_uint_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
 }
 
 template<>
@@ -108,18 +138,48 @@ inline PyArrayObject *_ndarray_copy<short>(const short *data, long rows, long co
 }
 
 template<>
-inline PyArrayObject *_ndarray_view<char>(char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_view<unsigned short>(unsigned short *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
-        return ndarray_char_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+        return ndarray_ushort_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
-        return ndarray_char_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+        return ndarray_ushort_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
 }
 template<>
-inline PyArrayObject *_ndarray_copy<char>(const char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+inline PyArrayObject *_ndarray_copy<unsigned short>(const unsigned short *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
     if (is_row_major)
-        return ndarray_copy_char_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+        return ndarray_copy_ushort_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
     else
-        return ndarray_copy_char_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+        return ndarray_copy_ushort_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+
+template<>
+inline PyArrayObject *_ndarray_view<signed char>(signed char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_schar_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_schar_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+template<>
+inline PyArrayObject *_ndarray_copy<signed char>(const signed char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_copy_schar_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_copy_schar_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+
+template<>
+inline PyArrayObject *_ndarray_view<unsigned char>(unsigned char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_uchar_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_uchar_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
+}
+template<>
+inline PyArrayObject *_ndarray_copy<unsigned char>(const unsigned char *data, long rows, long cols, bool is_row_major, long outer_stride, long inner_stride) {
+    if (is_row_major)
+        return ndarray_copy_uchar_C(data, rows, cols, outer_stride>0?outer_stride:cols, inner_stride>0?inner_stride:1);
+    else
+        return ndarray_copy_uchar_F(data, rows, cols, inner_stride>0?inner_stride:1, outer_stride>0?outer_stride:rows);
 }
 
 template<>

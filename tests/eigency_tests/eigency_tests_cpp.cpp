@@ -72,8 +72,18 @@ Eigen::Array<long, Eigen::Dynamic, Eigen::Dynamic> function_type_long(Eigen::Map
     return output;
 }
 
+Eigen::Array<unsigned long, Eigen::Dynamic, Eigen::Dynamic> function_type_ulong(Eigen::Map<Eigen::Array<unsigned long, Eigen::Dynamic, Eigen::Dynamic> > &mat) {
+    Eigen::Array<unsigned long, Eigen::Dynamic, Eigen::Dynamic> output = mat;
+    return output;
+}
+
 Eigen::ArrayXXi function_type_int(Eigen::Map<Eigen::ArrayXXi> &mat) {
     Eigen::ArrayXXi output = mat;
+    return output;
+}
+
+Eigen::Array<unsigned int, Eigen::Dynamic, Eigen::Dynamic> function_type_uint(Eigen::Map<Eigen::Array<unsigned int, Eigen::Dynamic, Eigen::Dynamic> > &mat) {
+    Eigen::Array<unsigned int, Eigen::Dynamic, Eigen::Dynamic> output = mat;
     return output;
 }
 
@@ -82,8 +92,18 @@ Eigen::Array<short, Eigen::Dynamic, Eigen::Dynamic> function_type_short(Eigen::M
     return output;
 }
 
-Eigen::Array<char, Eigen::Dynamic, Eigen::Dynamic> function_type_char(Eigen::Map<Eigen::Array<char, Eigen::Dynamic, Eigen::Dynamic> > &mat) {
-    Eigen::Array<char, Eigen::Dynamic, Eigen::Dynamic> output = mat;
+Eigen::Array<unsigned short, Eigen::Dynamic, Eigen::Dynamic> function_type_ushort(Eigen::Map<Eigen::Array<unsigned short, Eigen::Dynamic, Eigen::Dynamic> > &mat) {
+    Eigen::Array<unsigned short, Eigen::Dynamic, Eigen::Dynamic> output = mat;
+    return output;
+}
+
+Eigen::Array<signed char, Eigen::Dynamic, Eigen::Dynamic> function_type_signed_char(Eigen::Map<Eigen::Array<signed char, Eigen::Dynamic, Eigen::Dynamic> > &mat) {
+    Eigen::Array<signed char, Eigen::Dynamic, Eigen::Dynamic> output = mat;
+    return output;
+}
+
+Eigen::Array<unsigned char, Eigen::Dynamic, Eigen::Dynamic> function_type_unsigned_char(Eigen::Map<Eigen::Array<unsigned char, Eigen::Dynamic, Eigen::Dynamic> > &mat) {
+    Eigen::Array<unsigned char, Eigen::Dynamic, Eigen::Dynamic> output = mat;
     return output;
 }
 
