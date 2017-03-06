@@ -320,12 +320,22 @@ template <template<class,int,int,int,int,int> class DenseBase,
     // The error would only show up with EIGEN_DEFAULT_TO_ROW_MAJOR is defined
     // (when EIGEN_DEFAULT_MATRIX_STORAGE_ORDER_OPTION is RowMajor)
                           ( (_Rows==1 && _Cols!=1) ? Eigen::RowMajor
-                          : !(_Cols==1 && _Rows!=1) ?  EIGEN_DEFAULT_MATRIX_STORAGE_ORDER_OPTION
+// EIGEN_DEFAULT_MATRIX_STORAGE_ORDER_OPTION contains explicit namespace since Eigen 3.1.19
+#if EIGEN_VERSION_AT_LEAST(3,2,90)
+                          : !(_Cols==1 && _Rows!=1) ? EIGEN_DEFAULT_MATRIX_STORAGE_ORDER_OPTION
+#else
+                          : !(_Cols==1 && _Rows!=1) ? Eigen::EIGEN_DEFAULT_MATRIX_STORAGE_ORDER_OPTION
+#endif
                           : ColMajor ),
 #else
                           ( (_Rows==1 && _Cols!=1) ? Eigen::RowMajor
                           : (_Cols==1 && _Rows!=1) ? Eigen::ColMajor
+// EIGEN_DEFAULT_MATRIX_STORAGE_ORDER_OPTION contains explicit namespace since Eigen 3.1.19
+#if EIGEN_VERSION_AT_LEAST(3,2,90)
+                          : EIGEN_DEFAULT_MATRIX_STORAGE_ORDER_OPTION ),
+#else
                           : Eigen::EIGEN_DEFAULT_MATRIX_STORAGE_ORDER_OPTION ),
+#endif
 #endif
           int _MapOptions = Eigen::Unaligned,
           int _StrideOuter=0, int _StrideInner=0,
