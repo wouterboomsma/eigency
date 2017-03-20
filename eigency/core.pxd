@@ -1,8 +1,12 @@
 cimport cython
 cimport numpy as np
 
+ctypedef signed char schar;
+ctypedef unsigned char uchar;
+
 ctypedef fused dtype:
-    char
+    uchar
+    schar
     short
     int
     long
