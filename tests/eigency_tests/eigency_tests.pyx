@@ -50,6 +50,8 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
      cdef PlainObjectBase _function_type_complex_double "function_type_complex_double" (Map[ArrayXXcd] &)
      cdef PlainObjectBase _function_type_complex_float "function_type_complex_float" (Map[ArrayXXcf] &)
 
+     cdef PlainObjectBase _function_single_col_matrix "function_single_col_matrix" (Map[ArrayXXd] &)
+
      cdef cppclass _FixedMatrixClass "FixedMatrixClass":
          _FixedMatrixClass () except +
          Matrix3d &get_matrix()
@@ -166,6 +168,10 @@ def function_type_complex128(np.ndarray array):
 # Functions with different matrix types: complex64
 def function_type_complex64(np.ndarray array):
     return ndarray(_function_type_complex_float(Map[ArrayXXcf](array)))
+
+# Functions testing a matrix with only one column
+def function_single_col_matrix(np.ndarray array):
+    return ndarray(_function_single_col_matrix(Map[ArrayXXd](array)))
 
 
 cdef class FixedMatrixClass:

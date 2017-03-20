@@ -117,3 +117,6 @@ Eigen::ArrayXXcf function_type_complex_float(Eigen::Map<Eigen::ArrayXXcf> &mat) 
     return output;
 }
 
+Eigen::Map<Eigen::ArrayXXd> function_single_col_matrix(Eigen::Map<Eigen::ArrayXXd> &array) {
+    return array;
+}

@@ -44,6 +44,8 @@ Eigen::Array<unsigned char, Eigen::Dynamic, Eigen::Dynamic> function_type_unsign
 Eigen::ArrayXXcd function_type_complex_double(Eigen::Map<Eigen::ArrayXXcd> &array);
 Eigen::ArrayXXcf function_type_complex_float(Eigen::Map<Eigen::ArrayXXcf> &array);
 
+Eigen::Map<Eigen::ArrayXXd> function_single_col_matrix(Eigen::Map<Eigen::ArrayXXd> &array);
+
 
 class FixedMatrixClass {
 public:

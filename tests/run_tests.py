@@ -211,7 +211,15 @@ class TestEigency(unittest.TestCase):
         mat_in = np.array([[1.+1.j, 2.+2.j, 3.+3.j, 4.+4.j], [5.+5.j, 6.+6.j, 7.+7.j, 8.+8.j]], order='F', dtype=np.complex64)
         mat_out = eigency_tests.function_type_complex64(mat_in)
         assert_array_equal(mat_in, mat_out)
-        
+
+    def test_function_single_col_matrix(self):
+        # Issue #11
+        mat_in = np.zeros((2,3), order='F')
+        mat_out = eigency_tests.function_single_col_matrix(mat_in)
+        assert_array_equal(mat_in, mat_out)
+        mat_in = np.zeros((1,3), order='F')
+        mat_out = eigency_tests.function_single_col_matrix(mat_in)
+        assert_array_equal(mat_in, mat_out)
         
 if __name__ == '__main__':
     unittest.main(buffer=False)
