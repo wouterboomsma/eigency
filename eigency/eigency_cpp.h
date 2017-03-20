@@ -246,6 +246,11 @@ public:
                   : cols),
                stride
             )  {}
+
+    MapBase &operator=(const MatrixType &other) {
+        Base::operator=(other);
+        return *this;
+    }
 };
 
 
@@ -357,6 +362,11 @@ public:
         new (this) Map(const_cast<Scalar*>(other.data()),
                        other.rows(),
                        other.cols());
+        return *this;
+    }
+
+    Map &operator=(const MatrixType &other) {
+        MapBase<MatrixType>::operator=(other);
         return *this;
     }
     
