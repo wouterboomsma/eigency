@@ -5,23 +5,15 @@ include setup.py
 include setup.cfg
 
 # Core
-include eigency/__init__.py
-include eigency/core.pxd
-include eigency/core.pyx
-include eigency/conversions.pxd
-include eigency/conversions.pyx
-include eigency/eigency_cpp.h
-exclude eigency/conversions.c
-exclude eigency/core.cpp
+include eigency/*.h
+include eigency/*.py
+include eigency/*.pyd
+include eigency/*.pyx
+exclude eigency/*.cpp
 
 # tests
-include tests/eigency_tests/init.py
-include tests/eigency_tests/eigency_tests_cpp.cpp
-include tests/eigency_tests/eigency_tests_cpp.h
-include tests/eigency_tests/eigency_tests.pyx
-include tests/run_tests.py
-include tests/setup.py
+recursive-include tests *.cpp *.h *.py *.pyx
 
 # Eigen library
-recursive-include eigen_3.2.8 *
+prune eigency/eigen_3.2.8/
 

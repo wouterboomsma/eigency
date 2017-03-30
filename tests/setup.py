@@ -1,7 +1,5 @@
-import os
-from distutils import file_util
-from distutils.core import setup
-from distutils.extension import Extension
+from setuptools import setup
+from setuptools.extension import Extension
 from Cython.Build import cythonize
 
 import eigency
@@ -18,11 +16,4 @@ dist = setup(
     ext_modules = cythonize(extensions),
     packages = ["eigency_tests"]
 )
-
-if 'install' in dist.command_obj:
-    destination_path = dist.command_obj['install'].install_lib
-    package_path = os.path.join(destination_path, "eigency_tests")
-
-    # Copy init file
-    file_util.copy_file('eigency_tests/init.py', os.path.join(package_path, "__init__.py"), update=1, preserve_mode=0)
 
