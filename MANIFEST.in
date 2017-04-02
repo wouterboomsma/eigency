@@ -15,5 +15,6 @@ exclude eigency/*.cpp
 recursive-include tests *.cpp *.h *.py *.pyx
 
 # Eigen library
-prune eigency/eigen_3.2.8/
+graft eigency/eigen_3.2.8/
+recursive-exclude eigency/eigen_3.2.8/ .hg*
 
