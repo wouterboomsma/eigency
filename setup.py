@@ -38,17 +38,30 @@ dist = setup(
     name = __package_name__,
     description = "Cython interface between the numpy arrays and the Matrix/Array classes of the Eigen C++ library",
     long_description=long_description,
+    classifiers=[
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: C++',
+        'Programming Language :: Cython',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+    ],
+    license = "MIT",
     author = "Wouter Boomsma",
     author_email = "wb@di.ku.dk",
     url = "https://github.com/wouterboomsma/eigency",
     use_scm_version = True,
-    setup_requires = ['setuptools_scm'],
+    setup_requires = ['setuptools_scm', 'cython'],
     ext_modules = cythonize(extensions),
     packages = find_packages(),
     package_data = {__package_name__: [
-        '*.h', '*.pxd',
+        '*.h', '*.pxd', '*.pyx',
         join(__eigen_lib_dir__, '*'),
     ] + eigen_data_files},
+    exclude_package_data = {__package_name__: [join(__eigen_lib_dir__, 'CMakeLists.txt')]},
     install_requires = ['numpy', 'cython']
 )
 
