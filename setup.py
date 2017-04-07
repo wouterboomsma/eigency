@@ -57,6 +57,7 @@ dist = setup(
     setup_requires = ['setuptools_scm', 'cython'],
     ext_modules = cythonize(extensions),
     packages = find_packages(),
+    include_package_data=True, 
     package_data = {__package_name__: [
         '*.h', '*.pxd', '*.pyx',
         join(__eigen_lib_dir__, '*'),
