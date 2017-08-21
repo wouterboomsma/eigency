@@ -173,6 +173,17 @@ def function_type_complex64(np.ndarray array):
 def function_single_col_matrix(np.ndarray array):
     return ndarray(_function_single_col_matrix(Map[ArrayXXd](array)))
 
+# Functions testing that map properly holds a reference to python objects.
+def function_map_holds_reference(np.ndarray array):
+    # Hold a reference to a copy of an array.
+    cdef Map[ArrayXXd] eigency_map = Map[ArrayXXd](array.copy(order="K"))
+
+    # Do some nontrivial operation so that array_copy might be clobbered.
+    array_doubled = 2 * array
+
+    # Use the reference to the copy held by eigency_map.
+    return ndarray(_function_type_double(eigency_map))
+
 
 cdef class FixedMatrixClass:
     cdef _FixedMatrixClass *thisptr;
