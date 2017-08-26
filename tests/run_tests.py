@@ -220,6 +220,12 @@ class TestEigency(unittest.TestCase):
         mat_in = np.zeros((1,3), order='F')
         mat_out = eigency_tests.function_single_col_matrix(mat_in)
         assert_array_equal(mat_in, mat_out)
+
+    def test_function_map_holds_reference(self):
+        # Tests error fixed by 4ee448a in pull request #18
+        mat_in = np.array([[1., 2., 3., 4.], [5., 6., 7., 8.]], order='F', dtype=np.float64)
+        mat_out = eigency_tests.function_map_holds_reference(mat_in)
+        assert_array_equal(mat_in, mat_out)
         
 if __name__ == '__main__':
     unittest.main(buffer=False)
