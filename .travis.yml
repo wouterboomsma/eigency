@@ -18,4 +18,5 @@ script:
   - cd tests
   - python setup.py build
   - python setup.py install
-  - python run_tests.py
+  - cd ..
+  - python tests/run_tests.py
