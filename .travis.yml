@@ -1,0 +1,21 @@
+sudo: required
+dist: trusty
+language: python
+
+python:
+    - 2.7
+    - 3.4
+    - 3.5
+    - 3.6
+
+install:
+  - travis_retry pip install cython
+
+script:
+  - python --version
+  - python setup.py build
+  - python setup.py install
+  - cd tests
+  - python setup.py build
+  - python setup.py install
+  - python run_tests.py
