@@ -316,7 +316,7 @@ public:
 };
 
 
-template <template<class,int,int,int,int,int> class DenseBase,
+template <template<class,int,int,int,int,int> class EigencyDenseBase,
           typename Scalar,
           int _Rows, int _Cols,
           int _Options = Eigen::AutoAlign |
@@ -348,9 +348,9 @@ template <template<class,int,int,int,int,int> class DenseBase,
           int _StrideOuter=0, int _StrideInner=0,
           int _MaxRows = _Rows,
           int _MaxCols = _Cols>
-class FlattenedMap: public MapBase<DenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> >  {
+class FlattenedMap: public MapBase<EigencyDenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> >  {
 public:
-    typedef MapBase<DenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> > Base;
+    typedef MapBase<EigencyDenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> > Base;
 
     FlattenedMap()
         : Base(NULL, 0, 0),
@@ -399,8 +399,8 @@ public:
         return static_cast<Base&>(*this);
     }
 
-    operator DenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>() const {
-        return DenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>(static_cast<Base>(*this));
+    operator EigencyDenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>() const {
+        return EigencyDenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>(static_cast<Base>(*this));
     }
 
     virtual ~FlattenedMap() {
@@ -492,6 +492,3 @@ private:
 }
 
 #endif
-
-
-
