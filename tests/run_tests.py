@@ -32,7 +32,7 @@ class TestEigency(unittest.TestCase):
         self.assertAlmostEqual(x[0], 1.)
 
     def test_function_w_mat_arg(self):
-        x = np.array([1., 2., 3., 4.])
+        x = np.array([1.1, 2.2, 3.3, 4.4])
         eigency_tests.function_w_mat_arg(x.reshape([2,2]))
         # Shared memory test: Verify that first entry was set to 0 by C++ code.
         self.assertAlmostEqual(x[0], 0.)        
@@ -142,7 +142,7 @@ class TestEigency(unittest.TestCase):
         mat_out = eigency_tests.function_type_float32(mat_in)
         assert_array_equal(mat_in, mat_out)
         
-    def test_function_type_long(self):
+    def test_function_type_int(self):
         # C++ long - Note that this is the standard Python integer
         mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F')
         # # equivalent to:
@@ -152,15 +152,15 @@ class TestEigency(unittest.TestCase):
         mat_out = eigency_tests.function_type_long(mat_in)
         assert_array_equal(mat_in, mat_out)
         
-    def test_function_type_ulong(self):
+    def test_function_type_long(self):
         # C++ ulong - Note that this is the standard Python unsigned integer
-        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.uint)
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.int)
         mat_out = eigency_tests.function_type_long(mat_in)
         assert_array_equal(mat_in, mat_out)
         
-    def test_function_type_long(self):
+    def test_function_type_ulong(self):
         # C++ long
-        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.long)
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order='F', dtype=np.uint)
         mat_out = eigency_tests.function_type_ulong(mat_in)
         assert_array_equal(mat_in, mat_out)
         
