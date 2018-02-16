@@ -418,8 +418,15 @@ public:
     typedef MapBase<MatrixType> Base;
     typedef typename MatrixType::Scalar Scalar;
 
+    enum {
+        RowsAtCompileTime = Base::Base::RowsAtCompileTime,
+        ColsAtCompileTime = Base::Base::ColsAtCompileTime
+    };
+
     Map()
-        : Base(NULL, 0, 0),
+        : Base(NULL,
+               (RowsAtCompileTime == Eigen::Dynamic) ? 0 : RowsAtCompileTime,
+               (ColsAtCompileTime == Eigen::Dynamic) ? 0 : ColsAtCompileTime),
           object_(NULL) {
     }
     
