@@ -68,7 +68,7 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
          PlainObjectBase get_array_copy()
 
 # Function with vector argument. 
-def function_w_vec_arg(np.ndarray array):
+def function_w_vec_arg(np.ndarray[np.float64_t] array):
     return _function_w_vec_arg(Map[VectorXd](array))
 
 # Function with vector argument. 
@@ -76,25 +76,25 @@ def function_w_1darr_arg(np.ndarray[np.int32_t] array):
     return _function_w_1darr_arg(Map[ArrayXi](array))
 
 # Function with vector argument - no map - no ref. 
-def function_w_vec_arg_no_map1(np.ndarray array):
+def function_w_vec_arg_no_map1(np.ndarray[np.float64_t] array):
     return _function_w_vec_arg_no_map1(Map[VectorXd](array))
 
 # Function with vector argument - no map. 
-def function_w_vec_arg_no_map2(np.ndarray array):
+def function_w_vec_arg_no_map2(np.ndarray[np.float64_t] array):
     return _function_w_vec_arg_no_map2(Map[VectorXd](array))
 
 # Function with matrix argument. 
-def function_w_mat_arg(np.ndarray array):
+def function_w_mat_arg(np.ndarray[np.float64_t, ndim=2] array):
     return _function_w_mat_arg(Map[MatrixXd](array))
 
 # Function with complex matrix argument. 
-def function_w_complex_mat_arg(np.ndarray array):
+def function_w_complex_mat_arg(np.ndarray[np.complex128_t, ndim=2] array):
     return _function_w_complex_mat_arg(Map[MatrixXcd](array))
 
 # Function using a full Map specification, rather than the convenience typedefs
 # Note that since cython does not support nested fused types, the Map has been
 # flattened to include all arguments at once
-def function_w_fullspec_arg(np.ndarray array):
+def function_w_fullspec_arg(np.ndarray[np.float64_t] array):
     return _function_w_fullspec_arg(FlattenedMap[Array, double, Dynamic, _1](array))
 
 # Function returning vector (copy is made)
@@ -114,67 +114,67 @@ def function_filter1(np.ndarray array):
     return ndarray(_function_filter1(Map[ArrayXXd](array)))
 
 # Function both taking array as argument and returning it - RowMajor order
-def function_filter2(np.ndarray array):
+def function_filter2(np.ndarray[np.float64_t, ndim=2] array):
     return ndarray(_function_filter2(FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor](array)))
 
 # Function both taking array as argument and returning it - RowMajor stride
-def function_filter3(np.ndarray array):
+def function_filter3(np.ndarray[np.float64_t, ndim=2] array):
     return ndarray(_function_filter3(FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic](array)))
 
 # Functions with different matrix types: float64
-def function_type_float64(np.ndarray array):
+def function_type_float64(np.ndarray[np.float64_t, ndim=2] array):
     return ndarray(_function_type_double(Map[ArrayXXd](array)))
 
 # Functions with different matrix types: float32
-def function_type_float32(np.ndarray array):
+def function_type_float32(np.ndarray[np.float32_t, ndim=2] array):
     return ndarray(_function_type_float(Map[ArrayXXf](array)))
 
 # Functions with different matrix types: long
-def function_type_long(np.ndarray array):
+def function_type_long(np.ndarray[np.long_t, ndim=2] array):
     return ndarray(_function_type_long(FlattenedMap[Array, long, Dynamic, Dynamic](array)))
 
 # Functions with different matrix types: ulong
-def function_type_ulong(np.ndarray array):
+def function_type_ulong(np.ndarray[np.ulong_t, ndim=2] array):
     return ndarray(_function_type_ulong(FlattenedMap[Array, ulong, Dynamic, Dynamic](array)))
 
 # Functions with different matrix types: int
-def function_type_intc(np.ndarray array):
+def function_type_intc(np.ndarray[np.int32_t, ndim=2] array):
     return ndarray(_function_type_int(Map[ArrayXXi](array)))
 
 # Functions with different matrix types: uint
-def function_type_uintc(np.ndarray array):
+def function_type_uintc(np.ndarray[np.uint32_t, ndim=2] array):
     return ndarray(_function_type_uint(FlattenedMap[Array, uint, Dynamic, Dynamic](array)))
 
 # Functions with different matrix types: short
-def function_type_short(np.ndarray array):
+def function_type_short(np.ndarray[np.int16_t, ndim=2] array):
     return ndarray(_function_type_short(FlattenedMap[Array, short, Dynamic, Dynamic](array)))
 
 # Functions with different matrix types: ushort
-def function_type_ushort(np.ndarray array):
+def function_type_ushort(np.ndarray[np.uint16_t, ndim=2] array):
     return ndarray(_function_type_ushort(FlattenedMap[Array, ushort, Dynamic, Dynamic](array)))
 
 # Functions with different matrix types: signed char
-def function_type_int8(np.ndarray array):
+def function_type_int8(np.ndarray[np.int8_t, ndim=2] array):
     return ndarray(_function_type_signed_char(FlattenedMap[Array, schar, Dynamic, Dynamic](array)))
 
 # Functions with different matrix types: unsigned char
-def function_type_uint8(np.ndarray array):
+def function_type_uint8(np.ndarray[np.uint8_t, ndim=2] array):
     return ndarray(_function_type_unsigned_char(FlattenedMap[Array, uchar, Dynamic, Dynamic](array)))
 
 # Functions with different matrix types: complex128
-def function_type_complex128(np.ndarray array):
+def function_type_complex128(np.ndarray[np.complex128_t, ndim=2] array):
     return ndarray(_function_type_complex_double(Map[ArrayXXcd](array)))
 
 # Functions with different matrix types: complex64
-def function_type_complex64(np.ndarray array):
+def function_type_complex64(np.ndarray[np.complex64_t, ndim=2] array):
     return ndarray(_function_type_complex_float(Map[ArrayXXcf](array)))
 
 # Functions testing a matrix with only one column
-def function_single_col_matrix(np.ndarray array):
+def function_single_col_matrix(np.ndarray[np.float64_t, ndim=2] array):
     return ndarray(_function_single_col_matrix(Map[ArrayXXd](array)))
 
 # Functions testing that map properly holds a reference to python objects.
-def function_map_holds_reference(np.ndarray array):
+def function_map_holds_reference(np.ndarray[np.float64_t, ndim=2] array):
     # Hold a reference to a copy of an array.
     cdef Map[ArrayXXd] eigency_map = Map[ArrayXXd](array.copy(order="K"))
 
@@ -200,7 +200,7 @@ cdef class FixedMatrixClass:
 
 cdef class DynamicArrayClass:
     cdef _DynamicArrayClass *thisptr;
-    def __cinit__(self, np.ndarray array):
+    def __cinit__(self, np.ndarray[np.float64_t, ndim=2] array):
         self.thisptr = new _DynamicArrayClass(Map[ArrayXXd](array))
     def __dealloc__(self):
         del self.thisptr
@@ -209,7 +209,7 @@ cdef class DynamicArrayClass:
 
 cdef class DynamicRowMajorArrayClass:
     cdef _DynamicRowMajorArrayClass *thisptr;
-    def __cinit__(self, np.ndarray array):
+    def __cinit__(self, np.ndarray[np.float64_t, ndim=2] array):
         self.thisptr = new _DynamicRowMajorArrayClass(FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor](array))
     def __dealloc__(self):
         del self.thisptr

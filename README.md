@@ -7,7 +7,7 @@ process of writing C++ extensions using the Eigen library. Eigency is
 designed to reuse the underlying storage of the arrays when passing
 data back and forth, and will thus avoid making unnecessary copies
 whenever possible. Only in cases where copies are explicitly requested
-by your C++ code will they be made (see example below)
+by your C++ code will they be made.
 
 Below is a description of a range of common usage scenarios. A full working
 example of both setup and these different use cases is available in the
@@ -42,7 +42,7 @@ Assume we are writing a Cython interface to the following C++ function:
 
 ```c++
 void function_w_mat_arg(const Eigen::Map<Eigen::MatrixXd> &mat) {
-     ...
+    std::cout << mat << "\n";
 }
 ```
 
@@ -61,7 +61,70 @@ def function_w_mat_arg(np.ndarray array):
 
 The last line contains the actual conversion. `Map` is an Eigency
 type that derives from the real Eigen map, and will take care of
-the conversion from the numpy array to the corresponding Eigen type.
+the conversion from the numpy array to the corresponding Eigen type. 
+
+We can now call the C++ function directly from Python:
+```python
+>>> import numpy as np
+>>> import eigency_tests
+>>> x = np.array([[1.1, 2.2], [3.3, 4.4]])
+>>> eigency_tests.function_w_mat_arg(x)
+1.1 3.3
+2.2 4.4
+```
+(if you are wondering about why the matrix is transposed, please 
+see the Storage layout section below).
+
+## Types matter
+
+The basic idea behind eigency is to share the underlying representation of a 
+numpy array between Python and C++. This means that somewhere in the process, 
+we need to make explicit which numerical types we are dealing with. In the
+function above, we specify that we expect an Eigen MatrixXd, which means
+that the numpy array must also contain double (i.e. float64) values. If we instead provide
+a numpy array of ints, we will get strange results. 
+
+```python
+>>> import numpy as np
+>>> import eigency_tests
+>>> x = np.array([[1, 2], [3, 4]])
+>>> eigency_tests.function_w_mat_arg(x)
+4.94066e-324  1.4822e-323
+9.88131e-324 1.97626e-323
+```
+This is because we are explicitly asking C++ to interpret out python integer
+values as floats. 
+
+To avoid this type of error, you can force your cython function to
+accept only numpy arrays of a specific type:
+
+```
+cdef extern from "functions.h":
+     cdef void _function_w_mat_arg "function_w_mat_arg"(Map[MatrixXd] &)
+
+# This will be exposed to Python
+def function_w_mat_arg(np.ndarray[np.float64_t, ndim=2] array):
+    return _function_w_mat_arg(Map[MatrixXd](array))
+```
+
+(Note that when using this technique to select the type, you also need to specify 
+the dimensions of the array (this will default to 1)). Using this new definition, 
+users will get an error when passing arrays of the wrong type:
+
+```python
+>>> import numpy as np
+>>> import eigency_tests
+>>> x = np.array([[1, 2], [3, 4]])
+>>> eigency_tests.function_w_mat_arg(x)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "eigency_tests/eigency_tests.pyx", line 87, in eigency_tests.eigency_tests.function_w_mat_arg
+ValueError: Buffer dtype mismatch, expected 'float64_t' but got 'long'
+```
+
+Since it avoids many surprises, it is strongly recommended to use this technique
+to specify the full types of numpy arrays in your cython code whenever 
+possible.
 
 
 ## Writing Eigen Map types in Cython
@@ -74,7 +137,7 @@ cdef extern from "functions.h":
      cdef void _function_w_mat_arg "function_w_mat_arg" (FlattenedMap[Matrix, double, Dynamic, Dynamic] &)
 
 # This will be exposed to Python
-def function_w_mat_arg(np.ndarray array):
+def function_w_mat_arg(np.ndarray[np.float64_t, ndim=2] array):
     return _function_w_mat_arg(FlattenedMap[Matrix, double, Dynamic, Dynamic](array))
 ```
 
@@ -107,7 +170,7 @@ cdef extern from "functions.h":
      cdef void _function_w_vec_arg_no_map "function_w_vec_arg_no_map"(Map[VectorXd] &)
 
 # This will be exposed to Python
-def function_w_vec_arg_no_map(np.ndarray array):
+def function_w_vec_arg_no_map(np.ndarray[np.float64_t] array):
     return _function_w_vec_arg_no_map(Map[VectorXd](array))
 ```
 
@@ -321,7 +384,7 @@ cdef extern from "functions.h":
     ...
     cdef Map[ArrayXXd] &_function_filter1 "function_filter1" (Map[ArrayXXd] &)
 
-def function_filter1(np.ndarray array):
+def function_filter1(np.ndarray[np.float64_t, ndim=2] array):
     return ndarray(_function_filter1(Map[ArrayXXd](array)))
 
 ```
@@ -378,7 +441,7 @@ cdef extern from "functions.h":
     ...
     cdef PlainObjectBase _function_filter2 "function_filter2" (FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor])
 
-def function_filter2(np.ndarray array):
+def function_filter2(np.ndarray[np.float64_t, ndim=2] array):
     return ndarray(_function_filter2(FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor](array)))
 ```
 
@@ -400,7 +463,7 @@ cdef extern from "functions.h":
     ...
     cdef PlainObjectBase _function_filter3 "function_filter3" (FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic])
 
-def function_filter3(np.ndarray array):
+def function_filter3(np.ndarray[np.float64_t, ndim=2] array):
     return ndarray(_function_filter3(FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic](array)))
 ```
 
