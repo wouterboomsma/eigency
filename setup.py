@@ -2,6 +2,7 @@ import os
 from os.path import basename, join
 from setuptools import setup, find_packages
 from setuptools.extension import Extension
+from Cython.Build import cythonize
 
 import eigency
 import numpy as np
@@ -21,19 +22,6 @@ extensions = [
     )
 ]
 
-# This hack delays importing cythonize until after setup_requires ensures that it exists.
-# ext_modules is expecting a list, so just wait to actually make the list until the first
-# time iter is called on it.
-class cythonize(list):
-    def __init__(self, ext):
-        self.ext = ext
-
-    def __iter__(self):
-        if self.ext is not None:
-            from Cython.Build import cythonize
-            list.__init__(self, cythonize(self.ext))
-            self.ext = None
-        return list.__iter__(self)
 
 try:
     import pypandoc
