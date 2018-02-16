@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/wouterboomsma/eigency.svg?branch=master)](https://travis-ci.org/wouterboomsma/eigency)
+
 # Eigency
 Eigency is a Cython interface between Numpy arrays and Matrix/Array
 objects from the Eigen C++ library. It is intended to simplify the
