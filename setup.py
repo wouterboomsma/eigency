@@ -2,7 +2,6 @@ import os
 from os.path import basename, join
 from setuptools import setup, find_packages
 from setuptools.extension import Extension
-from Cython.Build import cythonize
 
 import eigency
 import numpy as np
@@ -11,17 +10,30 @@ __package_name__ = "eigency"
 __eigen_dir__ = eigency.__eigen_dir__
 __eigen_lib_dir__ = join(basename(__eigen_dir__), 'Eigen')
 
+# Follow the pattern recommended here:
+# http://cython.readthedocs.io/en/latest/src/reference/compilation.html#distributing-cython-modules
+try:
+    from Cython.Build import cythonize
+    # Maybe make this a command line option?
+    USE_CYTHON = True
+    ext = '.pyx'
+except ImportError:
+    USE_CYTHON = False
+    ext = '.cpp'
+
 extensions = [
-    Extension("eigency.conversions", ["eigency/conversions.pyx"],
+    Extension("eigency.conversions", ["eigency/conversions"+ext],
               include_dirs = [np.get_include(), __eigen_dir__],
               language="c++"
     ),
-    Extension("eigency.core", ["eigency/core.pyx"],
+    Extension("eigency.core", ["eigency/core"+ext],
               include_dirs = [np.get_include(), __eigen_dir__],
               language="c++"
     )
 ]
 
+if USE_CYTHON:
+    extensions = cythonize(extensions)
 
 try:
     import pypandoc
@@ -55,8 +67,8 @@ dist = setup(
     author_email = "wb@di.ku.dk",
     url = "https://github.com/wouterboomsma/eigency",
     use_scm_version = True,
-    setup_requires = ['setuptools>=38','setuptools_scm', 'cython'],
-    ext_modules = cythonize(extensions),
+    setup_requires = ['setuptools>=38','setuptools_scm'],
+    ext_modules = extensions,
     packages = find_packages(),
     include_package_data=True,
     package_data = {__package_name__: [
@@ -64,6 +76,6 @@ dist = setup(
         join(__eigen_lib_dir__, '*'),
     ] + eigen_data_files},
     exclude_package_data = {__package_name__: [join(__eigen_lib_dir__, 'CMakeLists.txt')]},
-    install_requires = ['numpy', 'cython']
+    install_requires = ['numpy']
 )
 
