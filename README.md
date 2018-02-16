@@ -137,7 +137,7 @@ private:
 };
 ```
 
-The Cython C++ class inteface is specified as usual:
+The Cython C++ class interface is specified as usual:
 
 ```
      cdef cppclass _MyClass "MyClass":
@@ -200,7 +200,7 @@ public:
 ```
 
 With the corresponding cython interface specification
-The Cython C++ class inteface is specified as usual:
+The Cython C++ class interface is specified as usual:
 
 ```
      cdef cppclass _MyClass "MyClass":
