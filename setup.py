@@ -10,6 +10,13 @@ __package_name__ = "eigency"
 __eigen_dir__ = eigency.__eigen_dir__
 __eigen_lib_dir__ = join(basename(__eigen_dir__), 'Eigen')
 
+# Not all users may have cython installed.  If they only want this as a means
+# to access the Eigen header files to compile their own C++ code, then they
+# may not have cython already installed.  Therefore, only require cython
+# for cases where the user will need to build the .cpp files from the .pyx
+# files (typically from a git clone) and not for other pip installations.
+# cf. discussion in PR #26.
+
 # Follow the pattern recommended here:
 # http://cython.readthedocs.io/en/latest/src/reference/compilation.html#distributing-cython-modules
 try:
