@@ -2,7 +2,7 @@ from pkg_resources import resource_filename
 import numpy as np
 import os.path
 
-__eigen_dir__ = resource_filename(__name__, "eigen_3.2.8")
+__eigen_dir__ = resource_filename(__name__, "eigen_3.3.4")
 
 def get_includes(include_eigen=True):
     root = os.path.dirname(__file__)

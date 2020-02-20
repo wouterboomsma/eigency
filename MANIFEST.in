@@ -15,8 +15,8 @@ exclude eigency/*.cpp
 recursive-include tests *.cpp *.h *.py *.pyx
 
 # Eigen library
-prune eigency/eigen_3.2.8/
-graft eigency/eigen_3.2.8/Eigen
-include eigency/eigen_3.2.8/COPYING*
-recursive-exclude eigency/eigen_3.2.8/Eigen CMakeLists.txt
+prune eigency/eigen_3.3.4/
+graft eigency/eigen_3.3.4/Eigen
+include eigency/eigen_3.3.4/COPYING*
+recursive-exclude eigency/eigen_3.3.4/Eigen CMakeLists.txt
 
