@@ -10,9 +10,14 @@ pkg_check_modules(EIGEN
   eigen3
 )
 
+
 message(STATUS "Found Eigen in: ${EIGEN_INCLUDE_DIRS}")
+execute_process(COMMAND python -c "import os.path; print(os.path.relpath('${EIGEN_INCLUDE_DIRS}', '${CMAKE_SOURCE_DIR}'), end='')" OUTPUT_VARIABLE EIGEN_REL_PATH)
+message(STATUS "  Relative: ${EIGEN_REL_PATH}")
+set(PYTHON_INSTALL_DIR "$ENV{PYTHONPATH}") #"${CMAKE_INSTALL_PREFIX}")
+message(STATUS "Installing to: ${PYTHON_INSTALL_DIR}")
 
 configure_file(eigency/__init__.py.in ${CMAKE_SOURCE_DIR}/eigency/__init__.py @ONLY)
 configure_file(MANIFEST.in.in ${CMAKE_SOURCE_DIR}/MANIFEST.in @ONLY)
 
-add_custom_target(${PROJECT_NAME} ALL python setup.py install WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM)
+install(CODE "execute_process(COMMAND python setup.py install --prefix=${CMAKE_INSTALL_PREFIX}  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})")

@@ -15,6 +15,6 @@ exclude eigency/*.cpp
 recursive-include tests *.cpp *.h *.py *.pyx
 
 # Eigen library
-prune @EIGEN_INCLUDE_DIRS@
-graft @EIGEN_INCLUDE_DIRS@/Eigen
+prune @EIGEN_REL_PATH@
+graft @EIGEN_REL_PATH@/Eigen
 include eigency/eigen_3.3.4_licenses/COPYING*
