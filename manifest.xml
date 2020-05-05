@@ -1,0 +1,17 @@
+<package>
+  <description brief="Python wrapper for eigen">
+  </description>
+  <depend package="cython" />
+  <depend package="numpy" />
+  <depend package="python-setuptools" />
+  <depend package="pip" />
+  <keywords>
+  </keywords>
+<stage>-1</stage>
+<activity>active</activity>
+<classifiers>
+    <classifier>c++</classifier>
+    <classifier>rock</classifier>
+    <classifier>ubuntu</classifier>
+  </classifiers>
+</package>
