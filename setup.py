@@ -27,6 +27,7 @@ try:
 except ImportError:
     USE_CYTHON = False
     ext = '.cpp'
+    print("warning: failed to import Cython.build.cythonize")
 
 extensions = [
     Extension("eigency.conversions", ["eigency/conversions"+ext],
@@ -85,4 +86,3 @@ dist = setup(
     exclude_package_data = {__package_name__: [join(__eigen_lib_dir__, 'CMakeLists.txt')]},
     install_requires = ['numpy', 'Cython']
 )
-
