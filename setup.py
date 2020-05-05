@@ -28,6 +28,8 @@ except ImportError:
     USE_CYTHON = False
     ext = '.cpp'
     print("warning: failed to import Cython.build.cythonize")
+    if not os.path.isfile("eigency/conversions"+ext) or not os.path.isfile("eigency/core"+ext):
+        raise ImportError("Haven't found cythonize and there are no cpp files for the extensions.")
 
 extensions = [
     Extension("eigency.conversions", ["eigency/conversions"+ext],
@@ -74,7 +76,7 @@ dist = setup(
     author = "Wouter Boomsma",
     author_email = "wb@di.ku.dk",
     url = "https://github.com/wouterboomsma/eigency",
-    use_scm_version = True,
+    use_scm_version = False,
     setup_requires = ['setuptools>=38','setuptools_scm'],
     ext_modules = extensions,
     packages = find_packages(),
