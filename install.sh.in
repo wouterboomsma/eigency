@@ -1,5 +1,0 @@
-#/bin/bash
-source @APROOT@/env.sh
-
-cd @CMAKE_BINARY_DIR@
-python -m pip install --prefix @CMAKE_INSTALL_PREFIX@ $(ls *.whl)
