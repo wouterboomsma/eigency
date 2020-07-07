@@ -43,11 +43,13 @@ message(STATUS "Installing to: ${PYTHON_INSTALL_DIR}")
 set(APROOT $ENV{AUTOPROJ_CURRENT_ROOT})
 configure_file(eigency/__init__.py.in ${CMAKE_SOURCE_DIR}/eigency/__init__.py @ONLY)
 configure_file(MANIFEST.in.in ${CMAKE_SOURCE_DIR}/MANIFEST.in @ONLY)
-configure_file(install.sh.in ${CMAKE_SOURCE_DIR}/install.sh @ONLY)
 
 add_custom_target(python ALL
-    COMMAND ${Python_EXECUTABLE} setup.py bdist_wheel --dist-dir=${CMAKE_BINARY_DIR}
+    COMMAND ${Python_EXECUTABLE} setup.py build
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     VERBATIM )
 
-install(CODE "execute_process(COMMAND bash ${CMAKE_SOURCE_DIR}/install.sh)")
+add_custom_target(install ALL
+    COMMAND ${Python_EXECUTABLE} setup.py install --force --prefix=${CMAKE_INSTALL_PREFIX}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    VERBATIM )
