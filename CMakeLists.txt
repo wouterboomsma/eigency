@@ -45,6 +45,11 @@ configure_file(eigency/__init__.py.in ${CMAKE_SOURCE_DIR}/eigency/__init__.py @O
 configure_file(MANIFEST.in.in ${CMAKE_SOURCE_DIR}/MANIFEST.in @ONLY)
 
 add_custom_target(python ALL
-    COMMAND ${Python_EXECUTABLE} setup.py install --prefix=${CMAKE_INSTALL_PREFIX}
+    COMMAND ${Python_EXECUTABLE} setup.py build
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    VERBATIM )
+
+add_custom_target(install ALL
+    COMMAND ${Python_EXECUTABLE} setup.py install --force --prefix=${CMAKE_INSTALL_PREFIX}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     VERBATIM )
