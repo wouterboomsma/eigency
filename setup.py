@@ -3,8 +3,8 @@ from os.path import basename, join
 from setuptools import setup, find_packages
 from setuptools.extension import Extension
 
-import eigency
 import numpy as np
+import pkgconfig
 
 __package_name__ = "eigency"
 __eigen_dir__ = os.path.relpath(pkgconfig.cflags('eigen3')[2:],os.path.dirname(__file__))
@@ -20,6 +20,9 @@ with fileinput.FileInput(os.path.join(os.path.dirname(__file__),"Manifest.in"), 
 with fileinput.FileInput(os.path.join(os.path.dirname(__file__),"eigency/__init__.py"), inplace=True, backup='.bak') as file:
     for line in file:
         print(line.replace("@EIGEN_REL_PATH@", __eigen_dir__), end='')
+
+
+import eigency
 
 # Not all users may have cython installed.  If they only want this as a means
 # to access the Eigen header files to compile their own C++ code, then they

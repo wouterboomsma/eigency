@@ -1,7 +1,6 @@
 from pkg_resources import resource_filename
 import numpy as np
 import os.path
-import pkgconfig
 
 __eigen_dir__ = @EIGEN_REL_PATH@
 
