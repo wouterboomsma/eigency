@@ -10,6 +10,13 @@ __package_name__ = "eigency"
 __eigen_dir__ = eigency.__eigen_dir__
 __eigen_lib_dir__ = join(basename(__eigen_dir__), 'Eigen')
 
+# Replace the eigen pathes in Manifest.in
+import fileinput
+
+with fileinput.FileInput(filename, inplace=True, backup='.bak') as file:
+    for line in file:
+        print(line.replace("@EIGEN_REL_PATH@", __eigen_dir__, end='')
+
 # Not all users may have cython installed.  If they only want this as a means
 # to access the Eigen header files to compile their own C++ code, then they
 # may not have cython already installed.  Therefore, only require cython
