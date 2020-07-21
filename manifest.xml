@@ -5,6 +5,7 @@
   <depend package="numpy" />
   <depend package="python-setuptools" />
   <depend package="pip" />
+  <depend package="python-pkgconfig" />
   <keywords>
   </keywords>
 <stage>-1</stage>
