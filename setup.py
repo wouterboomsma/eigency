@@ -7,13 +7,17 @@ import eigency
 import numpy as np
 
 __package_name__ = "eigency"
-__eigen_dir__ = eigency.__eigen_dir__
+__eigen_dir__ = os.path.relpath(pkgconfig.cflags('eigen3')[2:],os.path.dirname(__file__))
 __eigen_lib_dir__ = join(basename(__eigen_dir__), 'Eigen')
 
 # Replace the eigen pathes in Manifest.in
 import fileinput
 
 with fileinput.FileInput(os.path.join(os.path.dirname(__file__),"Manifest.in"), inplace=True, backup='.bak') as file:
+    for line in file:
+        print(line.replace("@EIGEN_REL_PATH@", __eigen_dir__), end='')
+
+with fileinput.FileInput(os.path.join(os.path.dirname(__file__),"eigency/__init__.py"), inplace=True, backup='.bak') as file:
     for line in file:
         print(line.replace("@EIGEN_REL_PATH@", __eigen_dir__), end='')
 
