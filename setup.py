@@ -3,12 +3,26 @@ from os.path import basename, join
 from setuptools import setup, find_packages
 from setuptools.extension import Extension
 
-import eigency
 import numpy as np
+import pkgconfig
 
 __package_name__ = "eigency"
-__eigen_dir__ = eigency.__eigen_dir__
+__eigen_dir__ = os.path.relpath(pkgconfig.cflags('eigen3')[2:],os.path.dirname(__file__))
 __eigen_lib_dir__ = join(basename(__eigen_dir__), 'Eigen')
+
+# Replace the eigen pathes in Manifest.in
+import fileinput
+
+with fileinput.FileInput(os.path.join(os.path.dirname(__file__),"Manifest.in"), inplace=True, backup='.bak') as file:
+    for line in file:
+        print(line.replace("@EIGEN_REL_PATH@", __eigen_dir__), end='')
+
+with fileinput.FileInput(os.path.join(os.path.dirname(__file__),"eigency/__init__.py"), inplace=True, backup='.bak') as file:
+    for line in file:
+        print(line.replace("@EIGEN_REL_PATH@", __eigen_dir__), end='')
+
+
+import eigency
 
 # Not all users may have cython installed.  If they only want this as a means
 # to access the Eigen header files to compile their own C++ code, then they
@@ -27,6 +41,9 @@ try:
 except ImportError:
     USE_CYTHON = False
     ext = '.cpp'
+    print("warning: failed to import Cython.build.cythonize")
+    if not os.path.isfile("eigency/conversions"+ext) or not os.path.isfile("eigency/core"+ext):
+        raise ImportError("Haven't found cythonize and there are no cpp files for the extensions.")
 
 extensions = [
     Extension("eigency.conversions", ["eigency/conversions"+ext],
@@ -80,6 +97,5 @@ dist = setup(
         join(__eigen_lib_dir__, '*'),
     ] + eigen_data_files},
     exclude_package_data = {__package_name__: [join(__eigen_lib_dir__, 'CMakeLists.txt')]},
-    install_requires = ['numpy']
+    install_requires = ['numpy', 'Cython']
 )
-
