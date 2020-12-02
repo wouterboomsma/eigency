@@ -42,11 +42,7 @@ extensions = [
 if USE_CYTHON:
     extensions = cythonize(extensions)
 
-try:
-    import pypandoc
-    long_description = pypandoc.convert('README.md', 'rst')
-except(IOError, ImportError):
-    long_description = open('README.md').read()
+long_description = open('README.md').read()
 
 eigen_data_files = []
 for root, dirs, files in os.walk(join(__eigen_dir__, 'Eigen')):
@@ -58,6 +54,7 @@ dist = setup(
     name = __package_name__,
     description = "Cython interface between the numpy arrays and the Matrix/Array classes of the Eigen C++ library",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
