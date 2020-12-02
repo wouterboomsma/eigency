@@ -9,7 +9,7 @@ include eigency/*.h
 include eigency/*.py
 include eigency/*.pyd
 include eigency/*.pyx
-exclude eigency/*.cpp
+include eigency/*.cpp
 
 # tests
 recursive-include tests *.cpp *.h *.py *.pyx
