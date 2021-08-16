@@ -1,0 +1,24 @@
+package:
+  name: "eigency"
+  version: {{ GIT_DESCRIBE_TAG }}.{{ GIT_DESCRIBE_NUMBER }}
+
+source:
+  - path: ../.
+
+build:
+  number: 0
+  script: EIGEN_INC=${PREFIX}/include/eigen3 {{ PYTHON }} -m pip install --no-deps . -vv # [not win]
+  script: set EIGEN_INC=%LIBRARY_INC%\eigen3 & {{ PYTHON }} -m pip install --no-deps . -vv # [win]
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - python
+    - cython
+    - numpy {{ numpy }}
+    - eigen
+  run:
+    - python
+    - numpy {{ numpy }}
