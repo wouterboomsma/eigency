@@ -4,6 +4,7 @@ import os.path
 
 __eigen_dir__ = "@EIGEN_REL_PATH@"
 
+
 def get_includes(include_eigen=True):
     root = os.path.dirname(__file__)
     path = [root, np.get_include()]

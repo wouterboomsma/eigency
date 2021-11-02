@@ -11,16 +11,13 @@ __eigen_dir__ = os.path.relpath(pkgconfig.cflags('eigen3')[2:],os.path.dirname(_
 __eigen_lib_dir__ = join(basename(__eigen_dir__), 'Eigen')
 
 # Replace the eigen pathes in Manifest.in
-import fileinput
+inFile = open("Manifest.in.in", "r").read()
+with open("Manifest.in", "w") as f:
+    f.write(inFile.replace("@EIGEN_REL_PATH@", __eigen_dir__))
 
-with fileinput.FileInput(os.path.join(os.path.dirname(__file__),"Manifest.in"), inplace=True, backup='.bak') as file:
-    for line in file:
-        print(line.replace("@EIGEN_REL_PATH@", __eigen_dir__), end='')
-
-with fileinput.FileInput(os.path.join(os.path.dirname(__file__),"eigency/__init__.py"), inplace=True, backup='.bak') as file:
-    for line in file:
-        print(line.replace("@EIGEN_REL_PATH@", __eigen_dir__), end='')
-
+inFile = open("eigency/__init__.py.in", "r").read()
+with open("eigency/__init__.py", "w") as f:
+    f.write(inFile.replace("@EIGEN_REL_PATH@", __eigen_dir__))
 
 import eigency
 

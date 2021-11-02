@@ -1,3 +1,7 @@
+# automaticly created files
+Manifest.in
+eigency/__init__.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
