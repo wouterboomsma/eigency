@@ -2,6 +2,7 @@
 requires = [
     "setuptools>=38",
     "setuptools_scm",
+    "wheel",
     "numpy",
     "Cython"
 ]
