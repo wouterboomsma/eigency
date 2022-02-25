@@ -1,10 +1,14 @@
 import os
+import sys
 from os.path import basename, join
 from setuptools import setup, find_packages
 from setuptools.extension import Extension
 
-import eigency
 import numpy as np
+
+sys.path.append(".")
+
+import eigency
 
 __package_name__ = "eigency"
 __eigen_dir__ = eigency.__eigen_dir__
