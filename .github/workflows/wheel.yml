@@ -31,6 +31,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
+      - name: Install build dependencies
+        run: |
+          python -m pip install wheel
       - name: Build eigency
         run: |
           python -m wheel .
