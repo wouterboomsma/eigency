@@ -75,7 +75,7 @@ dist = setup(
     author_email = "wb@di.ku.dk",
     url = "https://github.com/wouterboomsma/eigency",
     use_scm_version = True,
-    setup_requires = ['setuptools>=38','setuptools_scm'],
+    setup_requires = ['setuptools>=38.6.0','setuptools_scm==5.0.2'],
     ext_modules = extensions,
     packages = find_packages(),
     include_package_data=True,
