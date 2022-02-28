@@ -3,7 +3,7 @@
 # https://pip.pypa.io/en/stable/cli/pip_wheel/
 #
 
-name: Build with pip wheel
+name: pip wheel
 
 on:
   pull_request:
@@ -16,7 +16,7 @@ defaults:
     shell: bash
 
 jobs:
-  wheel:
+  build:
     strategy:
       fail-fast: false
       matrix:
@@ -36,4 +36,4 @@ jobs:
           python -m pip install wheel
       - name: Build eigency
         run: |
-          python -m wheel .
+          python -m pip wheel .
