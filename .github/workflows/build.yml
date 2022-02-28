@@ -3,7 +3,7 @@
 # https://pypa-build.readthedocs.io/en/stable/
 #
 
-name: PEP 517 build
+name: PEP 517
 
 on:
   pull_request:
