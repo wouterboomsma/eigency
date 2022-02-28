@@ -1,6 +1,8 @@
 cimport cython
+
 import numpy as np
 from numpy.lib.stride_tricks import as_strided
+
 
 @cython.boundscheck(False)
 cdef np.ndarray[double, ndim=2] ndarray_double_C(double *data, long rows, long cols, long row_stride, long col_stride):
@@ -324,4 +326,3 @@ cdef np.ndarray[np.complex64_t, ndim=2] ndarray_copy_complex_float_F(const np.co
     dtype = 'complex64'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
-

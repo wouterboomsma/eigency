@@ -85,13 +85,8 @@ setup(
     ext_modules=extensions,
     packages=find_packages(),
     include_package_data=True,
-    package_data={
-        __package_name__: ["*.h", "*.pxd", "*.pyx", join(__eigen_lib_dir__, "*")]
-        + eigen_data_files
-    },
-    exclude_package_data={
-        __package_name__: [join(__eigen_lib_dir__, "CMakeLists.txt")]
-    },
+    package_data={__package_name__: ["*.h", "*.pxd", "*.pyx", join(__eigen_lib_dir__, "*")] + eigen_data_files},
+    exclude_package_data={__package_name__: [join(__eigen_lib_dir__, "CMakeLists.txt")]},
     python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
     install_requires=["numpy"],
 )

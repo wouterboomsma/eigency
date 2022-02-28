@@ -245,97 +245,97 @@ cdef extern from "eigency_cpp.h" namespace "eigency":
 
      cdef cppclass _1 "1":
           pass
-          
+
      cdef cppclass _2 "2":
           pass
 
      cdef cppclass _3 "3":
           pass
-          
+
      cdef cppclass _4 "4":
           pass
 
      cdef cppclass _5 "5":
           pass
-          
+
      cdef cppclass _6 "6":
           pass
 
      cdef cppclass _7 "7":
           pass
-          
+
      cdef cppclass _8 "8":
           pass
 
      cdef cppclass _9 "9":
           pass
-          
+
      cdef cppclass _10 "10":
           pass
 
      cdef cppclass _11 "11":
           pass
-          
+
      cdef cppclass _12 "12":
           pass
 
      cdef cppclass _13 "13":
           pass
-          
+
      cdef cppclass _14 "14":
           pass
 
      cdef cppclass _15 "15":
           pass
-          
+
      cdef cppclass _16 "16":
           pass
 
      cdef cppclass _17 "17":
           pass
-          
+
      cdef cppclass _18 "18":
           pass
 
      cdef cppclass _19 "19":
           pass
-          
+
      cdef cppclass _20 "20":
           pass
 
      cdef cppclass _21 "21":
           pass
-          
+
      cdef cppclass _22 "22":
           pass
 
      cdef cppclass _23 "23":
           pass
-          
+
      cdef cppclass _24 "24":
           pass
 
      cdef cppclass _25 "25":
           pass
-          
+
      cdef cppclass _26 "26":
           pass
 
      cdef cppclass _27 "27":
           pass
-          
+
      cdef cppclass _28 "28":
           pass
 
      cdef cppclass _29 "29":
           pass
-          
+
      cdef cppclass _30 "30":
           pass
 
      cdef cppclass _31 "31":
           pass
-          
+
      cdef cppclass _32 "32":
           pass
 
@@ -373,7 +373,7 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
 
      cdef cppclass ColMajor:
           pass
-          
+
      cdef cppclass Aligned:
           pass
 
@@ -382,13 +382,13 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
 
      cdef cppclass Matrix(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array(PlainObjectBase):
           pass
-          
+
      cdef cppclass VectorXd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Vector1i(PlainObjectBase):
           pass
 
@@ -616,302 +616,300 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
 
      cdef cppclass Array22i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array23i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array24i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2Xi(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array32i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array33i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array34i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3Xi(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array42i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array43i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array44i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4Xi(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX2i(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX3i(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX4i(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXXi(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3i(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4i(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXi(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array22f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array23f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array24f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2Xf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array32f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array33f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array34f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3Xf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array42f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array43f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array44f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4Xf(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX2f(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX3f(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX4f(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXXf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3f(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4f(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array22d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array23d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array24d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2Xd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array32d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array33d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array34d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3Xd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array42d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array43d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array44d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4Xd(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX2d(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX3d(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX4d(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXXd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3d(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4d(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array22cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array23cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array24cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2Xcf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array32cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array33cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array34cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3Xcf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array42cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array43cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array44cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4Xcf(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX2cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX3cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX4cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXXcf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4cf(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXcf(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array22cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array23cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array24cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2Xcd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array32cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array33cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array34cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3Xcd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array42cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array43cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array44cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4Xcd(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX2cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX3cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayX4cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXXcd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array2cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array3cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass Array4cd(PlainObjectBase):
           pass
-          
+
      cdef cppclass ArrayXcd(PlainObjectBase):
           pass
-          
-
