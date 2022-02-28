@@ -2,13 +2,14 @@
 # distutils: sources = eigency_tests/eigency_tests_cpp.cpp
 
 from eigency.core cimport *
+
 # cimport eigency.conversions
 # from eigency_tests.eigency cimport *
 
 
 # import eigency
 # include "../eigency.pyx"
- 
+
 cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
      cdef long _function_w_vec_arg "function_w_vec_arg"(Map[VectorXd] &)
@@ -67,27 +68,27 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
          PlainObjectBase &get_array()
          PlainObjectBase get_array_copy()
 
-# Function with vector argument. 
+# Function with vector argument.
 def function_w_vec_arg(np.ndarray[np.float64_t] array):
     return _function_w_vec_arg(Map[VectorXd](array))
 
-# Function with vector argument. 
+# Function with vector argument.
 def function_w_1darr_arg(np.ndarray[np.int32_t] array):
     return _function_w_1darr_arg(Map[ArrayXi](array))
 
-# Function with vector argument - no map - no ref. 
+# Function with vector argument - no map - no ref.
 def function_w_vec_arg_no_map1(np.ndarray[np.float64_t] array):
     return _function_w_vec_arg_no_map1(Map[VectorXd](array))
 
-# Function with vector argument - no map. 
+# Function with vector argument - no map.
 def function_w_vec_arg_no_map2(np.ndarray[np.float64_t] array):
     return _function_w_vec_arg_no_map2(Map[VectorXd](array))
 
-# Function with matrix argument. 
+# Function with matrix argument.
 def function_w_mat_arg(np.ndarray[np.float64_t, ndim=2] array):
     return _function_w_mat_arg(Map[MatrixXd](array))
 
-# Function with complex matrix argument. 
+# Function with complex matrix argument.
 def function_w_complex_mat_arg(np.ndarray[np.complex128_t, ndim=2] array):
     return _function_w_complex_mat_arg(Map[MatrixXcd](array))
 

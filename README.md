@@ -4,6 +4,7 @@
 [![PEP 517](https://github.com/wouterboomsma/eigency/actions/workflows/build.yml/badge.svg)](https://github.com/wouterboomsma/eigency/actions/workflows/build.yml)
 [![pip wheel](https://github.com/wouterboomsma/eigency/actions/workflows/wheel.yml/badge.svg)](https://github.com/wouterboomsma/eigency/actions/workflows/wheel.yml)
 [![setup.py](https://github.com/wouterboomsma/eigency/actions/workflows/setup.yml/badge.svg)](https://github.com/wouterboomsma/eigency/actions/workflows/setup.yml)
+[![pre-commit](https://github.com/wouterboomsma/eigency/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/wouterboomsma/eigency/actions/workflows/pre-commit.yml)
 
 Eigency is a Cython interface between Numpy arrays and Matrix/Array
 objects from the Eigen C++ library. It is intended to simplify the
@@ -65,7 +66,7 @@ def function_w_mat_arg(np.ndarray array):
 
 The last line contains the actual conversion. `Map` is an Eigency
 type that derives from the real Eigen map, and will take care of
-the conversion from the numpy array to the corresponding Eigen type. 
+the conversion from the numpy array to the corresponding Eigen type.
 
 We can now call the C++ function directly from Python:
 ```python
@@ -76,17 +77,17 @@ We can now call the C++ function directly from Python:
 1.1 3.3
 2.2 4.4
 ```
-(if you are wondering about why the matrix is transposed, please 
+(if you are wondering about why the matrix is transposed, please
 see the Storage layout section below).
 
 ## Types matter
 
-The basic idea behind eigency is to share the underlying representation of a 
-numpy array between Python and C++. This means that somewhere in the process, 
+The basic idea behind eigency is to share the underlying representation of a
+numpy array between Python and C++. This means that somewhere in the process,
 we need to make explicit which numerical types we are dealing with. In the
 function above, we specify that we expect an Eigen MatrixXd, which means
 that the numpy array must also contain double (i.e. float64) values. If we instead provide
-a numpy array of ints, we will get strange results. 
+a numpy array of ints, we will get strange results.
 
 ```python
 >>> import numpy as np
@@ -97,7 +98,7 @@ a numpy array of ints, we will get strange results.
 9.88131e-324 1.97626e-323
 ```
 This is because we are explicitly asking C++ to interpret out python integer
-values as floats. 
+values as floats.
 
 To avoid this type of error, you can force your cython function to
 accept only numpy arrays of a specific type:
@@ -111,8 +112,8 @@ def function_w_mat_arg(np.ndarray[np.float64_t, ndim=2] array):
     return _function_w_mat_arg(Map[MatrixXd](array))
 ```
 
-(Note that when using this technique to select the type, you also need to specify 
-the dimensions of the array (this will default to 1)). Using this new definition, 
+(Note that when using this technique to select the type, you also need to specify
+the dimensions of the array (this will default to 1)). Using this new definition,
 users will get an error when passing arrays of the wrong type:
 
 ```python
@@ -127,7 +128,7 @@ ValueError: Buffer dtype mismatch, expected 'float64_t' but got 'long'
 ```
 
 Since it avoids many surprises, it is strongly recommended to use this technique
-to specify the full types of numpy arrays in your cython code whenever 
+to specify the full types of numpy arrays in your cython code whenever
 possible.
 
 
@@ -335,11 +336,11 @@ value will be returned from C++, and we have to take care to make
 a copy of this data instead of letting the resulting numpy array
 refer directly to this memory. In C++11, this situation can be
 detected directly using rvalue references, and it will therefore
-automatically make a copy: 
+automatically make a copy:
 ```
 def function_w_mat_retval():
     # This works in C++11, because it detects the rvalue reference
-    return ndarray(_function_w_mat_retval()) 
+    return ndarray(_function_w_mat_retval())
 ```
 
 However, to make sure it works with older compilers,
@@ -348,7 +349,7 @@ it is recommended to use the `ndarray_copy` conversion:
 ```
 def function_w_mat_retval():
     # Explicit request for copy - this always works
-    return ndarray_copy(_function_w_mat_retval()) 
+    return ndarray_copy(_function_w_mat_retval())
 ```
 
 
@@ -370,7 +371,7 @@ with the problem either in Python (use order="F" when constructing
 your numpy array), or on the C++ side: (1) explicitly define your
 argument to have the row-major storage layout, 2) manually set the Map
 stride, or 3) just call `.transpose()` on the received
-array/matrix). 
+array/matrix).
 
 As an example, consider the case of a C++ function that both receives
 and returns a Eigen Map type, thus acting as a filter:
@@ -473,5 +474,3 @@ def function_filter3(np.ndarray[np.float64_t, ndim=2] array):
 
 In all three cases, the returned array will now be of the same shape
 as the original.
-
-
