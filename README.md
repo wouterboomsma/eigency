@@ -1,6 +1,10 @@
-[![Build Status](https://travis-ci.org/wouterboomsma/eigency.svg?branch=master)](https://travis-ci.org/wouterboomsma/eigency)
-
 # Eigency
+
+[![PyPI version](https://badge.fury.io/py/eigency.svg)](https://badge.fury.io/py/eigency)
+[![PEP 517](https://github.com/wouterboomsma/eigency/actions/workflows/build.yml/badge.svg)](https://github.com/wouterboomsma/eigency/actions/workflows/build.yml)
+[![pip wheel](https://github.com/wouterboomsma/eigency/actions/workflows/wheel.yml/badge.svg)](https://github.com/wouterboomsma/eigency/actions/workflows/wheel.yml)
+[![setup.py](https://github.com/wouterboomsma/eigency/actions/workflows/setup.yml/badge.svg)](https://github.com/wouterboomsma/eigency/actions/workflows/setup.yml)
+
 Eigency is a Cython interface between Numpy arrays and Matrix/Array
 objects from the Eigen C++ library. It is intended to simplify the
 process of writing C++ extensions using the Eigen library. Eigency is
