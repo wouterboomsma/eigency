@@ -1,7 +1,7 @@
 [build-system]
 requires = [
     "setuptools>=38.6.0",
-    "setuptools-scm==5.0.2",
+    "setuptools_scm>=5.0.0<6",
     "numpy",
     "Cython"
 ]
