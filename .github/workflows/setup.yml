@@ -37,4 +37,7 @@ jobs:
           cd tests
           python setup.py build
           python setup.py install
+          mkdir test_run
+          cp run_tests.py test_run/.
+          cd test_run
           python run_tests.py
