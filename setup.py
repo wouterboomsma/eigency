@@ -1,10 +1,14 @@
 import os
+import sys
 from os.path import basename, join
 from setuptools import setup, find_packages
 from setuptools.extension import Extension
 
-import eigency
 import numpy as np
+
+sys.path.append(".")
+
+import eigency
 
 __package_name__ = "eigency"
 __eigen_dir__ = eigency.__eigen_dir__
@@ -71,7 +75,6 @@ dist = setup(
     author_email = "wb@di.ku.dk",
     url = "https://github.com/wouterboomsma/eigency",
     use_scm_version = True,
-    setup_requires = ['setuptools>=38','setuptools_scm'],
     ext_modules = extensions,
     packages = find_packages(),
     include_package_data=True,
