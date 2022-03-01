@@ -1,5 +1,6 @@
 prune .github
 
+exclude .gitignore
 exclude .pre-commit-config.yaml
 include LICENSE.txt
 exclude MANIFEST.in
