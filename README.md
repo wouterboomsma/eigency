@@ -14,15 +14,39 @@ data back and forth, and will thus avoid making unnecessary copies
 whenever possible. Only in cases where copies are explicitly requested
 by your C++ code will they be made.
 
+## Installing
+
+Eigency is packaged as a source distribution (`sdist`) and available on PyPi.
+It can be easily installed using `pip`:
+```bash
+python -m pip install eigency
+```
+
+**Requirement**: `pip >= 18.0`
+
+If your `pip` is too old, then upgrade it using:
+```bash
+python -m pip install --upgrade pip
+```
+
+## Contributing
+
+For instructions on building and/or packaging Eigency from source,
+see the contributing guide [here](./CONTRIBUTING.md).
+
+## Usage
+
 Below is a description of a range of common usage scenarios. A full working
 example of both setup and these different use cases is available in the
 `test` directory distributed with the this package.
 
-## Setup
+### Setup
+
 To import eigency functionality, add the following to your `.pyx` file:
 ```
 from eigency.core cimport *
 ```
+
 In addition, in the `setup.py` file, the include directories must be
 set up to include the eigency includes. This can be done by calling
 the `get_includes` function in the `eigency` module:
@@ -35,14 +59,15 @@ extensions = [
               ),
 ]
 ```
+
 Eigency includes a version of the Eigen library, and the `get_includes` function will include the path to this directory. If you
 have your own version of Eigen, just set the `include_eigen` option to False, and add your own path instead:
-
 ```
     include_dirs = [".", "module-dir-name", 'path-to-own-eigen'] + eigency.get_includes(include_eigen=False)
 ```
 
-## From Numpy to Eigen
+### From Numpy to Eigen
+
 Assume we are writing a Cython interface to the following C++ function:
 
 ```c++
@@ -131,8 +156,7 @@ Since it avoids many surprises, it is strongly recommended to use this technique
 to specify the full types of numpy arrays in your cython code whenever
 possible.
 
-
-## Writing Eigen Map types in Cython
+### Writing Eigen Map types in Cython
 
 Since Cython does not support nested fused types, you cannot write types like `Map[Matrix[double, 2, 2]]`. In most cases, you won't need to, since you can just use Eigens convenience typedefs, such as `Map[VectorXd]`. If you need the additional flexibility of the full specification, you can use the `FlattenedMap` type, where all type arguments can be specified at top level, for instance `FlattenedMap[Matrix, double, _2, _3]` or `FlattenedMap[Matrix, double, _2, Dynamic]`. Note that dimensions must be prefixed with an underscore.
 
@@ -155,7 +179,7 @@ defined separate types for this purpose. These are called
 template arguments, respectively. For details on their use, see the section
 about storage layout below.
 
-## From Numpy to Eigen (insisting on a copy)
+### From Numpy to Eigen (insisting on a copy)
 
 Eigency will not complain if the C++ function you interface with does
 not take a Eigen Map object, but instead a regular Eigen Matrix or
@@ -186,7 +210,7 @@ assigned to their corresponding Matrix/Array types this works
 seemlessly. But keep in mind that this assignment will make a copy of
 the underlying data.
 
-## Eigen to Numpy
+### Eigen to Numpy
 
 C++ functions returning a reference to an Eigen Matrix/Array can also
 be transferred to numpy arrays without copying their content.  Assume
@@ -245,7 +269,7 @@ you prefer):
          PlainObjectBase &get_matrix()
 ```
 
-## Overriding default behavior
+### Overriding default behavior
 
 The `ndarray` conversion type specifier will attempt do guess whether you want a copy
 or a view, depending on the return type. Most of the time, this is
@@ -296,7 +320,7 @@ cdef class MyClass:
         return ndarray_view(self.thisptr.get_const_matrix())
 ```
 
-## Eigen to Numpy (non-reference return values)
+### Eigen to Numpy (non-reference return values)
 
 Functions returning an Eigen object (not a reference), are specified
 in a similar way. For instance, given the following C++ function:
@@ -328,7 +352,8 @@ also with older compilers it is recommended to always use
 `ndarray_copy` when returning newly constructed eigen values.
 
 
-## Corrupt data when returning non-map types
+### Corrupt data when returning non-map types
+
 The tendency of Eigency to avoid copies whenever possible can lead
 to corrupted data when returning non-map Eigen arrays. For instance,
 in the `function_w_mat_retval` from the previous section, a temporary
@@ -352,9 +377,7 @@ def function_w_mat_retval():
     return ndarray_copy(_function_w_mat_retval())
 ```
 
-
-
-## Storage layout - why arrays are sometimes transposed
+### Storage layout - why arrays are sometimes transposed
 
 The default storage layout used in numpy and Eigen differ. Numpy uses
 a row-major layout (C-style) per default while Eigen uses a
