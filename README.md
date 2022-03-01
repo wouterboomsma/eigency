@@ -14,7 +14,7 @@ data back and forth, and will thus avoid making unnecessary copies
 whenever possible. Only in cases where copies are explicitly requested
 by your C++ code will they be made.
 
-## Install
+## Installing
 
 Eigency is packaged as a source distribution (`sdist`) and available on PyPi.
 It can be easily installed using `pip`:
@@ -22,7 +22,14 @@ It can be easily installed using `pip`:
 python -m pip install eigency
 ```
 
-## Contribute
+**Requirement**: Minimum pip version 18.0
+
+If your `pip` is too old, then upgrade it using:
+```bash
+python -m pip install --upgrade pip
+```
+
+## Contributing
 
 For instructions on building and/or packaging Eigency from source,
 see the contributing guide [here](./CONTRIBUTING.md).
