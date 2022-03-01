@@ -22,7 +22,7 @@ It can be easily installed using `pip`:
 python -m pip install eigency
 ```
 
-**Requirement**: Minimum pip version 18.0
+**Requirement**: `pip >= 18.0`
 
 If your `pip` is too old, then upgrade it using:
 ```bash

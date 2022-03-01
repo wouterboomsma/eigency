@@ -35,14 +35,14 @@ user@host:~/eigency$ source ./venv/bin/activate
 Successfully built eigency-x.xx.tar.gz
 ```
 
-It is still possible to invoke the setup.py script directly:
+It is still possible to invoke the legacy `setup.py` script directly:
 ```bash
 python setup.py sdist
 ```
 
-However, this requires installing all the build dependencies into the virtual environment before running setup.py.
+However, this requires installing all the build dependencies into the virtual environment before running `setup.py`.
 Doing it this way also doesn't guarantee that the builds are consistent and reproducible
-since it uses a non-isolated virtual environment that the user manages, or no virtual environment at all. Yikes!
+since it uses a non-isolated virtual environment that the user manages, or no virtual environment at all - **yikes!**
 
 ## Installing from source
 
