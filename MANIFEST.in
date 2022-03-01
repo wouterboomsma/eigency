@@ -1,5 +1,6 @@
 prune .github
 
+# Root
 exclude .bandit
 exclude .flake8
 exclude .gitignore
@@ -20,11 +21,11 @@ include eigency/*.pyd
 include eigency/*.pyx
 include eigency/*.cpp
 
-# tests
-recursive-include tests *.cpp *.h *.py *.pyx
-
 # Eigen library
 prune eigency/eigen_3.2.8
 graft eigency/eigen_3.2.8/Eigen
 include eigency/eigen_3.2.8/COPYING*
 recursive-exclude eigency/eigen_3.2.8/Eigen CMakeLists.txt
+
+# Tests
+prune tests
