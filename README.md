@@ -32,7 +32,7 @@ python -m pip install --upgrade pip
 ## Contributing
 
 For instructions on building and/or packaging Eigency from source,
-see the contributing guide [here](./CONTRIBUTING.md).
+see the contributing guide [here](https://github.com/wouterboomsma/eigency/blob/master/CONTRIBUTING.md).
 
 ## Usage
 
