@@ -1,14 +1,17 @@
 prune .github
 
+exclude .bandit
+exclude .flake8
 exclude .gitignore
+exclude .isort.cfg
 exclude .pre-commit-config.yaml
 exclude CONTRIBUTING.md
 include LICENSE.txt
 exclude MANIFEST.in
 include pyproject.toml
 include README.md
-include setup.py
 include setup.cfg
+include setup.py
 
 # Core
 include eigency/*.h
