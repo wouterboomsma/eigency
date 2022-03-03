@@ -7,6 +7,8 @@
 typedef ::std::complex< double > __pyx_t_double_complex;
 typedef ::std::complex< float > __pyx_t_float_complex;
 
+#include <numpy/ndarraytypes.h>
+
 #include "conversions_api.h"
 
 #ifndef EIGENCY_CPP
