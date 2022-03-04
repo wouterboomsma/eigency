@@ -23,9 +23,15 @@ jobs:
         python: [ "2.7", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10" ]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+      - name: Install MSBuild
         if: runner.os == 'Windows'
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+      - name: Install Visual C++ for Python 2.7
+        if: runner.os == 'Windows' && matrix.python == '2.7'
+        run: |
+          choco install vcpython27 -f -y
       - uses: actions/checkout@v2
       - name: Setup Python ${{ matrix.python }}
         uses: actions/setup-python@v2
