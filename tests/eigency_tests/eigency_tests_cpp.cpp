@@ -1,5 +1,7 @@
 #include "eigency_tests_cpp.h"
+
 #include <iostream>
+#include <complex>
 
 long function_w_vec_arg(Eigen::Map<Eigen::VectorXd> &vec) {
     vec[0] = 0.;
@@ -26,7 +28,7 @@ void function_w_mat_arg(Eigen::Map<Eigen::MatrixXd> &mat) {
 }
 
 void function_w_complex_mat_arg(Eigen::Map<Eigen::MatrixXcd> &mat) {
-    mat(0,0) = 0.+0.j;
+    mat(0,0) = complex(0.,0.);
 }
 
 void function_w_fullspec_arg(Eigen::Map<Eigen::Array<double, Eigen::Dynamic, 1> > &vec) {
