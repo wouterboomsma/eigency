@@ -1,6 +1,11 @@
 cimport numpy as np
 
 
+cdef api np.ndarray[long double, ndim=2] ndarray_long_double_C(long double *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[long double, ndim=2] ndarray_long_double_F(long double *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[long double, ndim=2] ndarray_copy_long_double_C(const long double *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[long double, ndim=2] ndarray_copy_long_double_F(const long double *data, long rows, long cols, long outer_stride, long inner_stride)
+
 cdef api np.ndarray[double, ndim=2] ndarray_double_C(double *data, long rows, long cols, long outer_stride, long inner_stride)
 cdef api np.ndarray[double, ndim=2] ndarray_double_F(double *data, long rows, long cols, long outer_stride, long inner_stride)
 cdef api np.ndarray[double, ndim=2] ndarray_copy_double_C(const double *data, long rows, long cols, long outer_stride, long inner_stride)
@@ -50,6 +55,11 @@ cdef api np.ndarray[unsigned char, ndim=2] ndarray_uchar_C(unsigned char *data, 
 cdef api np.ndarray[unsigned char, ndim=2] ndarray_uchar_F(unsigned char *data, long rows, long cols, long outer_stride, long inner_stride)
 cdef api np.ndarray[unsigned char, ndim=2] ndarray_copy_uchar_C(const unsigned char *data, long rows, long cols, long outer_stride, long inner_stride)
 cdef api np.ndarray[unsigned char, ndim=2] ndarray_copy_uchar_F(const unsigned char *data, long rows, long cols, long outer_stride, long inner_stride)
+
+cdef api np.ndarray[np.npy_clongdouble, ndim=2] ndarray_complex_long_double_C(np.npy_clongdouble *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[np.npy_clongdouble, ndim=2] ndarray_complex_long_double_F(np.npy_clongdouble *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[np.npy_clongdouble, ndim=2] ndarray_copy_complex_long_double_C(const np.npy_clongdouble *data, long rows, long cols, long outer_stride, long inner_stride)
+cdef api np.ndarray[np.npy_clongdouble, ndim=2] ndarray_copy_complex_long_double_F(const np.npy_clongdouble *data, long rows, long cols, long outer_stride, long inner_stride)
 
 cdef api np.ndarray[np.complex128_t, ndim=2] ndarray_complex_double_C(np.complex128_t *data, long rows, long cols, long outer_stride, long inner_stride)
 cdef api np.ndarray[np.complex128_t, ndim=2] ndarray_complex_double_F(np.complex128_t *data, long rows, long cols, long outer_stride, long inner_stride)

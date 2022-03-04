@@ -3,6 +3,41 @@ cimport cython
 import numpy as np
 from numpy.lib.stride_tricks import as_strided
 
+#
+# long double
+#
+
+@cython.boundscheck(False)
+cdef np.ndarray[long double, ndim=2] ndarray_long_double_C(long double *data, long rows, long cols, long row_stride, long col_stride):
+    cdef long double[:,:] mem_view = <long double[:rows,:cols]>data
+    dtype = 'longdouble'
+    cdef int itemsize = np.dtype(dtype).itemsize
+    return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
+@cython.boundscheck(False)
+cdef np.ndarray[long double, ndim=2] ndarray_long_double_F(long double *data, long rows, long cols, long row_stride, long col_stride):
+    cdef long double[::1,:] mem_view = <long double[:rows:1,:cols]>data
+    dtype = 'longdouble'
+    cdef int itemsize = np.dtype(dtype).itemsize
+    return as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize])
+
+@cython.boundscheck(False)
+cdef np.ndarray[long double, ndim=2] ndarray_copy_long_double_C(const long double *data, long rows, long cols, long row_stride, long col_stride):
+    cdef long double[:,:] mem_view = <long double[:rows,:cols]>data
+    dtype = 'longdouble'
+    cdef int itemsize = np.dtype(dtype).itemsize
+    return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
+@cython.boundscheck(False)
+cdef np.ndarray[long double, ndim=2] ndarray_copy_long_double_F(const long double *data, long rows, long cols, long row_stride, long col_stride):
+    cdef long double[::1,:] mem_view = <long double[:rows:1,:cols]>data
+    dtype = 'longdouble'
+    cdef int itemsize = np.dtype(dtype).itemsize
+    return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
+#
+# double
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[double, ndim=2] ndarray_double_C(double *data, long rows, long cols, long row_stride, long col_stride):
@@ -10,6 +45,7 @@ cdef np.ndarray[double, ndim=2] ndarray_double_C(double *data, long rows, long c
     dtype = 'double'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[double, ndim=2] ndarray_double_F(double *data, long rows, long cols, long row_stride, long col_stride):
     cdef double[::1,:] mem_view = <double[:rows:1,:cols]>data
@@ -23,6 +59,7 @@ cdef np.ndarray[double, ndim=2] ndarray_copy_double_C(const double *data, long r
     dtype = 'double'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[double, ndim=2] ndarray_copy_double_F(const double *data, long rows, long cols, long row_stride, long col_stride):
     cdef double[::1,:] mem_view = <double[:rows:1,:cols]>data
@@ -30,6 +67,9 @@ cdef np.ndarray[double, ndim=2] ndarray_copy_double_F(const double *data, long r
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# float
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[float, ndim=2] ndarray_float_C(float *data, long rows, long cols, long row_stride, long col_stride):
@@ -37,6 +77,7 @@ cdef np.ndarray[float, ndim=2] ndarray_float_C(float *data, long rows, long cols
     dtype = 'float'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[float, ndim=2] ndarray_float_F(float *data, long rows, long cols, long row_stride, long col_stride):
     cdef float[::1,:] mem_view = <float[:rows:1,:cols]>data
@@ -50,6 +91,7 @@ cdef np.ndarray[float, ndim=2] ndarray_copy_float_C(const float *data, long rows
     dtype = 'float'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[float, ndim=2] ndarray_copy_float_F(const float *data, long rows, long cols, long row_stride, long col_stride):
     cdef float[::1,:] mem_view = <float[:rows:1,:cols]>data
@@ -57,6 +99,9 @@ cdef np.ndarray[float, ndim=2] ndarray_copy_float_F(const float *data, long rows
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# long
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[long, ndim=2] ndarray_long_C(long *data, long rows, long cols, long row_stride, long col_stride):
@@ -64,6 +109,7 @@ cdef np.ndarray[long, ndim=2] ndarray_long_C(long *data, long rows, long cols, l
     dtype = 'int_'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[long, ndim=2] ndarray_long_F(long *data, long rows, long cols, long row_stride, long col_stride):
     cdef long[::1,:] mem_view = <long[:rows:1,:cols]>data
@@ -77,6 +123,7 @@ cdef np.ndarray[long, ndim=2] ndarray_copy_long_C(const long *data, long rows, l
     dtype = 'int_'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[long, ndim=2] ndarray_copy_long_F(const long *data, long rows, long cols, long row_stride, long col_stride):
     cdef long[::1,:] mem_view = <long[:rows:1,:cols]>data
@@ -84,6 +131,9 @@ cdef np.ndarray[long, ndim=2] ndarray_copy_long_F(const long *data, long rows, l
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# unsigned long
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned long, ndim=2] ndarray_ulong_C(unsigned long *data, long rows, long cols, long row_stride, long col_stride):
@@ -91,6 +141,7 @@ cdef np.ndarray[unsigned long, ndim=2] ndarray_ulong_C(unsigned long *data, long
     dtype = 'uint'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned long, ndim=2] ndarray_ulong_F(unsigned long *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned long[::1,:] mem_view = <unsigned long[:rows:1,:cols]>data
@@ -104,6 +155,7 @@ cdef np.ndarray[unsigned long, ndim=2] ndarray_copy_ulong_C(const unsigned long 
     dtype = 'uint'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned long, ndim=2] ndarray_copy_ulong_F(const unsigned long *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned long[::1,:] mem_view = <unsigned long[:rows:1,:cols]>data
@@ -111,6 +163,9 @@ cdef np.ndarray[unsigned long, ndim=2] ndarray_copy_ulong_F(const unsigned long 
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# int
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[int, ndim=2] ndarray_int_C(int *data, long rows, long cols, long row_stride, long col_stride):
@@ -118,6 +173,7 @@ cdef np.ndarray[int, ndim=2] ndarray_int_C(int *data, long rows, long cols, long
     dtype = 'int'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[int, ndim=2] ndarray_int_F(int *data, long rows, long cols, long row_stride, long col_stride):
     cdef int[::1,:] mem_view = <int[:rows:1,:cols]>data
@@ -131,6 +187,7 @@ cdef np.ndarray[int, ndim=2] ndarray_copy_int_C(const int *data, long rows, long
     dtype = 'int'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[int, ndim=2] ndarray_copy_int_F(const int *data, long rows, long cols, long row_stride, long col_stride):
     cdef int[::1,:] mem_view = <int[:rows:1,:cols]>data
@@ -138,6 +195,9 @@ cdef np.ndarray[int, ndim=2] ndarray_copy_int_F(const int *data, long rows, long
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# unsigned int
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned int, ndim=2] ndarray_uint_C(unsigned int *data, long rows, long cols, long row_stride, long col_stride):
@@ -145,6 +205,7 @@ cdef np.ndarray[unsigned int, ndim=2] ndarray_uint_C(unsigned int *data, long ro
     dtype = 'uint'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned int, ndim=2] ndarray_uint_F(unsigned int *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned int[::1,:] mem_view = <unsigned int[:rows:1,:cols]>data
@@ -158,6 +219,7 @@ cdef np.ndarray[unsigned int, ndim=2] ndarray_copy_uint_C(const unsigned int *da
     dtype = 'uint'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned int, ndim=2] ndarray_copy_uint_F(const unsigned int *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned int[::1,:] mem_view = <unsigned int[:rows:1,:cols]>data
@@ -165,6 +227,9 @@ cdef np.ndarray[unsigned int, ndim=2] ndarray_copy_uint_F(const unsigned int *da
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# short
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[short, ndim=2] ndarray_short_C(short *data, long rows, long cols, long row_stride, long col_stride):
@@ -172,6 +237,7 @@ cdef np.ndarray[short, ndim=2] ndarray_short_C(short *data, long rows, long cols
     dtype = 'short'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[short, ndim=2] ndarray_short_F(short *data, long rows, long cols, long row_stride, long col_stride):
     cdef short[::1,:] mem_view = <short[:rows:1,:cols]>data
@@ -185,6 +251,7 @@ cdef np.ndarray[short, ndim=2] ndarray_copy_short_C(const short *data, long rows
     dtype = 'short'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[short, ndim=2] ndarray_copy_short_F(const short *data, long rows, long cols, long row_stride, long col_stride):
     cdef short[::1,:] mem_view = <short[:rows:1,:cols]>data
@@ -192,6 +259,9 @@ cdef np.ndarray[short, ndim=2] ndarray_copy_short_F(const short *data, long rows
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# unsigned short
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned short, ndim=2] ndarray_ushort_C(unsigned short *data, long rows, long cols, long row_stride, long col_stride):
@@ -199,6 +269,7 @@ cdef np.ndarray[unsigned short, ndim=2] ndarray_ushort_C(unsigned short *data, l
     dtype = 'ushort'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned short, ndim=2] ndarray_ushort_F(unsigned short *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned short[::1,:] mem_view = <unsigned short[:rows:1,:cols]>data
@@ -212,6 +283,7 @@ cdef np.ndarray[unsigned short, ndim=2] ndarray_copy_ushort_C(const unsigned sho
     dtype = 'ushort'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned short, ndim=2] ndarray_copy_ushort_F(const unsigned short *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned short[::1,:] mem_view = <unsigned short[:rows:1,:cols]>data
@@ -219,6 +291,9 @@ cdef np.ndarray[unsigned short, ndim=2] ndarray_copy_ushort_F(const unsigned sho
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# signed char
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[signed char, ndim=2] ndarray_schar_C(signed char *data, long rows, long cols, long row_stride, long col_stride):
@@ -226,6 +301,7 @@ cdef np.ndarray[signed char, ndim=2] ndarray_schar_C(signed char *data, long row
     dtype = 'int8'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[signed char, ndim=2] ndarray_schar_F(signed char *data, long rows, long cols, long row_stride, long col_stride):
     cdef signed char[::1,:] mem_view = <signed char[:rows:1,:cols]>data
@@ -239,6 +315,7 @@ cdef np.ndarray[signed char, ndim=2] ndarray_copy_schar_C(const signed char *dat
     dtype = 'int8'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[signed char, ndim=2] ndarray_copy_schar_F(const signed char *data, long rows, long cols, long row_stride, long col_stride):
     cdef signed char[::1,:] mem_view = <signed char[:rows:1,:cols]>data
@@ -246,6 +323,9 @@ cdef np.ndarray[signed char, ndim=2] ndarray_copy_schar_F(const signed char *dat
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# unsigned char
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned char, ndim=2] ndarray_uchar_C(unsigned char *data, long rows, long cols, long row_stride, long col_stride):
@@ -253,6 +333,7 @@ cdef np.ndarray[unsigned char, ndim=2] ndarray_uchar_C(unsigned char *data, long
     dtype = 'uint8'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned char, ndim=2] ndarray_uchar_F(unsigned char *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned char[::1,:] mem_view = <unsigned char[:rows:1,:cols]>data
@@ -266,6 +347,7 @@ cdef np.ndarray[unsigned char, ndim=2] ndarray_copy_uchar_C(const unsigned char 
     dtype = 'uint8'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[unsigned char, ndim=2] ndarray_copy_uchar_F(const unsigned char *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned char[::1,:] mem_view = <unsigned char[:rows:1,:cols]>data
@@ -273,6 +355,41 @@ cdef np.ndarray[unsigned char, ndim=2] ndarray_copy_uchar_F(const unsigned char 
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# complex long double
+#
+
+@cython.boundscheck(False)
+cdef np.ndarray[np.npy_clongdouble, ndim=2] ndarray_complex_long_double_C(np.npy_clongdouble *data, long rows, long cols, long row_stride, long col_stride):
+    cdef np.npy_clongdouble[:,:] mem_view = <np.npy_clongdouble[:rows,:cols]>data
+    dtype = 'clongdouble'
+    cdef int itemsize = np.dtype(dtype).itemsize
+    return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
+@cython.boundscheck(False)
+cdef np.ndarray[np.npy_clongdouble, ndim=2] ndarray_complex_long_double_F(np.npy_clongdouble *data, long rows, long cols, long row_stride, long col_stride):
+    cdef np.npy_clongdouble[::1,:] mem_view = <np.npy_clongdouble[:rows:1,:cols]>data
+    dtype = 'clongdouble'
+    cdef int itemsize = np.dtype(dtype).itemsize
+    return as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize])
+
+@cython.boundscheck(False)
+cdef np.ndarray[np.npy_clongdouble, ndim=2] ndarray_copy_complex_long_double_C(const np.npy_clongdouble *data, long rows, long cols, long row_stride, long col_stride):
+    cdef np.npy_clongdouble[:,:] mem_view = <np.npy_clongdouble[:rows,:cols]>data
+    dtype = 'clongdouble'
+    cdef int itemsize = np.dtype(dtype).itemsize
+    return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
+@cython.boundscheck(False)
+cdef np.ndarray[np.npy_clongdouble, ndim=2] ndarray_copy_complex_long_double_F(const np.npy_clongdouble *data, long rows, long cols, long row_stride, long col_stride):
+    cdef np.npy_clongdouble[::1,:] mem_view = <np.npy_clongdouble[:rows:1,:cols]>data
+    dtype = 'clongdouble'
+    cdef int itemsize = np.dtype(dtype).itemsize
+    return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
+#
+# complex double
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[np.complex128_t, ndim=2] ndarray_complex_double_C(np.complex128_t *data, long rows, long cols, long row_stride, long col_stride):
@@ -280,6 +397,7 @@ cdef np.ndarray[np.complex128_t, ndim=2] ndarray_complex_double_C(np.complex128_
     dtype = 'complex128'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[np.complex128_t, ndim=2] ndarray_complex_double_F(np.complex128_t *data, long rows, long cols, long row_stride, long col_stride):
     cdef np.complex128_t[::1,:] mem_view = <np.complex128_t[:rows:1,:cols]>data
@@ -293,6 +411,7 @@ cdef np.ndarray[np.complex128_t, ndim=2] ndarray_copy_complex_double_C(const np.
     dtype = 'complex128'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[np.complex128_t, ndim=2] ndarray_copy_complex_double_F(const np.complex128_t *data, long rows, long cols, long row_stride, long col_stride):
     cdef np.complex128_t[::1,:] mem_view = <np.complex128_t[:rows:1,:cols]>data
@@ -300,6 +419,9 @@ cdef np.ndarray[np.complex128_t, ndim=2] ndarray_copy_complex_double_F(const np.
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="F"), strides=[row_stride*itemsize, col_stride*itemsize]))
 
+#
+# complex float
+#
 
 @cython.boundscheck(False)
 cdef np.ndarray[np.complex64_t, ndim=2] ndarray_complex_float_C(np.complex64_t *data, long rows, long cols, long row_stride, long col_stride):
@@ -307,6 +429,7 @@ cdef np.ndarray[np.complex64_t, ndim=2] ndarray_complex_float_C(np.complex64_t *
     dtype = 'complex64'
     cdef int itemsize = np.dtype(dtype).itemsize
     return as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize])
+
 @cython.boundscheck(False)
 cdef np.ndarray[np.complex64_t, ndim=2] ndarray_complex_float_F(np.complex64_t *data, long rows, long cols, long row_stride, long col_stride):
     cdef np.complex64_t[::1,:] mem_view = <np.complex64_t[:rows:1,:cols]>data
@@ -320,6 +443,7 @@ cdef np.ndarray[np.complex64_t, ndim=2] ndarray_copy_complex_float_C(const np.co
     dtype = 'complex64'
     cdef int itemsize = np.dtype(dtype).itemsize
     return np.copy(as_strided(np.asarray(mem_view, dtype=dtype, order="C"), strides=[row_stride*itemsize, col_stride*itemsize]))
+
 @cython.boundscheck(False)
 cdef np.ndarray[np.complex64_t, ndim=2] ndarray_copy_complex_float_F(const np.complex64_t *data, long rows, long cols, long row_stride, long col_stride):
     cdef np.complex64_t[::1,:] mem_view = <np.complex64_t[:rows:1,:cols]>data
