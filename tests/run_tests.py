@@ -155,7 +155,7 @@ class TestEigency(unittest.TestCase):
 
     def test_function_type_long(self):
         # C++ ulong - Note that this is the standard Python unsigned integer
-        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order="F", dtype=np.int)
+        mat_in = np.array([[1, 2, 3, 4], [5, 6, 7, 8]], order="F", dtype=int)
         mat_out = eigency_tests.function_type_long(mat_in)
         assert_array_equal(mat_in, mat_out)
 
