@@ -131,11 +131,11 @@ def function_type_float32(np.ndarray[np.float32_t, ndim=2] array):
     return ndarray(_function_type_float(Map[ArrayXXf](array)))
 
 # Functions with different matrix types: long
-def function_type_long(np.ndarray[long, ndim=2] array):
+def function_type_long(np.ndarray[np.long_t, ndim=2] array):
     return ndarray(_function_type_long(FlattenedMap[Array, long, Dynamic, Dynamic](array)))
 
 # Functions with different matrix types: ulong
-def function_type_ulong(np.ndarray[unsigned long, ndim=2] array):
+def function_type_ulong(np.ndarray[np.ulong_t, ndim=2] array):
     return ndarray(_function_type_ulong(FlattenedMap[Array, ulong, Dynamic, Dynamic](array)))
 
 # Functions with different matrix types: int
