@@ -69,7 +69,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: C++",
         "Programming Language :: Cython",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
@@ -87,6 +86,6 @@ setup(
     include_package_data=True,
     package_data={__package_name__: ["*.h", "*.pxd", "*.pyx", join(__eigen_lib_dir__, "*")] + eigen_data_files},
     exclude_package_data={__package_name__: [join(__eigen_lib_dir__, "CMakeLists.txt")]},
-    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+    python_requires=">=3.5",
     install_requires=["numpy"],
 )
