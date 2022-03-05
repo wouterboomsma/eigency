@@ -81,6 +81,9 @@ _NDAC(std::complex<double>, ndarray_copy_complex_double_C, ndarray_copy_complex_
 _NDAV(std::complex<float>, ndarray_complex_float_C, ndarray_complex_float_F)
 _NDAC(std::complex<float>, ndarray_copy_complex_float_C, ndarray_copy_complex_float_F)
 
+#undef _NDAV
+#undef _NDAC
+
 //
 // Constructors
 //
