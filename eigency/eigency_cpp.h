@@ -2,8 +2,8 @@
 #include <stdexcept>
 #include <complex>
 
-#ifndef EIGENCY_CPP
-#define EIGENCY_CPP
+#ifndef EIGENCY_CPP_H
+#define EIGENCY_CPP_H
 
 #include <Eigen/Core>
 #include <numpy/ndarraytypes.h>

@@ -1,5 +1,5 @@
-#ifndef EIGENCY_TYPEDEFS
-#define EIGENCY_TYPEDEFS
+#ifndef EIGENCY_H
+#define EIGENCY_H
 
 #include <Eigen/Core>
 
