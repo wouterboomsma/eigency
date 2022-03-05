@@ -1,5 +1,5 @@
-#ifndef EIGENCY_CPP
-#define EIGENCY_CPP
+#ifndef EIGENCY_TYPEDEFS
+#define EIGENCY_TYPEDEFS
 
 #include <Eigen/Dense>
 
@@ -30,13 +30,13 @@ EIGENCY_MAKE_TYPEDEFS_ALL_SIZES(std::complex<long double>, cld)
 // Array
 //
 
-#define EIGENCY_MAKE_ARRAY_TYPEDEFS(Type, TypeSuffix, Size, SizeSuffix)     \
-typedef Array<Type, Size, Size> Array##SizeSuffix##SizeSuffix##TypeSuffix;  \
-typedef Array<Type, Size, 1>    Array##SizeSuffix##TypeSuffix;
+#define EIGENCY_MAKE_ARRAY_TYPEDEFS(Type, TypeSuffix, Size, SizeSuffix)             \
+typedef ::Eigen::Array<Type, Size, Size> Array##SizeSuffix##SizeSuffix##TypeSuffix; \
+typedef ::Eigen::Array<Type, Size, 1>    Array##SizeSuffix##TypeSuffix;
 
-#define EIGENCY_MAKE_ARRAY_FIXED_TYPEDEFS(Type, TypeSuffix, Size)   \
-typedef Array<Type, Size, Dynamic> Array##Size##X##TypeSuffix;      \
-typedef Array<Type, Dynamic, Size> Array##X##Size##TypeSuffix;
+#define EIGENCY_MAKE_ARRAY_FIXED_TYPEDEFS(Type, TypeSuffix, Size)       \
+typedef ::Eigen::Array<Type, Size, Dynamic> Array##Size##X##TypeSuffix; \
+typedef ::Eigen::Array<Type, Dynamic, Size> Array##X##Size##TypeSuffix;
 
 #define EIGENCY_MAKE_ARRAY_TYPEDEFS_ALL_SIZES(Type, TypeSuffix) \
 EIGENCY_MAKE_ARRAY_TYPEDEFS(Type, TypeSuffix, 2, 2)             \
