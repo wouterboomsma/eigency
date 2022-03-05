@@ -5,7 +5,7 @@
 #ifndef EIGENCY_CPP
 #define EIGENCY_CPP
 
-#include <Eigen/Dense>
+#include <Eigen/Core>
 #include <numpy/ndarraytypes.h>
 
 #include "eigency.h"

@@ -1,7 +1,7 @@
 #ifndef TEST1_H
 #define TEST1_H
 
-#include "Eigen/Dense"
+#include "Eigen/Core"
 #include "eigency.h"
 
 long function_w_vec_arg(Eigen::Map<Eigen::VectorXd> &vec);

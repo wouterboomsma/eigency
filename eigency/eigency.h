@@ -1,7 +1,7 @@
 #ifndef EIGENCY_TYPEDEFS
 #define EIGENCY_TYPEDEFS
 
-#include <Eigen/Dense>
+#include <Eigen/Core>
 
 namespace eigency {
 
