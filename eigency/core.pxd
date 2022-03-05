@@ -977,7 +977,7 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
      cdef cppclass ArrayXcd(PlainObjectBase):
           pass
 
-cdef extern from "eigency_typedefs.h" namespace "eigency":
+cdef extern from "eigency.h" namespace "eigency":
 
      cdef cppclass Vector2ld(PlainObjectBase):
           pass

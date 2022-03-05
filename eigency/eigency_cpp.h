@@ -1,20 +1,19 @@
-#include <Eigen/Dense>
-
 #include <iostream>
 #include <stdexcept>
 #include <complex>
 
-typedef ::std::complex< double > __pyx_t_double_complex;
-typedef ::std::complex< float > __pyx_t_float_complex;
-
-#include <numpy/ndarraytypes.h>
-
-#include "conversions_api.h"
-
 #ifndef EIGENCY_CPP
 #define EIGENCY_CPP
 
-#include "eigency_typedefs.h"
+#include <Eigen/Dense>
+#include <numpy/ndarraytypes.h>
+
+#include "eigency.h"
+
+typedef ::std::complex< double > __pyx_t_double_complex;
+typedef ::std::complex< float > __pyx_t_float_complex;
+
+#include "conversions_api.h"
 
 namespace eigency {
 

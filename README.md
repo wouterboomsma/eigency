@@ -497,3 +497,43 @@ def function_filter3(np.ndarray[np.float64_t, ndim=2] array):
 
 In all three cases, the returned array will now be of the same shape
 as the original.
+
+### Long double support
+
+Eigency provides new shorthands for Eigen `long double` and complex `long double` Matrix and Array types.
+Examples:
+```
+Vector4ld
+Matrix3ld
+Vector2cld
+Matrix4cld
+Array3Xld
+ArrayXXcld
+```
+
+These typedefs are available in the `eigency` namespace when including the `eigency` header:
+```c++
+#include "eigency.h"
+
+void receive_long_double_matrix(Eigen::Map<eigency::MatrixXld> &mat) {
+    // use long double eigen matrix
+}
+```
+
+Use Cython (.pyx) to create Python binding to your C++ function:
+```python
+cdef extern from "functions.h":
+     cdef void _receive_long_double_matrix "receive_long_double_matrix"(Map[MatrixXld] &)
+
+def send_long_double_ndarray(np.ndarray[np.longdouble_t, ndim=2] array):
+    return _receive_long_double_matrix(Map[MatrixXld](array))
+```
+
+Invoke in Python:
+```python
+import numpy as np
+import my_module
+
+x = np.array([[1.1, 2.2], [3.3, 4.4]], dtype=np.longdouble)
+my_module.send_long_double_ndarray(x)
+```
