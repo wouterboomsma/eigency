@@ -14,6 +14,8 @@ typedef ::std::complex< float > __pyx_t_float_complex;
 #ifndef EIGENCY_CPP
 #define EIGENCY_CPP
 
+#include "eigency_typedefs.h"
+
 namespace eigency {
 
 template<typename Scalar>

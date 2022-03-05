@@ -27,7 +27,7 @@ void function_w_mat_arg(Eigen::Map<Eigen::MatrixXd> &mat) {
     mat(0,0) = 0.;
 }
 
-void function_w_ld_mat_arg(Eigen::Map<Eigen::MatrixXld> &mat) {
+void function_w_ld_mat_arg(Eigen::Map<eigency::MatrixXld> &mat) {
     long double ld = 0.0;
     mat(0,0) = ld;
 }
@@ -36,7 +36,7 @@ void function_w_complex_mat_arg(Eigen::Map<Eigen::MatrixXcd> &mat) {
     mat(0,0) = std::complex<double>(0.,0.);
 }
 
-void function_w_complex_ld_mat_arg(Eigen::Map<Eigen::MatrixXcld> &mat) {
+void function_w_complex_ld_mat_arg(Eigen::Map<eigency::MatrixXcld> &mat) {
     std::complex<long double> cld = std::complex<long double>(0.0, 0.0);
     mat(0,0) = cld;
 }

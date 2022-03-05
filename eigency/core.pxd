@@ -104,17 +104,14 @@ ctypedef fused DenseTypeShort:
     Matrix3d
     Matrix4d
     MatrixXd
-    Vector1ld
     Vector2ld
     Vector3ld
     Vector4ld
     VectorXld
-    RowVector1ld
     RowVector2ld
     RowVector3ld
     RowVector4ld
     RowVectorXld
-    Matrix1ld
     Matrix2ld
     Matrix3ld
     Matrix4ld
@@ -149,17 +146,14 @@ ctypedef fused DenseTypeShort:
     Matrix3cd
     Matrix4cd
     MatrixXcd
-    Vector1cld
     Vector2cld
     Vector3cld
     Vector4cld
     VectorXcld
-    RowVector1cld
     RowVector2cld
     RowVector3cld
     RowVector4cld
     RowVectorXcld
-    Matrix1cld
     Matrix2cld
     Matrix3cld
     Matrix4cld
@@ -593,51 +587,6 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
      cdef cppclass MatrixXd(PlainObjectBase):
           pass
 
-     cdef cppclass Vector1ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Vector2ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Vector3ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Vector4ld(PlainObjectBase):
-          pass
-
-     cdef cppclass VectorXld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVector1ld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVector2ld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVector3ld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVector4ld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVectorXld(PlainObjectBase):
-          pass
-
-     cdef cppclass Matrix1ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Matrix2ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Matrix3ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Matrix4ld(PlainObjectBase):
-          pass
-
-     cdef cppclass MatrixXld(PlainObjectBase):
-          pass
-
      cdef cppclass Vector1cf(PlainObjectBase):
           pass
 
@@ -726,51 +675,6 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
           pass
 
      cdef cppclass MatrixXcd(PlainObjectBase):
-          pass
-
-     cdef cppclass Vector1cld(PlainObjectBase):
-          pass
-
-     cdef cppclass Vector2cld(PlainObjectBase):
-          pass
-
-     cdef cppclass Vector3cld(PlainObjectBase):
-          pass
-
-     cdef cppclass Vector4cld(PlainObjectBase):
-          pass
-
-     cdef cppclass VectorXcld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVector1cld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVector2cld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVector3cld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVector4cld(PlainObjectBase):
-          pass
-
-     cdef cppclass RowVectorXcld(PlainObjectBase):
-          pass
-
-     cdef cppclass Matrix1cld(PlainObjectBase):
-          pass
-
-     cdef cppclass Matrix2cld(PlainObjectBase):
-          pass
-
-     cdef cppclass Matrix3cld(PlainObjectBase):
-          pass
-
-     cdef cppclass Matrix4cld(PlainObjectBase):
-          pass
-
-     cdef cppclass MatrixXcld(PlainObjectBase):
           pass
 
      cdef cppclass Array22i(PlainObjectBase):
@@ -953,66 +857,6 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
      cdef cppclass ArrayXd(PlainObjectBase):
           pass
 
-     cdef cppclass Array22ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array23ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array24ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array2Xld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array32ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array33ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array34ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array3Xld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array42ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array43ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array44ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array4Xld(PlainObjectBase):
-          pass
-
-     cdef cppclass ArrayX2ld(PlainObjectBase):
-          pass
-
-     cdef cppclass ArrayX3ld(PlainObjectBase):
-          pass
-
-     cdef cppclass ArrayX4ld(PlainObjectBase):
-          pass
-
-     cdef cppclass ArrayXXld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array2ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array3ld(PlainObjectBase):
-          pass
-
-     cdef cppclass Array4ld(PlainObjectBase):
-          pass
-
-     cdef cppclass ArrayXld(PlainObjectBase):
-          pass
-
      cdef cppclass Array22cf(PlainObjectBase):
           pass
 
@@ -1131,6 +975,140 @@ cdef extern from "eigency_cpp.h" namespace "Eigen":
           pass
 
      cdef cppclass ArrayXcd(PlainObjectBase):
+          pass
+
+cdef extern from "eigency_typedefs.h" namespace "eigency":
+
+     cdef cppclass Vector2ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Vector3ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Vector4ld(PlainObjectBase):
+          pass
+
+     cdef cppclass VectorXld(PlainObjectBase):
+          pass
+
+     cdef cppclass RowVector2ld(PlainObjectBase):
+          pass
+
+     cdef cppclass RowVector3ld(PlainObjectBase):
+          pass
+
+     cdef cppclass RowVector4ld(PlainObjectBase):
+          pass
+
+     cdef cppclass RowVectorXld(PlainObjectBase):
+          pass
+
+     cdef cppclass Matrix2ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Matrix3ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Matrix4ld(PlainObjectBase):
+          pass
+
+     cdef cppclass MatrixXld(PlainObjectBase):
+          pass
+
+     cdef cppclass Vector2cld(PlainObjectBase):
+          pass
+
+     cdef cppclass Vector3cld(PlainObjectBase):
+          pass
+
+     cdef cppclass Vector4cld(PlainObjectBase):
+          pass
+
+     cdef cppclass VectorXcld(PlainObjectBase):
+          pass
+
+     cdef cppclass RowVector2cld(PlainObjectBase):
+          pass
+
+     cdef cppclass RowVector3cld(PlainObjectBase):
+          pass
+
+     cdef cppclass RowVector4cld(PlainObjectBase):
+          pass
+
+     cdef cppclass RowVectorXcld(PlainObjectBase):
+          pass
+
+     cdef cppclass Matrix2cld(PlainObjectBase):
+          pass
+
+     cdef cppclass Matrix3cld(PlainObjectBase):
+          pass
+
+     cdef cppclass Matrix4cld(PlainObjectBase):
+          pass
+
+     cdef cppclass MatrixXcld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array22ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array23ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array24ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array2Xld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array32ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array33ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array34ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array3Xld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array42ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array43ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array44ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array4Xld(PlainObjectBase):
+          pass
+
+     cdef cppclass ArrayX2ld(PlainObjectBase):
+          pass
+
+     cdef cppclass ArrayX3ld(PlainObjectBase):
+          pass
+
+     cdef cppclass ArrayX4ld(PlainObjectBase):
+          pass
+
+     cdef cppclass ArrayXXld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array2ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array3ld(PlainObjectBase):
+          pass
+
+     cdef cppclass Array4ld(PlainObjectBase):
+          pass
+
+     cdef cppclass ArrayXld(PlainObjectBase):
           pass
 
      cdef cppclass Array22cld(PlainObjectBase):
