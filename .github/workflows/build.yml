@@ -20,8 +20,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-18.04, ubuntu-20.04 ]
-        python: [ "2.7", "3.5", "3.6", "3.7", "3.8", "3.9", "3.10" ]
+        os: [ ubuntu-18.04, ubuntu-20.04, windows-latest, macos-latest ]
+        python: [ "3.5", "3.6", "3.7", "3.8", "3.9", "3.10" ]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
