@@ -22,7 +22,11 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
      cdef void _function_w_mat_arg "function_w_mat_arg"(Map[MatrixXd] &)
 
+     cdef void _function_w_ld_mat_arg "function_w_ld_mat_arg"(Map[MatrixXld] &)
+
      cdef void _function_w_complex_mat_arg "function_w_complex_mat_arg"(Map[MatrixXcd] &)
+
+     cdef void _function_w_complex_ld_mat_arg "function_w_complex_ld_mat_arg"(Map[MatrixXcld] &)
 
      cdef void _function_w_fullspec_arg "function_w_fullspec_arg" (FlattenedMap[Array, double, Dynamic, _1] &)
 
@@ -88,9 +92,17 @@ def function_w_vec_arg_no_map2(np.ndarray[np.float64_t] array):
 def function_w_mat_arg(np.ndarray[np.float64_t, ndim=2] array):
     return _function_w_mat_arg(Map[MatrixXd](array))
 
+# Function with long double matrix argument.
+def function_w_ld_mat_arg(np.ndarray[np.longdouble_t, ndim=2] array):
+    return _function_w_ld_mat_arg(Map[MatrixXld](array))
+
 # Function with complex matrix argument.
 def function_w_complex_mat_arg(np.ndarray[np.complex128_t, ndim=2] array):
     return _function_w_complex_mat_arg(Map[MatrixXcd](array))
+
+# Function with complex long double matrix argument.
+def function_w_complex_ld_mat_arg(np.ndarray[np.clongdouble_t, ndim=2] array):
+    return _function_w_complex_ld_mat_arg(Map[MatrixXcld](array))
 
 # Function using a full Map specification, rather than the convenience typedefs
 # Note that since cython does not support nested fused types, the Map has been
