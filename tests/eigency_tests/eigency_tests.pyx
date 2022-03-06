@@ -34,6 +34,8 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
      cdef Matrix3d _function_w_mat_retval "function_w_mat_retval" ()
 
+     cdef MatrixXd _function_w_empty_mat_retval "function_w_empty_mat_retval" ()
+
      cdef PlainObjectBase _function_w_mat_retval_full_spec "function_w_mat_retval_full_spec" ()
 
      cdef Map[ArrayXXd] &_function_filter1 "function_filter1" (Map[ArrayXXd] &)
@@ -117,6 +119,10 @@ def function_w_vec_retval():
 # Function returning matrix (copy is made)
 def function_w_mat_retval():
     return ndarray(_function_w_mat_retval())
+
+# Function returning empty matrix (copy is made)
+def function_w_empty_mat_retval():
+    return ndarray(_function_w_empty_mat_retval())
 
 # Function returning matrix (copy is made)
 def function_w_mat_retval_full_spec():

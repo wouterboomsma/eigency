@@ -8,6 +8,10 @@ from numpy.lib.stride_tricks import as_strided
 #
 
 @cython.boundscheck(False)
+cdef np.ndarray[long double, ndim=2] ndarray_long_double():
+    return np.empty((0,0), dtype='longdouble')
+
+@cython.boundscheck(False)
 cdef np.ndarray[long double, ndim=2] ndarray_long_double_C(long double *data, long rows, long cols, long row_stride, long col_stride):
     cdef long double[:,:] mem_view = <long double[:rows,:cols]>data
     dtype = 'longdouble'
@@ -38,6 +42,10 @@ cdef np.ndarray[long double, ndim=2] ndarray_copy_long_double_F(const long doubl
 #
 # double
 #
+
+@cython.boundscheck(False)
+cdef np.ndarray[double, ndim=2] ndarray_double():
+    return np.empty((0,0), dtype='double')
 
 @cython.boundscheck(False)
 cdef np.ndarray[double, ndim=2] ndarray_double_C(double *data, long rows, long cols, long row_stride, long col_stride):
@@ -72,6 +80,10 @@ cdef np.ndarray[double, ndim=2] ndarray_copy_double_F(const double *data, long r
 #
 
 @cython.boundscheck(False)
+cdef np.ndarray[float, ndim=2] ndarray_float():
+    return np.empty((0,0), dtype='float')
+
+@cython.boundscheck(False)
 cdef np.ndarray[float, ndim=2] ndarray_float_C(float *data, long rows, long cols, long row_stride, long col_stride):
     cdef float[:,:] mem_view = <float[:rows,:cols]>data
     dtype = 'float'
@@ -102,6 +114,10 @@ cdef np.ndarray[float, ndim=2] ndarray_copy_float_F(const float *data, long rows
 #
 # long
 #
+
+@cython.boundscheck(False)
+cdef np.ndarray[long, ndim=2] ndarray_long():
+    return np.empty((0,0), dtype='int_')
 
 @cython.boundscheck(False)
 cdef np.ndarray[long, ndim=2] ndarray_long_C(long *data, long rows, long cols, long row_stride, long col_stride):
@@ -136,6 +152,10 @@ cdef np.ndarray[long, ndim=2] ndarray_copy_long_F(const long *data, long rows, l
 #
 
 @cython.boundscheck(False)
+cdef np.ndarray[unsigned long, ndim=2] ndarray_ulong():
+    return np.empty((0,0), dtype='uint')
+
+@cython.boundscheck(False)
 cdef np.ndarray[unsigned long, ndim=2] ndarray_ulong_C(unsigned long *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned long[:,:] mem_view = <unsigned long[:rows,:cols]>data
     dtype = 'uint'
@@ -166,6 +186,10 @@ cdef np.ndarray[unsigned long, ndim=2] ndarray_copy_ulong_F(const unsigned long 
 #
 # int
 #
+
+@cython.boundscheck(False)
+cdef np.ndarray[int, ndim=2] ndarray_int():
+    return np.empty((0,0), dtype='int')
 
 @cython.boundscheck(False)
 cdef np.ndarray[int, ndim=2] ndarray_int_C(int *data, long rows, long cols, long row_stride, long col_stride):
@@ -200,6 +224,10 @@ cdef np.ndarray[int, ndim=2] ndarray_copy_int_F(const int *data, long rows, long
 #
 
 @cython.boundscheck(False)
+cdef np.ndarray[unsigned int, ndim=2] ndarray_uint():
+    return np.empty((0,0), dtype='uint')
+
+@cython.boundscheck(False)
 cdef np.ndarray[unsigned int, ndim=2] ndarray_uint_C(unsigned int *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned int[:,:] mem_view = <unsigned int[:rows,:cols]>data
     dtype = 'uint'
@@ -230,6 +258,10 @@ cdef np.ndarray[unsigned int, ndim=2] ndarray_copy_uint_F(const unsigned int *da
 #
 # short
 #
+
+@cython.boundscheck(False)
+cdef np.ndarray[short, ndim=2] ndarray_short():
+    return np.empty((0,0), dtype='short')
 
 @cython.boundscheck(False)
 cdef np.ndarray[short, ndim=2] ndarray_short_C(short *data, long rows, long cols, long row_stride, long col_stride):
@@ -264,6 +296,10 @@ cdef np.ndarray[short, ndim=2] ndarray_copy_short_F(const short *data, long rows
 #
 
 @cython.boundscheck(False)
+cdef np.ndarray[unsigned short, ndim=2] ndarray_ushort():
+    return np.empty((0,0), dtype='ushort')
+
+@cython.boundscheck(False)
 cdef np.ndarray[unsigned short, ndim=2] ndarray_ushort_C(unsigned short *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned short[:,:] mem_view = <unsigned short[:rows,:cols]>data
     dtype = 'ushort'
@@ -294,6 +330,10 @@ cdef np.ndarray[unsigned short, ndim=2] ndarray_copy_ushort_F(const unsigned sho
 #
 # signed char
 #
+
+@cython.boundscheck(False)
+cdef np.ndarray[signed char, ndim=2] ndarray_schar():
+    return np.empty((0,0), dtype='int8')
 
 @cython.boundscheck(False)
 cdef np.ndarray[signed char, ndim=2] ndarray_schar_C(signed char *data, long rows, long cols, long row_stride, long col_stride):
@@ -328,6 +368,10 @@ cdef np.ndarray[signed char, ndim=2] ndarray_copy_schar_F(const signed char *dat
 #
 
 @cython.boundscheck(False)
+cdef np.ndarray[unsigned char, ndim=2] ndarray_uchar():
+    return np.empty((0,0), dtype='uint8')
+
+@cython.boundscheck(False)
 cdef np.ndarray[unsigned char, ndim=2] ndarray_uchar_C(unsigned char *data, long rows, long cols, long row_stride, long col_stride):
     cdef unsigned char[:,:] mem_view = <unsigned char[:rows,:cols]>data
     dtype = 'uint8'
@@ -358,6 +402,10 @@ cdef np.ndarray[unsigned char, ndim=2] ndarray_copy_uchar_F(const unsigned char 
 #
 # complex long double
 #
+
+@cython.boundscheck(False)
+cdef np.ndarray[np.npy_clongdouble, ndim=2] ndarray_complex_long_double():
+    return np.empty((0,0), dtype='clongdouble')
 
 @cython.boundscheck(False)
 cdef np.ndarray[np.npy_clongdouble, ndim=2] ndarray_complex_long_double_C(np.npy_clongdouble *data, long rows, long cols, long row_stride, long col_stride):
@@ -392,6 +440,10 @@ cdef np.ndarray[np.npy_clongdouble, ndim=2] ndarray_copy_complex_long_double_F(c
 #
 
 @cython.boundscheck(False)
+cdef np.ndarray[np.complex128_t, ndim=2] ndarray_complex_double():
+    return np.empty((0,0), dtype='complex128')
+
+@cython.boundscheck(False)
 cdef np.ndarray[np.complex128_t, ndim=2] ndarray_complex_double_C(np.complex128_t *data, long rows, long cols, long row_stride, long col_stride):
     cdef np.complex128_t[:,:] mem_view = <np.complex128_t[:rows,:cols]>data
     dtype = 'complex128'
@@ -422,6 +474,10 @@ cdef np.ndarray[np.complex128_t, ndim=2] ndarray_copy_complex_double_F(const np.
 #
 # complex float
 #
+
+@cython.boundscheck(False)
+cdef np.ndarray[np.complex64_t, ndim=2] ndarray_complex_float():
+    return np.empty((0,0), dtype='complex64')
 
 @cython.boundscheck(False)
 cdef np.ndarray[np.complex64_t, ndim=2] ndarray_complex_float_C(np.complex64_t *data, long rows, long cols, long row_stride, long col_stride):

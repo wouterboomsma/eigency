@@ -77,6 +77,10 @@ class TestEigency(unittest.TestCase):
         retval = eigency_tests.function_w_mat_retval()
         self.assertAlmostEqual(retval[0, 0], 4.0)
 
+    def test_empty_mat_retval(self):
+        retval = eigency_tests.function_w_empty_mat_retval()
+        self.assertEqual(retval.size, 0)
+
     def test_mat_ref_retval(self):
         my_object = eigency_tests.FixedMatrixClass()
         retval = my_object.get_matrix()
