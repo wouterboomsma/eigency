@@ -53,6 +53,10 @@ Eigen::Matrix3d function_w_mat_retval() {
     return Eigen::Matrix3d::Constant(4.);
 }
 
+Eigen::MatrixXd function_w_empty_mat_retval() {
+    return Eigen::MatrixXd();
+}
+
 Eigen::Matrix<double, 2, 4> function_w_mat_retval_full_spec() {
     return Eigen::Matrix<double, 2, 4>::Constant(2.);
 }

@@ -26,6 +26,8 @@ Eigen::VectorXd function_w_vec_retval();
 
 Eigen::Matrix3d function_w_mat_retval();
 
+Eigen::MatrixXd function_w_empty_mat_retval();
+
 Eigen::Matrix<double, 2, 4> function_w_mat_retval_full_spec();
 
 Eigen::Map<Eigen::ArrayXXd> &function_filter1(Eigen::Map<Eigen::ArrayXXd> &);
