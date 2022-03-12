@@ -6,7 +6,7 @@ cdef extern from "TestObject.cpp":
 
 # Declare the class with cdef
 
-cdef extern from "TestObject.hpp" :
+cdef extern from "TestObject.h" :
     cdef cppclass TestObject:
         TestObject() except +
         TestObject(FlattenedMapWithOrder[Matrix, double, Dynamic, Dynamic, RowMajor]&,
