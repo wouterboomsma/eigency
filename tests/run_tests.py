@@ -6,6 +6,15 @@ from numpy.testing import assert_array_equal
 
 
 class TestEigency(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        self.testObj = eigency_tests.TestObj()
+
+    def test_class_obj(self):
+        outs = []
+        outs.append(self.testObj.data)
+        assert len(outs) > 0
+
     def test_function_w_vec_arg(self):
         x = np.array([1.0, 2.0, 3.0, 4.0])
         cpp_size = eigency_tests.function_w_vec_arg(x)
