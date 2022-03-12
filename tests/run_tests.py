@@ -9,16 +9,31 @@ from numpy.testing import assert_array_equal
 class TestEigency(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.testObj = eigency_tests.TestObj()
+        A = np.array([[1.0, 1.0], [0.0, 1.0]], dtype=np.double)
+        B = np.array([[1.0], [0.0]], dtype=np.double)
+        C = np.array([[2.0, 0.0]], dtype=np.double)
+        Q = np.array([[0.0001, 0.0001], [0.0001, 0.0001]], dtype=np.double)
+        R = np.array([[5]], dtype=np.double)
+        P = 1000.0 * np.eye(2, dtype=np.double)
+        cls.testObj = eigency_tests.TestObj(A, B, C, Q, R, P)
 
     def test_class_obj(self):
         data_file_path = os.path.join(os.path.dirname(__file__), "data", "input.npy")
         measurements = np.load(data_file_path)
-        new_data = np.array([[measurements[0], 9.81, 3.14, 0]], dtype=np.double)
-        self.testObj.data = new_data
+
+        x0 = np.array([[measurements[0], 0, -9.81]], dtype=np.double)
+        self.testObj.x_hat = x0
+
         outs = []
-        outs.append(self.testObj.data)
-        self.assertEqual(len(outs), 1)
+        for i in range(len(measurements)):
+            y = np.array(measurements[i], dtype=np.double).reshape(1, 1)
+            u = np.array(0, dtype=np.double).reshape(-1, 1)
+            self.testObj.predict(u)
+            self.testObj.update(y)
+            outs.append(self.testObj.x_hat)
+
+        self.assertTrue(len(outs) == measurements.shape[0])
+        self.assertTrue(len(outs) > 0)
 
     def test_function_w_vec_arg(self):
         x = np.array([1.0, 2.0, 3.0, 4.0])

@@ -243,13 +243,24 @@ cdef class TestObj:
 
     cdef TestObject to
 
-    def __cinit__(self):
-        self.to = TestObject()
+    def __cinit__(self, np.ndarray A, np.ndarray B, np.ndarray C, np.ndarray Q, np.ndarray R, np.ndarray P):
+        self.to = TestObject(FlattenedMapWithOrder[Matrix, double, Dynamic, Dynamic, RowMajor](A),
+                             FlattenedMapWithOrder[Matrix, double, Dynamic, Dynamic, RowMajor](B),
+                             FlattenedMapWithOrder[Matrix, double, Dynamic, Dynamic, RowMajor](C),
+                             FlattenedMapWithOrder[Matrix, double, Dynamic, Dynamic, RowMajor](Q),
+                             FlattenedMapWithOrder[Matrix, double, Dynamic, Dynamic, RowMajor](R),
+                             FlattenedMapWithOrder[Matrix, double, Dynamic, Dynamic, RowMajor](P))
+
+    def predict(self, np.ndarray u):
+        self.to.predict(Map[VectorXd](u))
+
+    def update(self, np.ndarray y):
+        self.to.update(Map[VectorXd](y))
 
     @property
-    def data(self):
-        return ndarray(self.to.data)
+    def x_hat(self):
+        return ndarray(self.to.x_hat)
 
-    @data.setter
-    def data(self, data):
-        self.to.data = Map[VectorXd](data)
+    @x_hat.setter
+    def x_hat(self, x_hat):
+        self.to.x_hat = Map[VectorXd](x_hat)
