@@ -2,7 +2,7 @@
 requires = [
     "setuptools>=42",
     "setuptools_scm",
-    "numpy==1.21.5",
-    "Cython==3.0.0a10"
+    "numpy",
+    "Cython"
 ]
 build-backend = "setuptools.build_meta"
