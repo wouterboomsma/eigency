@@ -1,3 +1,4 @@
+import os
 import unittest
 
 import eigency_tests
@@ -11,7 +12,9 @@ class TestEigency(unittest.TestCase):
         cls.testObj = eigency_tests.TestObj()
 
     def test_class_obj(self):
-        new_data = np.array([[9.81, 3.14, 0]], dtype=np.double)
+        data_file_path = os.path.join(os.path.dirname(__file__), "data", "input.npy")
+        measurements = np.load(data_file_path)
+        new_data = np.array([[measurements[0], 9.81, 3.14, 0]], dtype=np.double)
         self.testObj.data = new_data
         outs = []
         outs.append(self.testObj.data)
