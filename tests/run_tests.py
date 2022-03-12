@@ -11,6 +11,8 @@ class TestEigency(unittest.TestCase):
         cls.testObj = eigency_tests.TestObj()
 
     def test_class_obj(self):
+        new_data = np.array([[9.81, 3.14, 0]], dtype=np.double)
+        self.testObj.data = new_data
         outs = []
         outs.append(self.testObj.data)
         self.assertEqual(len(outs), 1)

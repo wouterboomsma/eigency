@@ -249,3 +249,7 @@ cdef class TestObj:
     @property
     def data(self):
         return ndarray(self.to.data)
+
+    @data.setter
+    def data(self, data):
+        self.to.data = Map[VectorXd](data)
