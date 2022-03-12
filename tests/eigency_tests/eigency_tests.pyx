@@ -1,6 +1,8 @@
 # distutils: language = c++
 # distutils: sources = eigency_tests/eigency_tests_cpp.cpp
 
+from eigency_tests.TestObject cimport TestObject
+
 from eigency.core cimport *
 
 # cimport eigency.conversions
@@ -73,11 +75,6 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
          _DynamicRowMajorArrayClass (FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor] &) except +
          PlainObjectBase &get_array()
          PlainObjectBase get_array_copy()
-
-cdef extern from "eigency_tests/TestObject.h":
-    cdef cppclass TestObject:
-        TestObject() except +
-        Map[VectorXd] data
 
 # Function with vector argument.
 def function_w_vec_arg(np.ndarray[np.float64_t] array):
