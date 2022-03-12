@@ -6,7 +6,7 @@
 name: PEP 517
 
 on:
-  pull_request:
+#  pull_request:
   push:
     branches:
       - master

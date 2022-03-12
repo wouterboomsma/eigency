@@ -6,7 +6,7 @@
 name: pip wheel
 
 on:
-  pull_request:
+#  pull_request:
   push:
     branches:
       - master
