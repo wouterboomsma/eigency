@@ -17,5 +17,4 @@ setup(
     version="0.0.0",
     ext_modules=cythonize(extensions),
     packages=["eigency_tests"],
-    include_package_data=True,
 )
