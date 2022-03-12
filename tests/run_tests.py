@@ -8,7 +8,7 @@ from numpy.testing import assert_array_equal
 class TestEigency(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        self.testObj = eigency_tests.TestObj()
+        cls.testObj = eigency_tests.TestObj()
 
     def test_class_obj(self):
         outs = []
