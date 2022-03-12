@@ -1,8 +1,8 @@
 # distutils: language = c++
 
-from eigency.core cimport *
-
 from eigency_tests.TestObject cimport TestObject
+
+from eigency.core cimport *
 
 
 cdef class TestObj:
