@@ -74,6 +74,11 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
          PlainObjectBase &get_array()
          PlainObjectBase get_array_copy()
 
+cdef extern from "eigency_tests/TestObject.h":
+    cdef cppclass TestObject:
+        TestObject() except +
+        Map[VectorXd] data
+
 # Function with vector argument.
 def function_w_vec_arg(np.ndarray[np.float64_t] array):
     return _function_w_vec_arg(Map[VectorXd](array))
@@ -236,3 +241,14 @@ cdef class DynamicRowMajorArrayClass:
         return ndarray(self.thisptr.get_array())
     def get_array_copy(self):
         return ndarray(self.thisptr.get_array_copy())
+
+cdef class TestObj:
+
+    cdef TestObject to
+
+    def __cinit__(self):
+        self.to = TestObject()
+
+    @property
+    def data(self):
+        return ndarray(self.to.data)
