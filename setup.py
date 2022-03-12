@@ -49,7 +49,12 @@ extensions = [
 ]
 
 if USE_CYTHON:
-    extensions = cythonize(extensions)
+    extensions = cythonize(
+        extensions,
+        compiler_directives=dict(
+            language_level="3",
+        ),
+    )
 
 long_description = open("README.md").read()
 
