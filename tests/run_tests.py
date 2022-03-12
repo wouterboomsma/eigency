@@ -13,7 +13,7 @@ class TestEigency(unittest.TestCase):
     def test_class_obj(self):
         outs = []
         outs.append(self.testObj.data)
-        assert len(outs) > 0
+        self.assertEqual(len(outs), 1)
 
     def test_function_w_vec_arg(self):
         x = np.array([1.0, 2.0, 3.0, 4.0])
