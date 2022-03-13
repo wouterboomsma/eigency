@@ -1,4 +1,5 @@
 from eigency.core cimport *
+from libcpp.vector cimport vector
 
 
 cdef extern from "TestObject.cpp":

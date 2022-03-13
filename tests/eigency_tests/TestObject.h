@@ -1,7 +1,9 @@
 #ifndef TESTOBJECT_H
 #define TESTOBJECT_H
 
-#include <Eigen/Core>
+#include <Eigen/Dense>
+#include <iostream>
+#include <vector>
 
 typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> RowMajorMatrixD;
 
