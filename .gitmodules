@@ -1,0 +1,4 @@
+[submodule "eigency/eigen"]
+	path = eigency/eigen
+	url = https://gitlab.com/cantonios/eigen.git
+	shallow = true
