@@ -29,7 +29,9 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
         with:
           msbuild-architecture: x64
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Setup Python ${{ matrix.python }}
         uses: actions/setup-python@v2
         with:
