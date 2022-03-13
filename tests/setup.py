@@ -1,4 +1,5 @@
 import os
+
 from Cython.Build import cythonize
 from setuptools import setup
 from setuptools.extension import Extension
