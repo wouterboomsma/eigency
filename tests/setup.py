@@ -10,7 +10,7 @@ extensions = [
     Extension(
         "eigency_tests.eigency_tests",
         ["eigency_tests/eigency_tests.pyx"],
-        language='C++',
+        language="C++",
         include_dirs=[".", "eigency_tests"] + eigency.get_includes(),
         extra_compile_args=["-std=c++11", "-pthread", "-DEIGEN_MPL2_ONLY", "-Wno-unknown-pragmas"],
     ),
