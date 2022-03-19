@@ -1,0 +1,4 @@
+[submodule "eigen"]
+    path = eigency/eigen
+    url = https://gitlab.com/libeigen/eigen.git
+    shallow = true

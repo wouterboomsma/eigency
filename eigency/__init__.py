@@ -3,7 +3,7 @@ import os.path
 import numpy as np
 from pkg_resources import resource_filename
 
-__eigen_dir__ = resource_filename(__name__, "eigen_3.2.8")
+__eigen_dir__ = resource_filename(__name__, "eigen")
 
 
 def get_includes(include_eigen=True):

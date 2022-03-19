@@ -22,10 +22,10 @@ include eigency/*.pyx
 include eigency/*.cpp
 
 # Eigen library
-prune eigency/eigen_3.2.8
-graft eigency/eigen_3.2.8/Eigen
-include eigency/eigen_3.2.8/COPYING*
-recursive-exclude eigency/eigen_3.2.8/Eigen CMakeLists.txt
+prune eigency/eigen
+graft eigency/eigen/Eigen
+include eigency/eigen/COPYING*
+recursive-exclude eigency/eigen/Eigen CMakeLists.txt
 
 # Tests
 prune tests
