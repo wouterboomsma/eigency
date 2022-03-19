@@ -9,11 +9,13 @@ or try to fix the problem yourself and then [submit a pull request](https://gith
 ## Getting Started
 
 The recommended operating system for Eigency development is `Linux`, preferably a modern version of `Ubuntu`.
-The source code can be edited on other operating systems, such as `Windows`, but `GCC` is required to build Eigency.
+However, the source code and tests do successfully compile on `Windows` with MSVC and `MacOS` with GCC.
 
 Clone the upstream Git repository to your local computer:
 ```bash
 git clone git@github.com:wouterboomsma/eigency.git
+cd eigency
+git submodule update --init
 ```
 
 Or, clone your own fork.
