@@ -8,12 +8,19 @@ from setuptools.extension import Extension
 
 sys.path.append(".")
 
-import eigency  # noqa: E402
 
 __package_name__ = "eigency"
-__eigen_dir__ = eigency.__eigen_dir__
-__eigen_lib_dir__ = join(basename(__eigen_dir__), "Eigen")
 
+include_dirs = [np.get_include()]
+if "EIGEN_INC" in os.environ:
+    useSystemEigen = True
+    include_dirs.append(os.environ["EIGEN_INC"])
+else:
+    useSystemEigen = False
+    import eigency  # noqa: E402
+    __eigen_dir__ = eigency.get_eigency_eigen_dir()
+    __eigen_lib_dir__ = join(basename(__eigen_dir__), "Eigen")
+    include_dirs.append(__eigen_dir__)
 # Not all users may have cython installed.  If they only want this as a means
 # to access the Eigen header files to compile their own C++ code, then they
 # may not have cython already installed.  Therefore, only require cython
@@ -37,13 +44,13 @@ extensions = [
     Extension(
         "eigency.conversions",
         ["eigency/conversions" + ext],
-        include_dirs=[np.get_include(), __eigen_dir__],
+        include_dirs=include_dirs,
         language="c++",
     ),
     Extension(
         "eigency.core",
         ["eigency/core" + ext],
-        include_dirs=[np.get_include(), __eigen_dir__],
+        include_dirs=include_dirs,
         language="c++",
     ),
 ]
@@ -53,11 +60,16 @@ if USE_CYTHON:
 
 long_description = open("README.md").read()
 
+
 eigen_data_files = []
-for root, dirs, files in os.walk(join(__eigen_dir__, "Eigen")):
-    for f in files:
-        if f.endswith(".h"):
-            eigen_data_files.append(join(root, f))
+exclude_package_data = {}
+if not useSystemEigen:
+    for root, dirs, files in os.walk(join(__eigen_dir__, "Eigen")):
+        for f in files:
+            if f.endswith(".h"):
+                eigen_data_files.append(join(root, f))
+    eigen_data_files.append(join(__eigen_lib_dir__, "*"))
+    exclude_package_data = {__package_name__: [join(__eigen_lib_dir__, "CMakeLists.txt")]}
 
 setup(
     name=__package_name__,
@@ -84,8 +96,8 @@ setup(
     ext_modules=extensions,
     packages=find_packages(),
     include_package_data=True,
-    package_data={__package_name__: ["*.h", "*.pxd", "*.pyx", join(__eigen_lib_dir__, "*")] + eigen_data_files},
-    exclude_package_data={__package_name__: [join(__eigen_lib_dir__, "CMakeLists.txt")]},
+    package_data={__package_name__: ["*.h", "*.pxd", "*.pyx"] + eigen_data_files},
+    exclude_package_data=exclude_package_data,
     python_requires=">=3.5",
     install_requires=["numpy"],
 )
