@@ -17,8 +17,8 @@ requirements:
   host:
     - python
     - cython
-    - numpy {{ numpy }}
+    - numpy
     - eigen
   run:
     - python
-    - numpy {{ numpy }}
+    - numpy
