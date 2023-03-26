@@ -13,7 +13,7 @@ extensions = [
 ]
 
 setup(
-    name="eigency_tests",
+    name="eigency-tests",
     version="0.0.0",
     ext_modules=cythonize(
         extensions,
