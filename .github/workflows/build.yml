@@ -20,15 +20,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-18.04, ubuntu-20.04, windows-latest, macos-latest ]
-        python: [ "3.5", "3.6", "3.7", "3.8", "3.9", "3.10" ]
+        os: [ ubuntu-20.04, ubuntu-22.04, windows-latest, macos-latest ]
+        python: [ "3.6", "3.7", "3.8", "3.9", "3.10", "3.11" ]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
       - name: Setup Python ${{ matrix.python }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
       - name: Install build dependencies
