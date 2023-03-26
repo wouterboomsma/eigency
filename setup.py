@@ -3,7 +3,7 @@ import sys
 from os.path import basename, join
 
 import numpy as np
-from setuptools import find_packages, setup
+from setuptools import find_namespace_packages, setup
 from setuptools.extension import Extension
 
 sys.path.append(".")
@@ -49,7 +49,12 @@ extensions = [
 ]
 
 if USE_CYTHON:
-    extensions = cythonize(extensions)
+    extensions = cythonize(
+        extensions,
+        compiler_directives=dict(
+            language_level="3",
+        ),
+    )
 
 long_description = open("README.md").read()
 
@@ -82,7 +87,14 @@ setup(
     url="https://github.com/wouterboomsma/eigency",
     use_scm_version=True,
     ext_modules=extensions,
-    packages=find_packages(),
+    packages=find_namespace_packages(
+        include=[
+            "eigency",
+            "eigency.eigen",
+            "eigency.eigen.Eigen",
+            "eigency.eigen.Eigen.*",
+        ],
+    ),
     include_package_data=True,
     package_data={__package_name__: ["*.h", "*.pxd", "*.pyx", join(__eigen_lib_dir__, "*")] + eigen_data_files},
     exclude_package_data={__package_name__: [join(__eigen_lib_dir__, "CMakeLists.txt")]},
