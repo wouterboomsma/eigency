@@ -257,6 +257,11 @@ public:
         Py_XINCREF(object_);
     }
     FlattenedMap &operator=(const FlattenedMap &other) {
+        if (this == &other){
+            return *this;
+        }
+
+        Py_XDECREF(object_);
         if (other.object_) {
             new (this) FlattenedMap(other.object_);
         } else {
@@ -338,6 +343,11 @@ public:
     }
 
     Map &operator=(const Map &other) {
+        if (this == &other){
+            return *this;
+        }
+
+        Py_XDECREF(object_);
         if (other.object_) {
             new (this) Map(other.object_);
         } else {
