@@ -40,9 +40,9 @@ cdef extern from "eigency_tests/eigency_tests_cpp.h":
 
      cdef Map[ArrayXXd] &_function_filter1 "function_filter1" (Map[ArrayXXd] &)
 
-     cdef FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor] &_function_filter2 "function_filter2" (FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor] &)
+     cdef PlainObjectBase _function_filter2 "function_filter2" (FlattenedMapWithOrder[Array, double, Dynamic, Dynamic, RowMajor] &)
 
-     cdef FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic] &_function_filter3 "function_filter3" (FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic] &)
+     cdef PlainObjectBase _function_filter3 "function_filter3" (FlattenedMapWithStride[Array, double, Dynamic, Dynamic, ColMajor, Unaligned, _1, Dynamic] &)
 
      cdef PlainObjectBase _function_type_double "function_type_double" (Map[ArrayXXd] &)
      cdef PlainObjectBase _function_type_float "function_type_float" (Map[ArrayXXf] &)
