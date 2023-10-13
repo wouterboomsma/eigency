@@ -14,6 +14,11 @@ data back and forth, and will thus avoid making unnecessary copies
 whenever possible. Only in cases where copies are explicitly requested
 by your C++ code will they be made.
 
+## Versioning
+
+Eigency uses a 4-number version (`N.N.N.N`) where the first 3 parts correspond to the embedded Eigen library version.
+The last part is a revision number of Eigency itself.
+
 ## Installing
 
 Eigency is packaged as a source distribution (`sdist`) and available on PyPi.
