@@ -7,7 +7,7 @@ exclude .gitignore
 exclude .isort.cfg
 exclude .pre-commit-config.yaml
 exclude CONTRIBUTING.md
-include LICENSE.txt
+include LICENSE
 exclude MANIFEST.in
 include pyproject.toml
 include README.md

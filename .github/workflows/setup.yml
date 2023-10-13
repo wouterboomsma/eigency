@@ -19,10 +19,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-# Disable MacOS testing because it's being dumb
-#        os: [ ubuntu-20.04, ubuntu-22.04, windows-latest, macos-latest ]
+        # Disable MacOS testing because it's being dumb
+        # os: [ ubuntu-20.04, ubuntu-22.04, windows-latest, macos-latest ]
         os: [ ubuntu-20.04, ubuntu-22.04, windows-latest ]
-        python: [ "3.7", "3.8", "3.9", "3.10", "3.11" ]
+        python: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install MSBuild
@@ -30,7 +30,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
         with:
           msbuild-architecture: x64
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
       - name: Setup Python ${{ matrix.python }}
