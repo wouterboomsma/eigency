@@ -233,7 +233,9 @@ public:
     typedef MapBase<EigencyDenseBase<Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>, _MapOptions, Eigen::Stride<_StrideOuter, _StrideInner> > Base;
 
     FlattenedMap()
-        : Base(NULL, 0, 0),
+        : Base(NULL,
+               _Rows == Eigen::Dynamic ? 0 : _Rows,
+               _Cols == Eigen::Dynamic ? 0 : _Cols),
           object_(NULL) {}
 
     FlattenedMap(Scalar *data, long rows, long cols, long outer_stride=0, long inner_stride=0)
